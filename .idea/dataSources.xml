@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Oracle - @orca.csc.ncsu.edu" uuid="ab5c67ab-a9e8-4fe5-ad39-c7717ed8e562">
+    <data-source source="LOCAL" name="@orca.csc.ncsu.edu" uuid="31b066a8-5ef5-479a-a20d-f71d3e99dde9">
       <driver-ref>oracle</driver-ref>
       <synchronize>true</synchronize>
       <auto-commit>false</auto-commit>
       <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:ORCL01</jdbc-url>
+      <jdbc-url>jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01</jdbc-url>
     </data-source>
   </component>
 </project>
