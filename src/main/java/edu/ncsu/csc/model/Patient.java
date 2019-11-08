@@ -1,5 +1,7 @@
 package edu.ncsu.csc.model;
 
+import java.util.Date;
+
 public class Patient {
     private String name;
     private Date dob;
