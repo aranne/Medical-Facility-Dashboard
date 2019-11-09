@@ -10,7 +10,7 @@ public class Home {
     SignIn.display();
   }
 
-  public static void signUp() throws ParseException {
+  public static void signUp() {
     SignUp.display();
   }
 

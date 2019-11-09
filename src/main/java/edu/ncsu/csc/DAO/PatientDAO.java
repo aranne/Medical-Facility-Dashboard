@@ -14,7 +14,7 @@ public interface PatientDAO {
 
     Patient getPatientById(int id);
 
-    int getPatientIdByNameAndDob(String name, Date dob);
+    Patient getPatientByNameAndDob(String name, Date dob);
 
     void updatePatient(Patient p);
 

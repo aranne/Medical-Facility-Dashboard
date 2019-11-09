@@ -13,6 +13,7 @@ public class Patient {
     private String addrCountry;
     private String addrState;
     private String addrCity;
+    private String addrStreet;
     private int addrZip;
     private String priorityStatus;
     private Date treatmentDate;
@@ -22,7 +23,7 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, int addrZip, String priorityStatus, Date treatmentDate) {
+    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, String addrStreet, int addrZip, String priorityStatus, Date treatmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +32,7 @@ public class Patient {
         this.addrCountry = addrCountry;
         this.addrState = addrState;
         this.addrCity = addrCity;
+        this.addrStreet = addrStreet;
         this.addrZip = addrZip;
         this.priorityStatus = priorityStatus;
         this.treatmentDate = treatmentDate;
@@ -101,6 +103,14 @@ public class Patient {
         this.addrCity = addrCity;
     }
 
+    public String getAddrStreet() {
+        return addrStreet;
+    }
+
+    public void setAddrStreet(String addrStreet) {
+        this.addrStreet = addrStreet;
+    }
+
     public int getAddrZip() {
         return addrZip;
     }
@@ -127,5 +137,9 @@ public class Patient {
 
     public void addFicility(MedicalFacility f) {
         facilities.add(f);
+    }
+
+    public List<MedicalFacility> getFacilities() {
+        return facilities;
     }
 }

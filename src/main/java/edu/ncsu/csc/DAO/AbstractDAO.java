@@ -14,18 +14,16 @@ public class AbstractDAO {
   PreparedStatement preparedStatement;
   ResultSet resultSet;
 
-  AbstractDAO() {
+  void openConnection() throws SQLException {
     try {
       Class.forName("oracle.jdbc.driver.OracleDriver");
       connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    } catch (SQLException e) {
-      e.printStackTrace();
     } catch (ClassNotFoundException e) {
       System.out.println("Class not found");
     }
   }
 
-  protected void closeConnection() {
+  void closeConnection() {
     if (resultSet != null) {
       try {
         resultSet.close();
