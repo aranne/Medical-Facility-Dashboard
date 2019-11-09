@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MedicalFacilityDashboard" />
+        <module name="Medical-Facility-Dashboard" />
       </profile>
     </annotationProcessing>
   </component>
