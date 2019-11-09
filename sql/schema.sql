@@ -1,35 +1,50 @@
 -- 1.
-create table medical_facilities
+create table MEDICAL_FACILITIES
 (
-  facility_id number not null
-     constraint medical_facilities_pk
-        primary key,
-  name varchar2(255) not null,
-  classification varchar2(255) not null,
-  address_country varchar2(255) not null,
-  address_state varchar2(255) not null,
-  address_city varchar2(255) not null,
-  address_street varchar2(255) not null,
-  address_number varchar2(255) not null
+    FACILITY_ID    NUMBER        not null
+        constraint MEDICAL_FACILITIES_PK
+            primary key,
+    NAME           VARCHAR2(255) not null,
+    CLASSIFICATION VARCHAR2(255) not null,
+    ADDRESS        VARCHAR2(255) not null,
+    CAPACITY       VARCHAR2(255) not null
 )
 /
 
 -- 2.
-create table patients
+create table PATIENTS
 (
-  name varchar2(255) not null,
-  dob date not null,
-  phone varchar2(255) not null,
-  address_country varchar2(255) not null,
-  address_state varchar2(255) not null,
-  address_city varchar2(255) not null,
-  address_street varchar2(255) not null,
-  priority_status varchar2(255),
-  on_list char(1) default 0,
-  constraint patients_pk
-     primary key (name, dob)
+    PATIENT_ID      NUMBER,
+    FIRSTNAME       VARCHAR2(255),
+    LASTNAME        VARCHAR2(255) not null,
+    DOB             DATE          not null,
+    PHONE           VARCHAR2(255),
+    ADDRESS_COUNTRY VARCHAR2(255),
+    ADDRESS_STATE   VARCHAR2(255),
+    ADDRESS_CITY    VARCHAR2(255) not null,
+    ADDRESS_ZIP     NUMBER,
+    PRIORITY_STATUS VARCHAR2(255),
+    TREATMENT_TIME  DATE,
+    constraint PETIENTS_PK
+        primary key (LASTNAME, DOB)
 )
 /
+
+create sequence patient_ID_SEQ
+    nocache
+/
+create trigger patient_id_TRIGGER
+    before insert
+    on patients
+    for each row
+    when (NEW.PATIENT_ID is null)
+begin
+    select patient_ID_SEQ.nextval into :new.patient_id from dual;
+
+end patient_id_TRIGGER;
+/
+
+
 
 -- 3.
 create table patient_has_facility
@@ -215,16 +230,33 @@ create table facility_has_dept
 /
 
 -- 16.
-create table medical_staffs
+create table STAFFS
 (
-  employee_id number not null
-     constraint medical_staffs_pk
-        primary key,
-  name varchar2(255) not null,
-  designation varchar2(255) not null,
-  hiredate DATE not null
+    EMPLOYEE_ID NUMBER         not null
+        constraint STAFF_PK
+            primary key,
+    NAME        VARCHAR2(255)  not null,
+    IS_MEDICAL  CHAR default 1 not null,
+    DOB         DATE,
+    HIREDATE    DATE
 )
 /
+
+create table FACILITY_HAS_STAFF
+(
+    FACILITY_ID NUMBER not null
+        constraint FACILITY_ID_FK
+            references MEDICAL_FACILITIES
+                on delete cascade,
+    EMPLOYEE_ID NUMBER not null
+        constraint EMPLOYEE_ID_FK
+            references STAFFS
+                on delete cascade,
+    constraint FACILITY_HAS_STAFF_PK
+        primary key (FACILITY_ID, EMPLOYEE_ID)
+)
+/
+
 
 -- 17.
 create table non_medical_staffs
@@ -243,7 +275,7 @@ create table staff_works_dept
 (
   employee_id number not null
      constraint SWD_EMPLOYEE_ID_fk
-        references MEDICAL_STAFFS
+        references STAFFS
            on delete cascade,
   dept_code varchar2(255) not null
      constraint SWD_DEPT_CODE_fk
@@ -259,7 +291,7 @@ create table facility_has_staff
 (
   employee_id number not null
      constraint FHS_EMPLOYEE_ID_fk
-        references MEDICAL_STAFFS
+        references STAFFS
            on delete cascade,
   facility_id number not null
      constraint FHS_FACILITY_ID_fk
@@ -291,7 +323,7 @@ create table staff_records_vital
 (
   employee_id number not null
      constraint SRV_EMPLOYEE_ID_fk
-        references MEDICAL_STAFFS
+        references STAFFS
            on delete cascade,
   name varchar2(255) not null,
   dob date not null,
@@ -320,7 +352,7 @@ create table reports
            on delete cascade,
   employee_id number not null
      constraint R_EMPLOYEE_ID_fk
-        references MEDICAL_STAFFS
+        references STAFFS
            on delete cascade,
   constraint reports_pk
      primary key (time, dob, name),
@@ -335,7 +367,7 @@ create table staff_processes_report
 (
   employee_id number not null
      constraint SPR_EMPLOYEE_ID_fk
-        references MEDICAL_STAFFS
+        references STAFFS
            on delete cascade,
   time date not null,
   dob date not null,

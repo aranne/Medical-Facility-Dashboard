@@ -1,9 +1,11 @@
 package edu.ncsu.csc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Patient {
-    private String name;
+    private String lastName;
     private Date dob;
     private String phone;
     private String addressCountry;
@@ -14,12 +16,14 @@ public class Patient {
     private String priorityStatus;
     private Boolean onList;
 
+    private List<MedicalFacility> facilities;
+
     public Patient() {
 
     }
 
     public Patient(String name, Date dob, String phone, String addressCountry, String addressState, String addressCity, String addressStreet, String addressNumber, String priorityStatus, Boolean onList) {
-        this.name = name;
+        this.lastName = name;
         this.dob = dob;
         this.phone = phone;
         this.addressCountry = addressCountry;
@@ -29,14 +33,15 @@ public class Patient {
         this.addressNumber = addressNumber;
         this.priorityStatus = priorityStatus;
         this.onList = onList;
+        facilities = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.lastName = name;
     }
 
     public Date getDob() {
@@ -109,5 +114,13 @@ public class Patient {
 
     public void setOnList(Boolean onList) {
         this.onList = onList;
+    }
+
+    public List getFacilities() {
+        return facilities;
+    }
+
+    public void addFacility(MedicalFacility f) {
+        facilities.add(f);
     }
 }
