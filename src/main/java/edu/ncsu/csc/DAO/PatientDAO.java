@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public interface PatientDAO {
-    void add(Patient p);
+    void addPatient(Patient p);
 
     List getAllPatient();
 

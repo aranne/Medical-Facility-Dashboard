@@ -1,6 +1,8 @@
 package edu.ncsu.csc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Patient {
     private int id;
@@ -10,14 +12,17 @@ public class Patient {
     private String phone;
     private String addrCountry;
     private String addrState;
+    private String addrCity;
     private int addrZip;
     private String priorityStatus;
     private Date treatmentDate;
 
+    private List<MedicalFacility> facilities;
+
     public Patient() {
     }
 
-    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, int addrZip, String priorityStatus, Date treatmentDate) {
+    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, int addrZip, String priorityStatus, Date treatmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,9 +30,11 @@ public class Patient {
         this.phone = phone;
         this.addrCountry = addrCountry;
         this.addrState = addrState;
+        this.addrCity = addrCity;
         this.addrZip = addrZip;
         this.priorityStatus = priorityStatus;
         this.treatmentDate = treatmentDate;
+        facilities = new ArrayList<>();
     }
 
     public int getId() {
@@ -86,6 +93,14 @@ public class Patient {
         this.addrState = addrState;
     }
 
+    public String getAddrCity() {
+        return addrCity;
+    }
+
+    public void setAddrCity(String addrCity) {
+        this.addrCity = addrCity;
+    }
+
     public int getAddrZip() {
         return addrZip;
     }
@@ -108,5 +123,9 @@ public class Patient {
 
     public void setTreatmentDate(Date treatmentDate) {
         this.treatmentDate = treatmentDate;
+    }
+
+    public void addFicility(MedicalFacility f) {
+        facilities.add(f);
     }
 }

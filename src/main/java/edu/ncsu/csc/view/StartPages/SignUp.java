@@ -1,12 +1,18 @@
 package edu.ncsu.csc.view.StartPages;
 
+import edu.ncsu.csc.model.Patient;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import static edu.ncsu.csc.controller.StartPages.SignUp.signUp;
 
 public class SignUp {
-  public static void display() {
+  public static void display() throws ParseException {
+    Patient patient = new Patient();
     Scanner input = new Scanner(System.in);
     ArrayList<String> choices = new ArrayList<String>();
     choices.add("1");
@@ -17,19 +23,20 @@ public class SignUp {
     while (!choice.equals("2")) {
 
       System.out.println("A. First Name");
-      String firstName = input.next();
+      patient.setFirstName(input.next());
 
       System.out.println("B. Last name");
-      String lastName = input.next();
+      patient.setLastName(input.next());
 
-      System.out.println("C. Date of Birth");
-      String dob = input.next();
+      System.out.println("C. Date of Birth in format dd/mm/yyyy");
+      Date date = new SimpleDateFormat("dd/MM/yyyy").parse(input.next());
+      patient.setDob(date);
 
       System.out.println("D. City of address");
-      String city = input.next();
+      patient.setAddrCity(input.next());
 
       System.out.println("E. Phone Number");
-      String phoneNumber = input.next();
+      patient.setPhone(input.next());
 
       System.out.println("1. Sign up");
       System.out.println("2. Go Back");
@@ -43,7 +50,7 @@ public class SignUp {
 
       switch (Integer.parseInt(choice)) {
         case 1:
-          signUp();
+          signUp(patient);
           break;
         case 2:
           break;
