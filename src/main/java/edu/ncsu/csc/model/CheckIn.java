@@ -1,9 +1,8 @@
 package edu.ncsu.csc.model;
 
-import java.util.Date;
-
 public class CheckIn {
-    private String name;
+    private Integer id;
+    private String lastName;
     private Date dob;
     private Date startTime;
     private Date endTime;
@@ -12,19 +11,28 @@ public class CheckIn {
 
     }
 
-    public CheckIn(String name, Date dob, Date startTime, Date endTime) {
-        this.name = name;
+    public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime) {
+        this.id = id;
+        this.lastName = lastName;
         this.dob = dob;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public String getName() {
-        return name;
+    public Integer getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Date getDob() {
@@ -51,4 +59,3 @@ public class CheckIn {
         this.endTime = endTime;
     }
 }
-
