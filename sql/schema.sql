@@ -90,7 +90,7 @@ create table patient_has_facility
 -- 4.
 create table check_ins
 (
-    id number,
+    id number not null,
     last_name varchar2(255) not null,
     dob date not null,
     start_time date not null,
@@ -352,7 +352,7 @@ create table facility_has_staff
 -- 20.
 create table vitals
 (
-    id number,
+    id number not null,
     lastname varchar2(255) not null,
     dob date not null,
     temperature float not null,
@@ -403,7 +403,7 @@ create table staff_records_vital
 -- 22.
 create table reports
 (
-    id number,
+    id number not null,
     time date not null,
     dob date not null,
     lastname varchar2(255) not null,
@@ -460,7 +460,7 @@ create table staff_processes_report
 -- 24.
 create table negative_experiences
 (
-    id number,
+    id number not null,
     nega_code varchar2(255) not null,
     description varchar2(255) not null,
     time date not null,
@@ -490,7 +490,7 @@ end nega_exp_id_TRIGGER;
 -- 25.
 create table reasons
 (
-    id number,
+    id number not null,
     reason_code varchar2(255) not null
         constraint R_SERVICE_CODE_fk
             references SERVICES
@@ -525,7 +525,7 @@ end reason_id_TRIGGER;
 -- 26.
 create table rules
 (
-    id number,
+    id number not null,
     body_code varchar2(255) not null
         constraint R_BODY_CODE_fk
             references BODY_PARTS
