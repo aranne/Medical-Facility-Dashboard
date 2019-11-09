@@ -1,5 +1,6 @@
 package edu.ncsu.csc.view.StartPages;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static edu.ncsu.csc.controller.StartPages.SignUp.signUp;
@@ -7,8 +8,13 @@ import static edu.ncsu.csc.controller.StartPages.SignUp.signUp;
 public class SignUp {
   public static void display() {
     Scanner input = new Scanner(System.in);
-    int choice = -1;
-    while (choice != 2) {
+    ArrayList<String> choices = new ArrayList<String>();
+    choices.add("1");
+    choices.add("2");
+    String choice = "-1" ;
+
+
+    while (!choice.equals("2")) {
 
       System.out.println("A. First Name");
       String firstName = input.next();
@@ -27,13 +33,15 @@ public class SignUp {
 
       System.out.println("1. Sign up");
       System.out.println("2. Go Back");
-      choice = input.nextInt();
-      while (choice < 0 || choice > 2) {
-        System.out.println("Sign in Incorrect");
-        choice = input.nextInt();
+      choice = input.next();
+      while (!choices.contains(choice)) {
+        System.out.println("Invalid");
+        System.out.println("1. Sign up");
+        System.out.println("2. Go Back");
+        choice = input.next();
       }
 
-      switch (choice) {
+      switch (Integer.parseInt(choice)) {
         case 1:
           signUp();
           break;
