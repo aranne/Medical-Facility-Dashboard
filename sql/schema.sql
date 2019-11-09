@@ -325,7 +325,7 @@ create table reports
   constraint reports_pk
      primary key (time, dob, name),
   constraint R_DOB_NAME_fk
-     foreign key (dob, name) references PATIENTS
+     foreign key (name, dob) references PATIENTS
         on delete cascade
 )
 /
