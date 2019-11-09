@@ -1,5 +1,6 @@
 package edu.ncsu.csc.view.StartPages;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static edu.ncsu.csc.controller.StartPages.SignIn.signInAsPatient;
@@ -8,8 +9,12 @@ import static edu.ncsu.csc.controller.StartPages.SignIn.signInAsStaff;
 public class SignIn {
   public static void display() {
     Scanner input = new Scanner(System.in);
-    int choice = -1;
-    while (choice != 2) {
+    ArrayList<String> choices = new ArrayList<String>();
+    choices.add("1");
+    choices.add("2");
+    String choice = "-1" ;
+
+    while (!choice.equals("2")) {
 
       System.out.println("A. Facility id");
       String facilityId = input.next();
@@ -25,16 +30,22 @@ public class SignIn {
 
       System.out.println("E. Patient with Options(y/n?)");
       String isPatient = input.next();
+      while (!isPatient.equals("y")&& !isPatient.equals("n")) {
+        System.out.println("E. Patient with Options(y/n?)");
+        isPatient = input.next();
+      }
 
       System.out.println("1. Sign in");
       System.out.println("2. Go Back");
-      choice = input.nextInt();
-      while (choice < 0 || choice > 2) {
-        System.out.println("Sign in Incorrect");
-        choice = input.nextInt();
+      choice = input.next();
+      while (!choices.contains(choice)) {
+        System.out.println("Invalid");
+        System.out.println("1. Sign in");
+        System.out.println("2. Go Back");
+        choice = input.next();
       }
 
-      switch (choice) {
+      switch (Integer.parseInt(choice)) {
         case 1:
           if (isPatient.equals("y"))
             signInAsPatient();

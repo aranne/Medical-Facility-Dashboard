@@ -1,12 +1,15 @@
 package edu.ncsu.csc.controller.StartPages;
 
+import edu.ncsu.csc.view.StartPages.SignIn;
+import edu.ncsu.csc.view.StartPages.SignUp;
+
 public class Home {
   public static void signIn() {
-
+    SignIn.display();
   }
 
   public static void signUp() {
-
+    SignUp.display();
   }
 
   public static void demoQueries() {
