@@ -7,6 +7,10 @@ public class CheckIn {
     private Date startTime;
     private Date endTime;
 
+    public CheckIn(){
+
+    }
+
     public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime) {
         this.id = id;
         this.lastName = lastName;

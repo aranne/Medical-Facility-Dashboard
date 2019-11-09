@@ -8,6 +8,10 @@ public class Certification {
     private Date dateCertified;
     private Date expirationDate;
 
+    public Certification(){
+
+    }
+
     public Certification(String acronym, String name, Date dateCertified, Date expirationDate) {
         this.acronym = acronym;
         this.name = name;

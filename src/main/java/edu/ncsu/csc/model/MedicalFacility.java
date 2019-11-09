@@ -7,6 +7,10 @@ public class MedicalFacility {
     private String address;
     private String capacity;
 
+    public MedicalFacility(){
+
+
+    }
     public Integer getFacilityId() {
         return facilityId;
     }
