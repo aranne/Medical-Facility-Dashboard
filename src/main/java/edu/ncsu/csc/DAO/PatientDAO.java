@@ -1,6 +1,5 @@
 package edu.ncsu.csc.DAO;
 
-import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 
 import java.util.Date;
