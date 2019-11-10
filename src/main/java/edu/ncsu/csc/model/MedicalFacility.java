@@ -1,5 +1,6 @@
 package edu.ncsu.csc.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MedicalFacility {
@@ -9,10 +10,19 @@ public class MedicalFacility {
   private String address;
   private String capacity;
 
+  private List<ServiceDept> depts;
+
   public MedicalFacility(){
-
-
   }
+
+  public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
+    this.facilityId = facilityId;
+    this.name = name;
+    this.classification = classification;
+    this.address = address;
+    this.capacity = capacity;
+  }
+
   public Integer getFacilityId() {
     return facilityId;
   }
@@ -66,11 +76,11 @@ public class MedicalFacility {
     this.capacity = capacity;
   }
 
-  public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
-    this.facilityId = facilityId;
-    this.name = name;
-    this.classification = classification;
-    this.address = address;
-    this.capacity = capacity;
+  public void addServiceDept(ServiceDept d) {
+    depts.add(d);
+  }
+
+  public List<ServiceDept> getAllServiceDept() {
+    return depts;
   }
 }

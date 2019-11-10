@@ -1,5 +1,6 @@
 package edu.ncsu.csc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(int employeeId, String firstName, String lastName, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode, List<ServiceDept> secondaryDepts) {
+    public Staff(int employeeId, String firstName, String lastName, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +26,7 @@ public class Staff {
         this.dob = dob;
         this.hireDate = hireDate;
         this.primaryDeptCode = primaryDeptCode;
-        this.secondaryDepts = secondaryDepts;
+        secondaryDepts = new ArrayList<>();
     }
 
     public int getEmployeeId() {
