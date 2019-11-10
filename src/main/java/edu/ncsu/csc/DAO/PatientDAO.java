@@ -5,7 +5,6 @@ import edu.ncsu.csc.model.Patient;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
 public interface PatientDAO {
     void addPatient(Patient p);
@@ -20,6 +19,6 @@ public interface PatientDAO {
 
     void deletePatient(Patient p);
 
-    void addFacility(Patient p, MedicalFacility f);
+    void addFacility(Patient p);
 
 }

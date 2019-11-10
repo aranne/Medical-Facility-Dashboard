@@ -81,15 +81,18 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
 
   }
 
-  @Override
-  public void addFacility(Patient p, MedicalFacility f) {
-    int facilityId = f.getFacilityId();
+
+  public void addFacility(Patient p) {
     try {
-      preparedStatement = connection
-              .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
-      preparedStatement.setInt(1, f.getFacilityId());
-      preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setString(3, p.getLastName());
+      openConnection();
+      for (MedicalFacility f : p.getFacilities()) {
+        int facilityId = f.getFacilityId();
+        preparedStatement = connection
+                .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
+        preparedStatement.setInt(1, f.getFacilityId());
+        preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+        preparedStatement.setString(3, p.getLastName());
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
