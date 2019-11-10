@@ -25,7 +25,7 @@ public class SignUp {
   }
 
   public static void goBack() {
-
+    Home.display();
   }
 
 }

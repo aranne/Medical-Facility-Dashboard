@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import static edu.ncsu.csc.controller.StartPages.SignUp.goBack;
 import static edu.ncsu.csc.controller.StartPages.SignUp.signUp;
 
 public class SignUp {
@@ -88,7 +89,7 @@ public class SignUp {
           signUp(firstName, lastName, dob, addrStreet, addrCity, addrState, addrCountry, addrZip, phone);
           break;
         case 2:
-          display();
+          goBack();
           break;
       }
     }
