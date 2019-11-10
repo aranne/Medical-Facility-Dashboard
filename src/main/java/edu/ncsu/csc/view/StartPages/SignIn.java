@@ -90,7 +90,7 @@ public class SignIn {
           if (isPatient.equals("y")) {
             signInAsPatient(facilityId, lastName, dob, city);
           } else {
-            signInAsStaff();
+            signInAsStaff(facilityId, lastName, dob);
           }
           break;
         case 2:

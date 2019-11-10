@@ -5,6 +5,7 @@ import edu.ncsu.csc.model.Staff;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StaffDAOImp extends AbstractDAO implements StaffDAO {
@@ -21,6 +22,36 @@ public class StaffDAOImp extends AbstractDAO implements StaffDAO {
   @Override
   public Staff getStaffById(int id) {
     return null;
+  }
+
+  public Staff getStaffByNameAndDob(String lastName, Date dob) {
+    Staff staff = null;
+    try {
+      openConnection();
+      // TODO cannot find Staff
+      preparedStatement = connection
+              .prepareStatement("select * from STAFFS where last_name = ? and dob = ?");
+      preparedStatement.setString(1, lastName);
+      preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+      System.out.println(new java.sql.Date(dob.getTime()));
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        staff = new Staff(
+                resultSet.getInt("employee_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getBoolean("is_medical"),
+                resultSet.getDate("dob"),
+                resultSet.getDate("hire_date"),
+                resultSet.getString("primary_dept_code")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return staff;
   }
 
   @Override
