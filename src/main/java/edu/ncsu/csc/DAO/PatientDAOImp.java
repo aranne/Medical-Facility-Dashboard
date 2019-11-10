@@ -32,7 +32,7 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
     }
   }
 
-  public List getAllPatient() {
+  public List<Patient> getAllPatient() {
     return null;
   }
 
@@ -74,22 +74,53 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
   }
 
   public void updatePatient(Patient p) {
-
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("update patients " +
+                      "set first_name = ?, last_name = ?, dob = ?, phone = ?, " +
+                      "address_country = ?, address_state = ?, address_city = ?, address_street = ?, address_zip = ?, priority_status = ?, treatment_time = ?" +
+                      "where patient_id = ?");
+      preparedStatement.setString(1, p.getFirstName());
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setDate(3, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setString(4, p.getPhone());
+      preparedStatement.setString(5, p.getAddrCountry());
+      preparedStatement.setString(6, p.getAddrState());
+      preparedStatement.setString(7, p.getAddrCity());
+      preparedStatement.setString(8, p.getAddrStreet());
+      preparedStatement.setInt(9, p.getAddrZip());
+      preparedStatement.setString(10, p.getPriorityStatus());
+      if (p.getTreatmentDate() == null) {
+        preparedStatement.setDate(11, null);
+      } else {
+        preparedStatement.setDate(11, new java.sql.Date(p.getTreatmentDate().getTime()));
+      }
+      preparedStatement.setInt(12, p.getId());
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
   }
 
   public void deletePatient(Patient p) {
 
   }
 
-  @Override
-  public void addFacility(Patient p, MedicalFacility f) {
-    int facilityId = f.getFacilityId();
+
+  public void addFacility(Patient p) {
     try {
-      preparedStatement = connection
-              .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
-      preparedStatement.setInt(1, f.getFacilityId());
-      preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setString(3, p.getLastName());
+      openConnection();
+      for (MedicalFacility f : p.getFacilities()) {
+        int facilityId = f.getFacilityId();
+        preparedStatement = connection
+                .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
+        preparedStatement.setInt(1, f.getFacilityId());
+        preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+        preparedStatement.setString(3, p.getLastName());
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
