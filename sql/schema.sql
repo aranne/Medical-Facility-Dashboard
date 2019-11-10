@@ -286,23 +286,11 @@ create table STAFFS
     NAME        VARCHAR2(255)  not null,
     IS_MEDICAL  CHAR default 1 not null,
     DOB         DATE,
-    HIRE_DATE    DATE
-)
-/
-
--- 17.
-create table staff_prim_works_dept
-(
-    employee_id number not null
-        constraint SWD_PRIM_EMPLOYEE_ID_fk
-            references STAFFS
-                on delete cascade,
-    dept_code varchar2(255) not null
-        constraint SWD_PRIM_DEPT_CODE_fk
+    HIRE_DATE    DATE,
+    primary_dept_code varchar2(255) not null
+        constraint FHD_STAFFS_fk
             references SERVICE_DEPTS
-                on delete cascade,
-    constraint staff_prim_works_dept_pk
-        primary key (employee_id, dept_code)
+                on delete cascade
 )
 /
 

@@ -19,7 +19,7 @@ public class SignIn {
       System.out.println("Sign in Incorrect, please enter again");
       Home.signIn();
     } else {
-      /* Add facility to relation table only if patient goes to this facility for the first time. */
+      /* Register to facility only if patient goes to this facility for the first time. */
       MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
       MedicalFacility f = facilityDao.getFacilityById(facilityId);
       List<MedicalFacility> facilities = patientDao.getAllFacility(p);

@@ -8,16 +8,18 @@ public class Staff {
     private boolean isMedical;
     private Date dob;
     private Date hireDate;
+    private String primaryDeptCode;
 
     public Staff() {
     }
 
-    public Staff(int employeeId, String name, boolean isMedical, Date dob, Date hireDate) {
+    public Staff(int employeeId, String name, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode) {
         this.employeeId = employeeId;
         this.name = name;
         this.isMedical = isMedical;
         this.dob = dob;
         this.hireDate = hireDate;
+        this.primaryDeptCode = primaryDeptCode;
     }
 
     public int getEmployeeId() {
@@ -58,5 +60,13 @@ public class Staff {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public String getPrimaryDeptCode() {
+        return primaryDeptCode;
+    }
+
+    public void setPrimaryDeptCode(String primaryDeptCode) {
+        this.primaryDeptCode = primaryDeptCode;
     }
 }
