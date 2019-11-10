@@ -18,6 +18,7 @@ public class Patient {
     private String priorityStatus;
     private Date treatmentDate;
 
+    /* a patient has many facilities */
     private List<MedicalFacility> facilities;
 
     public Patient() {

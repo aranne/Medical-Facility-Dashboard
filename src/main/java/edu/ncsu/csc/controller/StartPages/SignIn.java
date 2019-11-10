@@ -1,6 +1,8 @@
 package edu.ncsu.csc.controller.StartPages;
 
+import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
 import edu.ncsu.csc.DAO.PatientDAOImp;
+import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 
 import java.util.Date;
@@ -19,7 +21,12 @@ public class SignIn {
         p.setAddrCity(city);
         patientDao.updatePatient(p);
       }
-      System.out.println("Login successfully");
+      /* add facility to relation table. */
+      MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+      MedicalFacility f = facilityDao.getFacilityById(facilityId);
+      p.addFacility(f);
+      patientDao.addFacility(p);
+      System.out.println("Login successfully\n" + "Thanks for choosing " + f.getName());
       // TODO go into Patient routing menu.
     }
   }
