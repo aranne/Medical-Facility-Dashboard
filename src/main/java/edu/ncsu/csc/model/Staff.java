@@ -1,6 +1,7 @@
 package edu.ncsu.csc.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Staff {
     private int employeeId;
@@ -9,6 +10,8 @@ public class Staff {
     private Date dob;
     private Date hireDate;
     private String primaryDeptCode;
+
+    private List<ServiceDept> secondaryDepts;
 
     public Staff() {
     }
@@ -68,5 +71,13 @@ public class Staff {
 
     public void setPrimaryDeptCode(String primaryDeptCode) {
         this.primaryDeptCode = primaryDeptCode;
+    }
+
+    public void addSecondaryDept(ServiceDept d) {
+        secondaryDepts.add(d);
+    }
+
+    public List<ServiceDept> getSecondaryDepts() {
+        return secondaryDepts;
     }
 }
