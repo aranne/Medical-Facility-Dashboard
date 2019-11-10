@@ -21,6 +21,7 @@ public class SignUp {
     PatientDAOImp patientDAO = new PatientDAOImp();
 
     while (!choice.equals("2") && !choice.equals("1")) {
+      System.out.println("==================== SIGN UP ====================");
       System.out.println("A. First Name");
       String firstName = input.next();
 

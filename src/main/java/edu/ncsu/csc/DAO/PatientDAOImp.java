@@ -4,6 +4,7 @@ import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -126,5 +127,34 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
     } finally {
       closeConnection();
     }
+  }
+
+  public List<MedicalFacility> getAllFacility(Patient p) {
+    List<MedicalFacility> facilities = new ArrayList<>();
+    /* Store all facility id selected from relationship table. */
+    List<Integer> ids = new ArrayList<>();
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select facility_id from patient_has_facility where dob = ? and last_name = ?");
+      preparedStatement.setDate(1, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setString(2, p.getLastName());
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        int facilityId = resultSet.getInt("facility_id");
+        ids.add(facilityId);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    /* Find all MedicalFacility corresponding to id. */
+    for (int id : ids) {
+      MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+      MedicalFacility f = facilityDao.getFacilityById(id);
+      facilities.add(f);
+    }
+    return facilities;
   }
 }

@@ -4,8 +4,10 @@ import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
 import edu.ncsu.csc.DAO.PatientDAOImp;
 import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
+import edu.ncsu.csc.view.PatientPages.Routing;
 
 import java.util.Date;
+import java.util.List;
 
 import static edu.ncsu.csc.view.StartPages.Home.display;
 
@@ -21,13 +23,19 @@ public class SignIn {
         p.setAddrCity(city);
         patientDao.updatePatient(p);
       }
-      /* add facility to relation table. */
+      /* Add facility to relation table only if patient goes to this facility for the first time. */
       MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
       MedicalFacility f = facilityDao.getFacilityById(facilityId);
-      p.addFacility(f);
-      patientDao.addFacility(p);
-      System.out.println("Login successfully\n" + "Thanks for choosing " + f.getName());
-      // TODO go into Patient routing menu.
+      List<MedicalFacility> facilities = patientDao.getAllFacility(p);
+      if (!facilities.contains(f)) {
+        p.addFacility(f);
+        patientDao.addFacility(p);
+        System.out.println("Login successfully\n" + "Thanks for choosing " + f.getName());
+      } else {
+        System.out.println("Login successfully\n" + "Welcome back to " + f.getName());
+      }
+      /* Display routing menu. */
+      Routing.display(p.getId());
     }
   }
 

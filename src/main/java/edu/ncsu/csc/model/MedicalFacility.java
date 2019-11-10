@@ -1,5 +1,7 @@
 package edu.ncsu.csc.model;
 
+import java.util.Objects;
+
 public class MedicalFacility {
   private Integer facilityId;
   private String name;
@@ -21,6 +23,19 @@ public class MedicalFacility {
 
   public String getName() {
     return name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MedicalFacility that = (MedicalFacility) o;
+    return facilityId.equals(that.facilityId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(facilityId);
   }
 
   public void setName(String name) {

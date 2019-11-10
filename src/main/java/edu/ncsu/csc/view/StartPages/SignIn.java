@@ -28,6 +28,7 @@ public class SignIn {
       for (MedicalFacility f : facilities) {
         ids.add(f.getFacilityId());
       }
+      System.out.println("==================== SIGN IN ====================");
       int facilityId;
       while (true) {
         try {

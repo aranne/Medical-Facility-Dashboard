@@ -18,6 +18,7 @@ public class Home {
     String choice = "-1";
 
     while (!choice.equals("4") && !choice.equals("3") && !choice.equals("2") && !choice.equals("1")) {
+      System.out.println("==================== HOME ====================");
       System.out.println("1. Sign In");
       System.out.println("2. Sign Up(Patient)");
       System.out.println("3. Demo Queries");
