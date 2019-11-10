@@ -28,12 +28,10 @@ public class StaffDAOImp extends AbstractDAO implements StaffDAO {
     Staff staff = null;
     try {
       openConnection();
-      // TODO cannot find Staff
       preparedStatement = connection
               .prepareStatement("select * from STAFFS where last_name = ? and dob = ?");
       preparedStatement.setString(1, lastName);
       preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
-      System.out.println(new java.sql.Date(dob.getTime()));
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         staff = new Staff(
@@ -64,6 +62,19 @@ public class StaffDAOImp extends AbstractDAO implements StaffDAO {
 
   }
 
+  /** Get all depts a staff belongs to. **/
+  public List<ServiceDept> getAllDepts(Staff s) {
+    List<ServiceDept> secondaryDepts = getAllSecondaryDepts(s);
+    ServiceDept primaryDept = getPrimaryDept(s);
+    secondaryDepts.add(primaryDept);
+    return secondaryDepts;
+  }
+
+  public ServiceDept getPrimaryDept(Staff s) {
+    ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
+    return deptDao.getServiceDeptByCode(s.getPrimaryDeptCode());
+  }
+
   public List<ServiceDept> getAllSecondaryDepts(Staff s) {
     List<ServiceDept> depts = new ArrayList<>();
     List<String> codes = new ArrayList<>();
@@ -83,8 +94,8 @@ public class StaffDAOImp extends AbstractDAO implements StaffDAO {
       closeConnection();
     }
     /* Find all ServiceDept corresponding to code. */
+    ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
     for (String code : codes) {
-      ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
       ServiceDept dept = deptDao.getServiceDeptByCode(code);
       depts.add(dept);
     }

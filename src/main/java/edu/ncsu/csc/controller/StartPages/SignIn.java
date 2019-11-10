@@ -5,6 +5,7 @@ import edu.ncsu.csc.DAO.PatientDAOImp;
 import edu.ncsu.csc.DAO.StaffDAOImp;
 import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
+import edu.ncsu.csc.model.ServiceDept;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.view.PatientPages.Routing;
 
@@ -40,12 +41,28 @@ public class SignIn {
   public static void signInAsStaff(int facilityId, String lastName, Date dob) {
     StaffDAOImp staffDao = new StaffDAOImp();
     Staff staff = staffDao.getStaffByNameAndDob(lastName, dob);
+    /* Verify facilityId for this staff in primary and secondary serviceDepts. */
+    List<ServiceDept> depts = staffDao.getAllDepts(staff);
+    MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+    MedicalFacility facility = facilityDao.getFacilityById(facilityId);
+    List<ServiceDept> facilityDepts = facilityDao.getAllServiceDept(facility);
+    /* Staff's working depts must be in this facility's depts. */
+    boolean isInFacility = false;
+    for (ServiceDept d: depts) {
+      if (facilityDepts.contains(d)) {
+        isInFacility = true;
+        break;
+      }
+    }
     if (staff == null) {
       System.out.println("Sign in Incorrect, please enter again");
       Home.signIn();
+    } else if (!isInFacility) {
+      System.out.println("You are not working in this facility, please enter again");
+      Home.signIn();
     } else {
-      System.out.println(staff.isMedical());
-      System.out.println(staff.getDob());
+      System.out.println("Login successfully\n" + "Welcome to " + facility.getName());
+      // TODO routing to staff menu
     }
   }
 
