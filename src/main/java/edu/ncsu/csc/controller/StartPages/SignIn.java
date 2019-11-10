@@ -15,14 +15,10 @@ public class SignIn {
   public static void signInAsPatient(int facilityId, String lastName, Date dob, String city) {
     PatientDAOImp patientDao = new PatientDAOImp();
     Patient p = patientDao.getPatientByNameAndDob(lastName, dob);
-    if (p == null) {
+    if (p == null || !p.getAddrCity().equals(city)) {
       System.out.println("Sign in Incorrect, please enter again");
       Home.signIn();
     } else {
-      if (!p.getAddrCity().equals(city)) {
-        p.setAddrCity(city);
-        patientDao.updatePatient(p);
-      }
       /* Add facility to relation table only if patient goes to this facility for the first time. */
       MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
       MedicalFacility f = facilityDao.getFacilityById(facilityId);
