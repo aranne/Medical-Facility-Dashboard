@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Staff {
     private int employeeId;
-    private String name;
+    private String firstName;
+    private String lastName;
     private boolean isMedical;
     private Date dob;
     private Date hireDate;
@@ -16,13 +17,15 @@ public class Staff {
     public Staff() {
     }
 
-    public Staff(int employeeId, String name, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode) {
+    public Staff(int employeeId, String firstName, String lastName, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode, List<ServiceDept> secondaryDepts) {
         this.employeeId = employeeId;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.isMedical = isMedical;
         this.dob = dob;
         this.hireDate = hireDate;
         this.primaryDeptCode = primaryDeptCode;
+        this.secondaryDepts = secondaryDepts;
     }
 
     public int getEmployeeId() {
@@ -33,12 +36,20 @@ public class Staff {
         this.employeeId = employeeId;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public boolean isMedical() {

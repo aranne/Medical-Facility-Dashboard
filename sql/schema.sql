@@ -283,7 +283,8 @@ create table STAFFS
     EMPLOYEE_ID NUMBER         not null
         constraint STAFF_PK
             primary key,
-    NAME        VARCHAR2(255)  not null,
+    FIRST_NAME VARCHAR2(255)  not null,
+    LAST_NAME VARCHAR2(255)  not null,
     IS_MEDICAL  CHAR default 1 not null,
     DOB         DATE,
     HIRE_DATE    DATE,
