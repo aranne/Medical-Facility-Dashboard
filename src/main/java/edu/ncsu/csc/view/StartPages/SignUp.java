@@ -20,8 +20,7 @@ public class SignUp {
     String choice = "-1" ;
     PatientDAOImp patientDAO = new PatientDAOImp();
 
-    while (!choice.equals("2")) {
-
+    while (!choice.equals("2") && !choice.equals("1")) {
       System.out.println("A. First Name");
       String firstName = input.next();
 

@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import static edu.ncsu.csc.controller.StartPages.SignIn.signInAsPatient;
-import static edu.ncsu.csc.controller.StartPages.SignIn.signInAsStaff;
+import static edu.ncsu.csc.controller.StartPages.SignIn.*;
 
 public class SignIn {
   public static void display() {
@@ -23,7 +22,7 @@ public class SignIn {
     List<MedicalFacility> facilities;
     List<Integer> ids = new ArrayList<>();
 
-    while (!choice.equals("2")) {
+    while (!choice.equals("2") && !choice.equals("1")) {
       MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
       facilities = facilityDao.getAllFacility();
       for (MedicalFacility f : facilities) {
@@ -87,12 +86,14 @@ public class SignIn {
 
       switch (Integer.parseInt(choice)) {
         case 1:
-          if (isPatient.equals("y"))
-            signInAsPatient();
-          if (isPatient.equals("n"))
+          if (isPatient.equals("y")) {
+            signInAsPatient(facilityId, lastName, dob, city);
+          } else {
             signInAsStaff();
+          }
           break;
         case 2:
+          goBack();
           break;
       }
     }
