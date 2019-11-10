@@ -150,8 +150,8 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
       closeConnection();
     }
     /* Find all MedicalFacility corresponding to id. */
+    MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
     for (int id : ids) {
-      MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
       MedicalFacility f = facilityDao.getFacilityById(id);
       facilities.add(f);
     }

@@ -1,6 +1,7 @@
 package edu.ncsu.csc.DAO;
 
 import edu.ncsu.csc.model.MedicalFacility;
+import edu.ncsu.csc.model.ServiceDept;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,5 +71,32 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilit
   @Override
   public void deleteFacility(MedicalFacility m) {
 
+  }
+
+  public List<ServiceDept> getAllServiceDept(MedicalFacility f) {
+    List<ServiceDept> depts = new ArrayList<>();
+    List<String> codes = new ArrayList<>();
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select dept_code from facility_has_dept where facility_id = ?");
+      preparedStatement.setInt(1, f.getFacilityId());
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        codes.add(
+                resultSet.getString("dept_code")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    /* Find all depts corresponding to dept_code. */
+    ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
+    for (String code : codes) {
+      depts.add(deptDao.getServiceDeptByCode(code));
+    }
+    return depts;
   }
 }
