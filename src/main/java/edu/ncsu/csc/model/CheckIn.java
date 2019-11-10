@@ -8,17 +8,19 @@ public class CheckIn {
     private Date dob;
     private Date startTime;
     private Date endTime;
+    private Integer facilityId;
 
     public CheckIn(){
 
     }
 
-    public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime) {
+    public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime, Integer facilityId) {
         this.id = id;
         this.lastName = lastName;
         this.dob = dob;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.facilityId = facilityId;
     }
 
     public Integer getId() {
@@ -59,5 +61,13 @@ public class CheckIn {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Integer getFacilityId() {
+        return facilityId;
+    }
+
+    public void setFacilityId(Integer facilityId) {
+        this.facilityId = facilityId;
     }
 }
