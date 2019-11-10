@@ -12,7 +12,7 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilit
   }
 
   @Override
-  public List getAllFacility() {
+  public List<MedicalFacility> getAllFacility() {
     List<MedicalFacility> facilities = new ArrayList<>();
     try {
       openConnection();

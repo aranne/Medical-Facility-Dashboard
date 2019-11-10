@@ -9,7 +9,7 @@ import java.util.List;
 public interface PatientDAO {
     void addPatient(Patient p);
 
-    List getAllPatient();
+    List<Patient> getAllPatient();
 
     Patient getPatientById(int id);
 

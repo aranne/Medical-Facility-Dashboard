@@ -7,7 +7,7 @@ import java.util.List;
 public interface MedicalFacilityDAO {
   void addFacility(MedicalFacility f);
 
-  List getAllFacility();
+  List<MedicalFacility> getAllFacility();
 
   MedicalFacility getFacilityById(int id);
 

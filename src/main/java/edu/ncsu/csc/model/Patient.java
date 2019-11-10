@@ -135,7 +135,7 @@ public class Patient {
         this.treatmentDate = treatmentDate;
     }
 
-    public void addFicility(MedicalFacility f) {
+    public void addFacility(MedicalFacility f) {
         facilities.add(f);
     }
 

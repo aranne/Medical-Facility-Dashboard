@@ -20,6 +20,7 @@ public class SignIn {
         patientDao.updatePatient(p);
       }
       System.out.println("Login successfully");
+      // TODO go into Patient routing menu.
     }
   }
 
