@@ -38,7 +38,35 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
   }
 
   public Patient getPatientById(int id) {
-    return null;
+    Patient patient = null;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from PATIENTS where patient_id = ?");
+      preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        patient = new Patient(
+                resultSet.getInt("patient_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getDate("dob"),
+                resultSet.getString("phone"),
+                resultSet.getString("address_country"),
+                resultSet.getString("address_state"),
+                resultSet.getString("address_city"),
+                resultSet.getString("address_street"),
+                resultSet.getInt("address_zip"),
+                resultSet.getString("priority_status"),
+                resultSet.getDate("treatment_time")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return patient;
   }
 
   public Patient getPatientByNameAndDob(String lastName, Date dob) {
