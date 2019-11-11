@@ -41,6 +41,7 @@ public class SignUp {
             System.out.println("Invalid Format for Date of Birth");
           }
         }
+        /* User has not signed up before. */
         if (patientDAO.getPatientByNameAndDob(lastName, dob) == null) {
           break;
         } else {
