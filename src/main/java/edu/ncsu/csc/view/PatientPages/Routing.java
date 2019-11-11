@@ -32,6 +32,7 @@ public class Routing {
     }
     switch (Integer.parseInt(choice)) {
       case 1:
+        /* Display a list of facilities. */
         int facilityId = Routing.displayFacilities(input);
         CheckInPage.checkIn(patientId, facilityId);
         break;

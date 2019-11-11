@@ -9,9 +9,9 @@ public interface CheckInDAO {
 
   List<CheckIn> getAllCheckIn();
 
-  CheckIn getCheckInByPatientId();
+  List<CheckIn> getAllCheckInByPatientIdAndFacilityId(int patientId, int facilityId);
 
-  CheckIn getCheckInByFacilityId();
+  List<CheckIn> getAllCheckInByFacilityId(int facilityId);
 
   void updateCheckIn(CheckIn c);
 
