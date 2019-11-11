@@ -73,6 +73,7 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilit
 
   }
 
+  @Override
   public List<ServiceDept> getAllServiceDept(MedicalFacility f) {
     List<ServiceDept> depts = new ArrayList<>();
     List<String> codes = new ArrayList<>();

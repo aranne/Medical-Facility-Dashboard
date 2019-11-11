@@ -31,7 +31,7 @@ public class SignIn {
         patientDao.addFacility(p);
         System.out.println("Login successfully\n" + "Thanks for choosing " + f.getName());
       } else {
-        System.out.println("Login successfully\n" + "Welcome back to " + f.getName());
+        System.out.println("Login successfully\n" + "Welcome to " + f.getName());
       }
       /* Display routing menu. */
       Routing.display(p.getId());

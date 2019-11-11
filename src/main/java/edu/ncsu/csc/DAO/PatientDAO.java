@@ -1,5 +1,6 @@
 package edu.ncsu.csc.DAO;
 
+import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 
 import java.util.Date;
@@ -20,4 +21,5 @@ public interface PatientDAO {
 
     void addFacility(Patient p);
 
+    List<MedicalFacility> getAllFacility(Patient p);
 }
