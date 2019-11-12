@@ -19,6 +19,11 @@ public class ProcessPatient {
         while (running) {
             CheckInManager staffp=new CheckInManager();
             List<String> checkins= staffp.getChechinChoices();//获取已经check_in的病人列表
+            if(checkins.size()<=0)
+            {
+                intertool.show("the patient checklist is empty!");
+                break;
+            }
             intertool.show(checkins);//获取用户选择的记录
             intertool.show("please select a checkin record:");
             staffp.setChoosedCheckin(intertool.getChoice(checkins.size()));

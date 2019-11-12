@@ -1,86 +1,90 @@
 package edu.ncsu.csc.DAO;
 
 import edu.ncsu.csc.model.CheckIn;
-import edu.ncsu.csc.model.Patient;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckInDAOImp extends AbstractDAO implements CheckInDAO {
+public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
+
   @Override
-  public void addCheckIn(CheckIn c) {
+  public boolean addOneValue(CheckIn p) {
+    boolean rest=true;
     try {
       openConnection();
       preparedStatement = connection
-              .prepareStatement("insert into check_ins (last_name, dob, start_time, facility_id)" +
-                      " values (?, ?, ?, ?)");
-      preparedStatement.setString(1, c.getLastName());
-      preparedStatement.setDate(2, new java.sql.Date(c.getDob().getTime()));
-      preparedStatement.setDate(3, new java.sql.Date(System.currentTimeMillis())); // Get current System Time
-      preparedStatement.setInt(4, c.getFacilityId());
+              .prepareStatement("INSERT INTO check_ins (LAST_NAME, DOB, START_TIME, END_TIME,FACILITY_ID) values (?, ?, ?, ?,?)");
+      preparedStatement.setString(1, p.getLastName());
+      preparedStatement.setDate(2, (Date) p.getDob());
+      preparedStatement.setDate(3, (Date) p.getStartTime());
+      preparedStatement.setDate(4, (Date) p.getEndTime());
+      preparedStatement.setInt(5, p.getFacilityId());
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
+      rest=false;
     } finally {
       closeConnection();
     }
+    return rest;
   }
 
   @Override
-  public List<CheckIn> getAllCheckIn() {
-    return null;
-  }
-
-  @Override
-  public List<CheckIn> getAllCheckInByPatientIdAndFacilityId(int patientId, int facilityId) {
-    PatientDAOImp patientDao = new PatientDAOImp();
-    Patient p = patientDao.getPatientById(patientId);
-    List<CheckIn> checkIns = new ArrayList<>();
+  public List<CheckIn> getAllValues() {
+    List<CheckIn> rules = null;
     try {
+      rules = new ArrayList<CheckIn>(0);
       openConnection();
       preparedStatement = connection
-              .prepareStatement("select * from CHECK_INS where last_name = ? and dob = ? and facility_id = ?");
-      preparedStatement.setString(1, p.getLastName());
-      preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setInt(3, facilityId);
+              .prepareStatement("SELECT * FROM check_ins");
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        CheckIn checkIn = new CheckIn(
+        rules.add(new CheckIn(
                 resultSet.getInt("id"),
                 resultSet.getString("last_name"),
                 resultSet.getDate("dob"),
                 resultSet.getDate("start_time"),
                 resultSet.getDate("end_time"),
                 resultSet.getInt("facility_id")
-        );
-        checkIns.add(checkIn);
+        ));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       closeConnection();
     }
-    return checkIns;
+    return rules;
   }
 
   @Override
-  public List<CheckIn> getAllCheckInByFacilityId(int facilityId) {
+  public List<CheckIn> getBatchByQuery(String queryStr) {
     return null;
   }
 
   @Override
-  public void updateCheckIn(CheckIn c) {
-
+  public CheckIn getOneByQuery(String queryStr) {
+    return null;
   }
 
   @Override
-  public void deleteCheckIn(CheckIn c) {
-
+  public CheckIn getOneById(int id) {
+    return null;
   }
 
   @Override
-  public void setCheckInEndTime(CheckIn c) {
+  public CheckIn getOneById(String id) {
+    return null;
+  }
 
+  @Override
+  public boolean updateValue(CheckIn p) {
+    return false;
+  }
+
+  @Override
+  public boolean deleteRecord(CheckIn p) {
+    return false;
   }
 }
