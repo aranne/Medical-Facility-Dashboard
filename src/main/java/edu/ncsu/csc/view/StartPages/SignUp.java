@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import static edu.ncsu.csc.controller.StartPages.SignUp.goBack;
 import static edu.ncsu.csc.controller.StartPages.SignUp.signUp;
 
 public class SignUp {
@@ -19,8 +20,8 @@ public class SignUp {
     String choice = "-1" ;
     PatientDAOImp patientDAO = new PatientDAOImp();
 
-    while (!choice.equals("2")) {
-
+    while (!choice.equals("2") && !choice.equals("1")) {
+      System.out.println("==================== SIGN UP ====================");
       System.out.println("A. First Name");
       String firstName = input.next();
 
@@ -40,6 +41,7 @@ public class SignUp {
             System.out.println("Invalid Format for Date of Birth");
           }
         }
+        /* User has not signed up before. */
         if (patientDAO.getPatientByNameAndDob(lastName, dob) == null) {
           break;
         } else {
@@ -88,7 +90,7 @@ public class SignUp {
           signUp(firstName, lastName, dob, addrStreet, addrCity, addrState, addrCountry, addrZip, phone);
           break;
         case 2:
-          display();
+          goBack();
           break;
       }
     }

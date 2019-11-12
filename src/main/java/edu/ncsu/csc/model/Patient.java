@@ -18,6 +18,7 @@ public class Patient {
     private String priorityStatus;
     private Date treatmentDate;
 
+    /* a patient has many facilities */
     private List<MedicalFacility> facilities;
 
     public Patient() {
@@ -135,7 +136,7 @@ public class Patient {
         this.treatmentDate = treatmentDate;
     }
 
-    public void addFicility(MedicalFacility f) {
+    public void addFacility(MedicalFacility f) {
         facilities.add(f);
     }
 

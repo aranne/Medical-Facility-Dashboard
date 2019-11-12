@@ -1,5 +1,8 @@
 package edu.ncsu.csc.model;
 
+import java.util.List;
+import java.util.Objects;
+
 public class MedicalFacility {
   private Integer facilityId;
   private String name;
@@ -7,10 +10,19 @@ public class MedicalFacility {
   private String address;
   private String capacity;
 
+  private List<ServiceDept> depts;
+
   public MedicalFacility(){
-
-
   }
+
+  public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
+    this.facilityId = facilityId;
+    this.name = name;
+    this.classification = classification;
+    this.address = address;
+    this.capacity = capacity;
+  }
+
   public Integer getFacilityId() {
     return facilityId;
   }
@@ -21,6 +33,19 @@ public class MedicalFacility {
 
   public String getName() {
     return name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    MedicalFacility that = (MedicalFacility) o;
+    return facilityId.equals(that.facilityId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(facilityId);
   }
 
   public void setName(String name) {
@@ -51,11 +76,11 @@ public class MedicalFacility {
     this.capacity = capacity;
   }
 
-  public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
-    this.facilityId = facilityId;
-    this.name = name;
-    this.classification = classification;
-    this.address = address;
-    this.capacity = capacity;
+  public void addServiceDept(ServiceDept d) {
+    depts.add(d);
+  }
+
+  public List<ServiceDept> getAllServiceDept() {
+    return depts;
   }
 }

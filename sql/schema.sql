@@ -96,8 +96,11 @@ create table check_ins
     dob date not null,
     start_time date not null,
     end_time date,
+    facility_id number not null,
+        foreign key (facility_id) references MEDICAL_FACILITIES
+            on delete cascade,
     constraint check_ins_pk
-        primary key (last_name, dob, start_time),
+        primary key (last_name, dob, start_time, facility_id),
     constraint PHF_NAME_DOB_fk
         foreign key (last_name, dob) references PATIENTS
             on delete cascade
@@ -212,7 +215,7 @@ create table service_depts
         constraint medical_depts_pk
             primary key,
     name varchar2(255) not null,
-    isMedical char(1)
+    is_Medical char(1)
 )
 /
 
@@ -280,26 +283,15 @@ create table STAFFS
     EMPLOYEE_ID NUMBER         not null
         constraint STAFF_PK
             primary key,
-    NAME        VARCHAR2(255)  not null,
+    FIRST_NAME VARCHAR2(255)  not null,
+    LAST_NAME VARCHAR2(255)  not null,
     IS_MEDICAL  CHAR default 1 not null,
     DOB         DATE,
-    HIREDATE    DATE
-)
-/
-
--- 17.
-create table staff_prim_works_dept
-(
-    employee_id number not null
-        constraint SWD_PRIM_EMPLOYEE_ID_fk
-            references STAFFS
-                on delete cascade,
-    dept_code varchar2(255) not null
-        constraint SWD_PRIM_DEPT_CODE_fk
+    HIRE_DATE    DATE,
+    primary_dept_code varchar2(255) not null
+        constraint FHD_STAFFS_fk
             references SERVICE_DEPTS
-                on delete cascade,
-    constraint staff_prim_works_dept_pk
-        primary key (employee_id, dept_code)
+                on delete cascade
 )
 /
 
@@ -334,35 +326,19 @@ create table staff_directs_dept
 )
 /
 
--- 19.
-create table facility_has_staff
-(
-    employee_id number not null
-        constraint FHS_EMPLOYEE_ID_fk
-            references STAFFS
-                on delete cascade,
-    facility_id number not null
-        constraint FHS_FACILITY_ID_fk
-            references MEDICAL_FACILITIES
-                on delete cascade,
-    constraint facility_has_staff_pk
-        primary key (employee_id, facility_id)
-)
-/
-
 -- 20.
 create table vitals
 (
     id number not null,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     dob date not null,
     temperature float not null,
     blood_pressure_systolic float not null,
     blood_pressure_diastolic float not null,
     constraint vitals_pk
-        primary key (lastname, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
+        primary key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
     constraint V_NAME_DOB_fk
-        foreign key (lastname, dob) references PATIENTS
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade
 )
 /
@@ -388,15 +364,15 @@ create table staff_records_vital
         constraint SRV_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     dob date not null,
     temperature float not null,
     blood_pressure_systolic float not null,
     blood_pressure_diastolic float not null,
     constraint staff_records_vital_pk
-        primary key (employee_id, lastname, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
+        primary key (employee_id, last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
     constraint SRV_VITALS_fk
-        foreign key (lastname, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic) references VITALS
+        foreign key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic) references VITALS
             on delete cascade
 )
 /
@@ -407,7 +383,7 @@ create table reports
     id number not null,
     time date not null,
     dob date not null,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     discharge_status varchar2(255) not null,
     treatment varchar2(255) not null,
     facility_id number not null
@@ -419,9 +395,9 @@ create table reports
             references STAFFS
                 on delete cascade,
     constraint reports_pk
-        primary key (time, dob, lastname),
+        primary key (time, dob, last_name),
     constraint R_DOB_NAME_fk
-        foreign key (lastname, dob) references PATIENTS
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade
 )
 /
@@ -449,11 +425,11 @@ create table staff_processes_report
                 on delete cascade,
     time date not null,
     dob date not null,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     constraint staff_processes_report_pk
-        primary key (employee_id, time, dob, lastname),
+        primary key (employee_id, time, dob, last_name),
     constraint SPR_REPOT_fk
-        foreign key (time, dob, lastname) references REPORTS
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /
@@ -466,11 +442,11 @@ create table negative_experiences
     description varchar2(255) not null,
     time date not null,
     dob date not null,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     constraint negative_experiences_pk
-        primary key (nega_code, description, time, dob, lastname),
+        primary key (nega_code, description, time, dob, last_name),
     constraint NE_REPORT_fk
-        foreign key (time, dob, lastname) references REPORTS
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /
@@ -500,11 +476,11 @@ create table reasons
     service_code varchar2(255) not null,
     time date not null,
     dob date not null,
-    lastname varchar2(255) not null,
+    last_name varchar2(255) not null,
     constraint reasons_pk
-        primary key (reason_code, description, service_code, time, dob, lastname),
+        primary key (reason_code, description, service_code, time, dob, last_name),
     constraint R_REPORT_fk
-        foreign key (time, dob, lastname) references REPORTS
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /

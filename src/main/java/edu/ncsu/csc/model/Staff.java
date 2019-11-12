@@ -1,23 +1,32 @@
 package edu.ncsu.csc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Staff {
     private int employeeId;
-    private String name;
+    private String firstName;
+    private String lastName;
     private boolean isMedical;
     private Date dob;
     private Date hireDate;
+    private String primaryDeptCode;
+
+    private List<ServiceDept> secondaryDepts;
 
     public Staff() {
     }
 
-    public Staff(int employeeId, String name, boolean isMedical, Date dob, Date hireDate) {
+    public Staff(int employeeId, String firstName, String lastName, boolean isMedical, Date dob, Date hireDate, String primaryDeptCode) {
         this.employeeId = employeeId;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.isMedical = isMedical;
         this.dob = dob;
         this.hireDate = hireDate;
+        this.primaryDeptCode = primaryDeptCode;
+        secondaryDepts = new ArrayList<>();
     }
 
     public int getEmployeeId() {
@@ -28,12 +37,20 @@ public class Staff {
         this.employeeId = employeeId;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public boolean isMedical() {
@@ -58,5 +75,21 @@ public class Staff {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public String getPrimaryDeptCode() {
+        return primaryDeptCode;
+    }
+
+    public void setPrimaryDeptCode(String primaryDeptCode) {
+        this.primaryDeptCode = primaryDeptCode;
+    }
+
+    public void addSecondaryDept(ServiceDept d) {
+        secondaryDepts.add(d);
+    }
+
+    public List<ServiceDept> getSecondaryDepts() {
+        return secondaryDepts;
     }
 }
