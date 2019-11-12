@@ -2,8 +2,10 @@ package edu.ncsu.csc.DAO;
 
 import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
+import edu.ncsu.csc.model.Symptom;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

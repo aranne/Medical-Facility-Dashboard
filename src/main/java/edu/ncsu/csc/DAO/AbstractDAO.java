@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 public class AbstractDAO {
   private static final String URL = "jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01";
   private static final String USERNAME = "wfu4";
-  private static final String PASSWORD = "fwroyf0312";
+  private static final String PASSWORD = "200315233";
   Connection connection;
   PreparedStatement preparedStatement;
   ResultSet resultSet;

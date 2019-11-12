@@ -1,30 +1,39 @@
 package edu.ncsu.csc.model;
 
 public class Symptom {
-    private String name;
-    private String symCode;
+  private String name;
+  private String symCode;
 
-    public Symptom() {
-    }
+  public Symptom() {
+  }
 
-    public Symptom(String name, String symCode) {
-        this.name = name;
-        this.symCode = symCode;
-    }
+  public Symptom(String name, String symCode) {
+    this.name = name;
+    this.symCode = symCode;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getSymCode() {
-        return symCode;
-    }
+  public String getSymCode() {
+    return symCode;
+  }
 
-    public void setSymCode(String symCode) {
-        this.symCode = symCode;
-    }
+  public void setSymCode(String symCode) {
+    this.symCode = symCode;
+  }
+
+  @Override
+  public String toString() {
+    return "Symptom{" +
+        "name='" + name + '\'' +
+        ", symCode='" + symCode + '\'' +
+        '}';
+  }
+
 }
