@@ -5,8 +5,7 @@ import edu.ncsu.csc.model.Symptom;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PatientPagesDaoImpl extends AbstractDAO implements PatientPagesDao {
-
+public class SymptomDAOImpl extends AbstractDAO implements SymptomDAO {
   @Override
   public ArrayList<Symptom> getAllSymptoms() {
     ArrayList<Symptom> symptoms = new ArrayList<Symptom>();

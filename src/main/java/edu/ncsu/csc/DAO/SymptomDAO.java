@@ -4,6 +4,6 @@ import edu.ncsu.csc.model.Symptom;
 
 import java.util.ArrayList;
 
-public interface PatientPagesDao {
+public interface SymptomDAO {
   ArrayList<Symptom> getAllSymptoms();
 }

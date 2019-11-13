@@ -39,9 +39,10 @@ public class InteractiveTool {
         int index = -1;
         while (true) {
             try {
-                index = Integer.parseInt(getStringFromInput(choicePrompt));
+                String choice = scanner.next();
+                index = Integer.parseInt(choice);
             } catch (Exception e) {
-                System.out.println("Invalid Menue id");
+                System.out.println("Invalid Menue idsdf");
                 continue;
             }
             if (index < 1 || index > maxv) {
