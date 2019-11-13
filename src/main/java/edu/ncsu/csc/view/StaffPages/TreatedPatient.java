@@ -18,6 +18,12 @@ public class TreatedPatient {
         while (running) {
             TreatedPatients staffp=new TreatedPatients();
             List<String> checkins= staffp.getChechinChoices();//get the "treated patient list"
+            if(checkins.size()<=0)
+            {
+                intertool.show("the patient checklist is empty!");
+                running = false;
+                continue;
+            }
             intertool.show(checkins);//获取用户选择的记录
             intertool.show("please select a checkin record:");
             //TODO

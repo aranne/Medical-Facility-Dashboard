@@ -42,7 +42,7 @@ public class InteractiveTool {
                 String choice = scanner.next();
                 index = Integer.parseInt(choice);
             } catch (Exception e) {
-                System.out.println("Invalid Menue idsdf");
+                System.out.println("Invalid Menue id");
                 continue;
             }
             if (index < 1 || index > maxv) {

@@ -1,12 +1,12 @@
 package edu.ncsu.csc.controller.StaffPages;
 
 import edu.ncsu.csc.DAO.CheckInDAOImp;
+import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.CheckIn;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.lang.Exception;
 public class CheckInManager {
     List<CheckIn> checkIns;
 
@@ -15,8 +15,8 @@ public class CheckInManager {
         reloadCheckinList();
     }
     public void reloadCheckinList(){
-        CheckInDAOImp checkDao=new CheckInDAOImp();
-        checkIns=checkDao.getAllCheckIn();//c.getAllValues();
+        TemplateDAO checkDao=new CheckInDAOImp();
+        checkIns=checkDao.getAllValues();
     }
     public  List<String> getChechinChoices(){
         List<String> choices = new ArrayList<String>(checkIns.size());
@@ -28,12 +28,12 @@ public class CheckInManager {
     }
     public void setChoosedCheckin(int index){
         if(index<0 || index>=checkIns.size())
-            throw new ValueException("invalidate checkin idnex");
+            throw new NumberFormatException("invalidate checkin idnex");
         checkIn=checkIns.get(index);
     }
     public CheckIn getCheckIn() {
         if(null==checkIn)
-            throw new ValueException("must choose a checkIn before entering a vital!!");
+            throw new NullPointerException("must choose a checkIn before entering a vital!!");
         return checkIn;
     }
 }
