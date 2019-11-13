@@ -13,7 +13,7 @@ import static edu.ncsu.csc.controller.PatientPages.CheckIn.*;
 public class CheckIn {
   public static void display(int patientId) {
     List<String> menueStrs = new ArrayList<String>(0);
-    ArrayList<Symptom> symptomsList = getAllSymptoms();
+    List<Symptom> symptomsList = getAllSymptoms();
     ArrayList<Symptom> symptomsToBeSaved = new ArrayList<Symptom>();
     Boolean running = true;
     InteractiveTool intertool = new InteractiveTool();

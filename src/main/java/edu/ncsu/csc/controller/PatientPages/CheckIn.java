@@ -1,15 +1,16 @@
 package edu.ncsu.csc.controller.PatientPages;
 
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAO;
 import edu.ncsu.csc.model.Symptom;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CheckIn {
 
-  public static ArrayList<Symptom> getAllSymptoms() {
-    SymptomDAOImpl patientPagesDao = new SymptomDAOImpl();
-    ArrayList<Symptom> symptoms = patientPagesDao.getAllSymptoms();
+  public static List<Symptom> getAllSymptoms() {
+    SymptomDAO patientPagesDao = new SymptomDAO();
+    List<Symptom> symptoms = patientPagesDao.getAllValues();
     return symptoms;
   }
 

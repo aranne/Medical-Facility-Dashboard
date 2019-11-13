@@ -34,7 +34,8 @@ public class Routing {
       case 1:
         /* Display a list of facilities. */
         int facilityId = Routing.displayFacilities(input);
-        CheckInPage.checkIn(patientId, facilityId);
+//        FIXME
+//        CheckInPage.checkIn(patientId, facilityId);
         break;
       case 2:
         // TODO go to patient check-out acknowledgement controller
