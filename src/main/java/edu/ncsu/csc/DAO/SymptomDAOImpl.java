@@ -31,4 +31,22 @@ public class SymptomDAOImpl extends AbstractDAO implements SymptomDAO {
     }
     return symptoms;
   }
+
+  public boolean addOneValue(Symptom p) {
+    boolean rest=true;
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("INSERT INTO SYMPTOMS (NAME, SYM_CODE) values (?, ?)");
+      preparedStatement.setString(1, p.getName());
+      preparedStatement.setString(2, p.getSymCode());
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      rest=false;
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
 }
