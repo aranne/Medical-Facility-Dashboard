@@ -1,5 +1,7 @@
-package edu.ncsu.csc.controller;
+package edu.ncsu.csc.controller.PatientPages;
 
+import edu.ncsu.csc.DAO.SeverityDAOImp;
+import edu.ncsu.csc.DAO.SymptomDAOImpl;
 import edu.ncsu.csc.model.BodyPart;
 import edu.ncsu.csc.model.Severity;
 import edu.ncsu.csc.model.Symptom;
@@ -7,17 +9,19 @@ import edu.ncsu.csc.model.Symptom;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SymptomMetaManager {
+public class CheckinSymptomMeta {
     private List<Severity> severities;
     private List<BodyPart> bodyparts;
     private Symptom symptom;
-    public SymptomMetaManager(Symptom symptom) {
+    public CheckinSymptomMeta(Symptom symptom) {
         this.symptom=symptom;
         reLoad();
     }
     public void reLoad(){
-//        severities=
-//                bodyparts=
+        SeverityDAOImp severdao=new SeverityDAOImp();
+        severities=severdao.getAllValues();
+        SymptomDAOImpl symps=new SymptomDAOImpl();
+        bodyparts=symps.getBodysbySymptom(symptom);
     }
     public List<String> getBodyMenu(){
         List<String> choices = new ArrayList<String>(0);

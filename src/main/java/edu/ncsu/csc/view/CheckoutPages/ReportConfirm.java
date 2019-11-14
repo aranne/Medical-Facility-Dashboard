@@ -1,5 +1,6 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
+import edu.ncsu.csc.controller.CheckoutPages.ReportManager;
 import edu.ncsu.csc.model.NagativeExperience;
 import edu.ncsu.csc.model.Reason;
 import edu.ncsu.csc.model.ReferralStatus;
@@ -11,17 +12,19 @@ import java.util.List;
 
 public class ReportConfirm extends BasePage implements PageView {
     private Report report;
-    public ReportConfirm(Report report) {
+    private ReportManager rpm;
+    public ReportConfirm(Report report,ReportManager rpm) {
         choicePrompt = "input your choice:";
         menueStrs.add("Confirm");
         menueStrs.add("Go Back");
         this.report=report;
+        this.rpm=rpm;
     }
 
     public  void display() {
          showReport();
          initPage();
-         if(getChoice(menueStrs)==1){
+         if(getChoice()==1){
 
          }else{
              show("the report may not be confirmed");

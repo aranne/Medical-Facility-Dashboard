@@ -1,45 +1,43 @@
 package edu.ncsu.csc.view.PatientPages;
 
-import edu.ncsu.csc.controller.StaffPages.SymptomsManager;
+import edu.ncsu.csc.controller.PatientPages.CheckinSymptoms;
+import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Symptom;
 import edu.ncsu.csc.model.SymptomMeta;
 import edu.ncsu.csc.view.BasePage;
-import edu.ncsu.csc.view.InteractiveTool;
 import edu.ncsu.csc.view.PageView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import static edu.ncsu.csc.controller.PatientPages.CheckIn.*;
 
 
-public class CheckIn extends BasePage implements PageView {
-    private Symptom symptom;
-    SymptomsManager symm;
+public class CheckInPage extends BasePage implements PageView {
+    private CheckIn checkIn;
+    CheckinSymptoms symm;
 
-    public CheckIn() {
+    public CheckInPage(CheckIn checkIn) {
         choicePrompt = "Enter Choice (1-3)";
         pageTitle = "==================== CHECKIN ====================";
-        symm = new SymptomsManager();
+        symm = new CheckinSymptoms();
         List<String> symptoms = symm.getSymtomsMenu();
         for (int i = 0; i < symptoms.size(); i++) {
             menueStrs.add(symptoms.get(i));
         }
         menueStrs.add("Other");
         menueStrs.add("Done");
-
+        this.checkIn=checkIn;
     }
 
     @Override
     public void display() {
         running = true;
         SymptomMeta smeta;
+        Symptom symptom=null;
         while (running) {
             initPage();
             while (running) {
                 initPage();
-                int index = getChoice(menueStrs);
+
+                int index = getChoice();
                 if (index <= (menueStrs.size() - 2)) {
                     symptom = symm.getSymtomsSelection(index);
                     PageView p = new InputSymptomMeta(symptom);

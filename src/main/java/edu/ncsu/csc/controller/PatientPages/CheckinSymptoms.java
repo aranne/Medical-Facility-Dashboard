@@ -1,4 +1,4 @@
-package edu.ncsu.csc.controller.StaffPages;
+package edu.ncsu.csc.controller.PatientPages;
 
 import edu.ncsu.csc.DAO.BodyPartDAO;
 import edu.ncsu.csc.DAO.SymptomDAOImpl;
@@ -9,10 +9,10 @@ import edu.ncsu.csc.model.Symptom;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SymptomsManager {
+public class CheckinSymptoms {
     List<Symptom> symptoms;
     List<BodyPart> bodyParts;
-    public SymptomsManager(){
+    public CheckinSymptoms(){
         reloadDatas();
     }
     public void reloadDatas(){
@@ -45,11 +45,11 @@ public class SymptomsManager {
         }
         return choices;
     }
-    public List<BodyPart> getSlected(String[] indexs){
+    public List<BodyPart> getSlected(List<Integer> indexs){
         List<BodyPart> seleteds=new ArrayList<BodyPart>(0);
-        for(int i=0;i<indexs.length;i++)
+        for(int i=0;i<indexs.size();i++)
         {
-            seleteds.add(bodyParts.get(Integer.parseInt(indexs[i])));
+            seleteds.add(bodyParts.get(indexs.get(i)));
         }
         return seleteds;
     }
@@ -61,21 +61,21 @@ public class SymptomsManager {
         }
         return choices;
     }
-    public  void addSymptom(String name,String code,String[] indexs){
+    public  void addSymptom(String name,String code,List<Integer> indexs){
 
-        if(null==indexs)
+        if(indexs.size()==0)
         {
             //symptom can associated all bodypart;
         }else{
             TemplateDAO m_dao=new SymptomDAOImpl();
-                Symptom s=new Symptom(name,code);
+            Symptom s=new Symptom(name,code);
                 List<BodyPart> bodies=getSlected(indexs);
-//                m_dao.addSymptomWithBody(s,bodies);
+                ((SymptomDAOImpl)m_dao).addSymptomWithBody(s,bodies);
         }
 
     }
 
-    public boolean submit(Symptom symptom, SymptomsManager symm) {
+    public boolean submit(Symptom symptom, CheckinSymptoms symm) {
         return false;
     }
 }

@@ -1,43 +1,60 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import edu.ncsu.csc.view.InteractiveTool;
+import edu.ncsu.csc.controller.StaffPages.StaffMenuController;
+import edu.ncsu.csc.model.CheckIn;
+import edu.ncsu.csc.model.Staff;
+import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
+import edu.ncsu.csc.view.PageView;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static edu.ncsu.csc.controller.StaffPages.StaffMenu.*;
-
-public class StaffMenu {
-
-    public static void display() {
-        List<String> menueStrs = new ArrayList<String>(0);
+public class StaffMenu extends BasePage implements PageView {
+    private Staff m_staff;
+    public StaffMenu(Staff m_staff) {
+        this.m_staff = m_staff;
+        pageTitle="======================STAFF MENU===============";
+        choicePrompt="select a job:";
         menueStrs.add("Checked-in patient list");
         menueStrs.add("Threated patient list");
         menueStrs.add("Add symptoms");
         menueStrs.add("Add severity scale");
         menueStrs.add("Add assessment rule");
         menueStrs.add("Go back");
-        Boolean running = true;
-        InteractiveTool intertool = new InteractiveTool();
+    }
+
+    @Override
+    public  void display() {
+        running = true;
         while (running) {
-            intertool.show(menueStrs);
-            intertool.show("input your choice:");
-            int index = intertool.getChoice(6);
+            initPage();
+            int index = getChoice();
+            CheckIn checkIn=null;
+            if(index==1||index==2)
+            {
+            	StaffMenuController checkmm=new StaffMenuController();
+                List<String> checkins= checkmm.getChechinChoices();//获取已经check_in的病人列表
+                if(checkins.size()<=0)
+                {
+                    show("the patient checklist is empty!");
+                    break;
+                }
+                checkIn=checkmm.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
+              }
             switch (index) {
                 case 1:
-                    processPatient();
+                    new ProcessPatient(m_staff).display();
                     break;
                 case 2:
-                    treatedPatient();
+                    new TreatedPatient(checkIn,m_staff).display();
                     break;
                 case 3:
-                    addSymptom();
+                    new AddSymptoms().display();
                     break;
                 case 4:
-                    addScale();
+                    new AddSeverityScale().display();
                     break;
                 case 5:
-                    addAssessment();
+                    new AddAssessmentRule();
                     break;
                 case 6:
                     running = false;

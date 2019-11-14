@@ -49,7 +49,38 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
     }
     return patient;
   }
-
+  public Patient patientExist(String lastName,Date dob) {
+    Patient patient = null;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from PATIENTS where last_name = ? and dob = ?");
+      preparedStatement.setString(1,lastName);
+      preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+      resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        patient = new Patient(
+                resultSet.getInt("patient_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getDate("dob"),
+                resultSet.getString("phone"),
+                resultSet.getString("address_country"),
+                resultSet.getString("address_state"),
+                resultSet.getString("address_city"),
+                resultSet.getString("address_street"),
+                resultSet.getInt("address_zip"),
+                resultSet.getString("priority_status"),
+                resultSet.getDate("treatment_time")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return patient;
+  }
 
   public void addFacility(Patient p) {
     try {
@@ -69,35 +100,44 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
     }
   }
 
-  public List<MedicalFacility> getAllFacility(Patient p) {
-    List<MedicalFacility> facilities = new ArrayList<>();
-//    /* Store all facility id selected from relationship table. */
-//    List<Integer> ids = new ArrayList<>();
-//    try {
-//      openConnection();
-//      preparedStatement = connection
-//              .prepareStatement("select facility_id from patient_has_facility where dob = ? and last_name = ?");
-//      preparedStatement.setDate(1, new java.sql.Date(p.getDob().getTime()));
-//      preparedStatement.setString(2, p.getLastName());
-//      resultSet = preparedStatement.executeQuery();
-//      while (resultSet.next()) {
-//        int facilityId = resultSet.getInt("facility_id");
-//        ids.add(facilityId);
-//      }
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    } finally {
-//      closeConnection();
-//    }
-//    /* Find all MedicalFacility corresponding to id. */
-//    MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
-//    for (int id : ids) {
-//      MedicalFacility f = facilityDao.getFacilityById(id);
-//      facilities.add(f);
-//    }
-    return facilities;
+  public boolean patientInFacility(int facilityId,Patient p) {
+    boolean rest=false;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from patient_has_facility where dob = ? and last_name = ? and facility_id= ?");
+      preparedStatement.setDate(1, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setInt(3,facilityId);
+      resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        rest=true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
   }
-
+  public boolean registerToFacility(int facilityId,Patient p) {
+    boolean rest=false;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("insert into patient_has_facility (facility_id, dob, last_name) values (?, ?, ?)");
+      preparedStatement.setInt(1, facilityId);
+      preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setString(3, p.getLastName());
+      preparedStatement.executeUpdate();
+      rest=true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
   @Override
   public boolean addOneValue(Patient p) {
     boolean rest=false;
@@ -219,5 +259,6 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
   public boolean deleteRecord(Patient p) {
     return false;
   }
+
 
 }

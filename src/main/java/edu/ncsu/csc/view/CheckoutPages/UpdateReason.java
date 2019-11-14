@@ -1,9 +1,9 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
-import edu.ncsu.csc.controller.ReportManager;
-import edu.ncsu.csc.controller.ServiceManager;
+import edu.ncsu.csc.controller.CheckoutPages.ReportManager;
 import edu.ncsu.csc.model.Reason;
 import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class UpdateReason extends BasePage implements PageView {
     public UpdateReason(Reason reason, ReportManager rpm) {
         this.reason = reason;
         this.rpm=rpm;
-        choicePrompt = "input your choice:";
+        choicePrompt = "choose a reason";
         menueStrs.add("service unavailable at time of visit");
         menueStrs.add("service not present at facility");
         menueStrs.add("non payment");
@@ -23,13 +23,10 @@ public class UpdateReason extends BasePage implements PageView {
     @Override
     public void display() {
         List<String> services=rpm.getServiceMenu();
-        show(services);
-        show("choose a service");
-        int index=getChoice(services);
+        int index= ComboBoxPage.getInstance().select(services,"choose a service");
         reason.setServiceCode(rpm.getServiceSelection(index).getServiceCode());
         show(menueStrs);
-        show("choose a reason");
-        index=getChoice(menueStrs);
+        initPage();
         reason.setReasonCode(String.valueOf(index));
         reason.setDescription(getEmailFromInput("input some disciption:"));
     }

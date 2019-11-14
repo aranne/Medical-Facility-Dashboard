@@ -1,49 +1,64 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import edu.ncsu.csc.controller.StaffPages.CheckInManager;
-import edu.ncsu.csc.controller.StaffPages.TreatPatient;
-import edu.ncsu.csc.view.InteractiveTool;
+import edu.ncsu.csc.controller.StaffPages.StaffMenuController;
+import edu.ncsu.csc.controller.StaffPages.StaffProcessPatient;
+import edu.ncsu.csc.model.CheckIn;
+import edu.ncsu.csc.model.Staff;
+import edu.ncsu.csc.model.Vital;
+import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
+import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
+import edu.ncsu.csc.view.PageView;
 
-public class ProcessPatient {
-
-    public static void display() {
-        List<String> menueStrs = new ArrayList<String>(0);
+public class ProcessPatient  extends BasePage implements PageView {
+    Staff m_staff;
+    public ProcessPatient(Staff staff) {
+        this.m_staff=staff;
+        pageTitle="===================ProcessPatient=========================";
+        choicePrompt="select a operation:";
         menueStrs.add("Enter Vitals");
         menueStrs.add("Treat patient");
         menueStrs.add("Go back");
-        Boolean running = true;
-        InteractiveTool intertool = new InteractiveTool();
+    }
+    public void display() {
+        running = true;
         while (running) {
-            CheckInManager staffp=new CheckInManager();
-            List<String> checkins= staffp.getChechinChoices();//获取已经check_in的病人列表
+            initPage();
+            StaffProcessPatient staffp=new StaffProcessPatient();
+            List<String> checkins= staffp.getChechinChoices();//��ȡ�Ѿ�check_in�Ĳ����б�
             if(checkins.size()<=0)
             {
-                intertool.show("the patient checklist is empty!");
+                show("the patient checklist is empty!");
                 break;
             }
-            intertool.show(checkins);//获取用户选择的记录
-            intertool.show("please select a checkin record:");
-            staffp.setChoosedCheckin(intertool.getChoice(checkins.size()));
-            intertool.show(menueStrs);
-            intertool.show("input your choice:");
-            int index = intertool.getChoice(3);
-            switch (index) {
+            CheckIn checkIn=staffp.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
+            switch (getChoice()) {
                 case 1:
                     //进入指标输入页面，并传入病人信息参数
-                    EnterVital.display(staffp.getCheckIn().getLastName(),staffp.getCheckIn().getDob());
+                	Vital vital=new Vital();
+                	vital.setLastName(checkIn.getLastName());
+                    vital.setDob(checkIn.getDob());
+                    new EnterVital(vital).display();
+                    if(staffp.enterVital(vital,checkIn,m_staff))
+                    {
+                        show("enter vital successfully!");
+                    }else{
+                        show("faild to enter a vital !!!");
+                    }
                     break;
                 case 2:
-                    if(TreatPatient.checkPrivilege(staffp.getCheckIn())){
-                        if(TreatPatient.treating(staffp.getCheckIn())){
-                            intertool.show("faild to traet patient !!!");
-                        }else{
-                            intertool.show("treat patient successfully!");
-                        }
+                	StaffProcessPatient stp=new StaffProcessPatient();
+                    if(stp.checkPrivilege(checkIn,m_staff)){
+                        new TreatedPatient(checkIn,m_staff).display();
+//                        if(stp.treating(checkIn)){
+//                            show("faild to traet patient !!!");
+//                        }else{
+//                            show("treat patient successfully!");
+//                        }
                     }else{
-                        intertool.show("you have no privilege for this operation!");
+                        show("you have no privilege for this operation!");
                     }
                     break;
                 case 3:

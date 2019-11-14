@@ -1,39 +1,46 @@
 package edu.ncsu.csc.controller.StaffPages;
 
+
 import edu.ncsu.csc.DAO.CheckInDAOImp;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.CheckIn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Exception;
-public class CheckInManager {
+// similarity with ChecKInManager,use this calss to manage the "Trated Patient list"
+public class StaffMenuController {
+
     List<CheckIn> checkIns;
 
-    public CheckIn checkIn=null;
-    public CheckInManager(){
+
+    public StaffMenuController(){
         reloadCheckinList();
     }
     public void reloadCheckinList(){
-        TemplateDAO checkDao=new CheckInDAOImp();
+        reload();
+    }
+    public void reload(){
+        TemplateDAO<CheckIn> checkDao=new CheckInDAOImp();
+        //应该获取treated patient lsit
         checkIns=checkDao.getAllValues();
     }
     public  List<String> getChechinChoices(){
-        List<String> choices = new ArrayList<String>(checkIns.size());
+        List<String> choices = new ArrayList<String>(0);
         for(int i=0;i<checkIns.size();i++)
         {
             choices.add(checkIns.get(i).getLastName());
         }
         return choices;
     }
-    public void setChoosedCheckin(int index){
+    public CheckIn getCheckInSelection(int index){
         if(index<0 || index>=checkIns.size())
-            throw new NumberFormatException("invalidate checkin idnex");
-        checkIn=checkIns.get(index);
+            throw new NullPointerException("invalidate checkin idnex");
+        return checkIns.get(index);
     }
-    public CheckIn getCheckIn() {
-        if(null==checkIn)
-            throw new NullPointerException("must choose a checkIn before entering a vital!!");
-        return checkIn;
+    
+    
+    public  boolean treating(CheckIn checkin){
+        return false;
     }
+
 }

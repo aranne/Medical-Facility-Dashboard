@@ -1,23 +1,20 @@
 package edu.ncsu.csc.view.StartPages;
 
-import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
 import edu.ncsu.csc.controller.StartPages.UserManager;
 import edu.ncsu.csc.model.MedicalFacility;
+import edu.ncsu.csc.model.Patient;
+import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
+import edu.ncsu.csc.view.PatientPages.PatientRoutingPage;
+import edu.ncsu.csc.view.StaffPages.StaffMenu;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-
-import static edu.ncsu.csc.controller.StartPages.SignIn.*;
 
 public class SignIn extends BasePage implements PageView {
     private MedicalFacility facility;
-    UserManager um;
+    private Staff m_staff;
+    private Patient m_patient;
     private boolean isPatient;
     public SignIn(MedicalFacility facility) {
         super();
@@ -26,23 +23,27 @@ public class SignIn extends BasePage implements PageView {
         pageTitle = "==================== SIGN IN ====================";
         choicePrompt = "input your choice:";
         this.facility = facility;
-        um=new UserManager();
+        m_staff=null;
+        m_patient=null;
         isPatient=false;
     }
     public void display() {
         running = true;
         while (running) {
             initPage();
-            switch (getChoice(menueStrs)) {
+            m_staff=null;
+            m_patient=null;
+            isPatient=false;
+            switch (getChoice()) {
                 case 1:
                     if (doSignIn()) {
                         if(isPatient)
                         {
                             show("Login successfully\n" + "Thanks for choosing " + facility.getName());
-                            //TODO
+                            new PatientRoutingPage(m_patient,facility).display();
                         }else{
                             show("Login successfully\n" );
-                            //TODO
+                            new StaffMenu(m_staff).display();
                         }
                         running = false;
                     } else {
@@ -57,16 +58,32 @@ public class SignIn extends BasePage implements PageView {
     }
 
     private boolean doSignIn() {
+        UserManager um=new UserManager();
         String lastName = getStringFromInput("B. Last Name");
         Date dob = getDateFromInput("C. Date of Birth in format mm/dd/yyyy");
         String addrCity = getStringFromInput("D. City of address");
         String tmp = getStringFromInput("E. Patient with Options(y/n?)");
         if (tmp.equals("y")) {
             isPatient=true;
-            return um.signInAsPatient(facility.getFacilityId(),lastName,dob,addrCity);
+            m_patient=um.signInAsPatient(facility.getFacilityId(),lastName,dob,addrCity);
+            if(m_patient==null)
+            {
+                return false;
+            }
+            else {
+                return true;
+            }
         } else {
             isPatient=false;
-            return um.signInAsStaff(facility.getFacilityId(),lastName,dob);
+            m_staff=um.signInAsStaff(facility.getFacilityId(),lastName,dob);
+            if(m_staff==null)
+            {
+                show("Sign in Incorrect or You are not working in this facility, please enter again");
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 }

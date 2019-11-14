@@ -1,12 +1,9 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
-import edu.ncsu.csc.controller.ServiceManager;
 import edu.ncsu.csc.model.NagativeExperience;
-import edu.ncsu.csc.model.Reason;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
-import java.util.List;
 
 public class UpdateNegative extends BasePage implements PageView {
     NagativeExperience nagexp;
@@ -20,7 +17,7 @@ public class UpdateNegative extends BasePage implements PageView {
     @Override
     public void display() {
         initPage();
-        int index=getChoice(menueStrs);
+        int index=getChoice();
         nagexp.setNagativeCode(String.valueOf(index));
         nagexp.setDiscription(getEmailFromInput("input some disciptions:"));
     }

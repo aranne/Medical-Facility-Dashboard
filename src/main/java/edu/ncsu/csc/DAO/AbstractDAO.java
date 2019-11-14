@@ -30,6 +30,7 @@ class AbstractDAO {
       } catch (SQLException e) {
         e.printStackTrace();
       }
+      resultSet=null;
     }
     if (preparedStatement != null) {
       try {

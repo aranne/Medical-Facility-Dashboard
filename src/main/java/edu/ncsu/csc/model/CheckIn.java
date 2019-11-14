@@ -70,4 +70,7 @@ public class CheckIn {
     public void setFacilityId(Integer facilityId) {
         this.facilityId = facilityId;
     }
+
+
+
 }
