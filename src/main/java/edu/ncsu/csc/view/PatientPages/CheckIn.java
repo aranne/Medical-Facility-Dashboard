@@ -1,50 +1,68 @@
 package edu.ncsu.csc.view.PatientPages;
 
+import edu.ncsu.csc.controller.StaffPages.SymptomsManager;
 import edu.ncsu.csc.model.Symptom;
+import edu.ncsu.csc.model.SymptomMeta;
+import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.InteractiveTool;
+import edu.ncsu.csc.view.PageView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import static edu.ncsu.csc.controller.PatientPages.CheckIn.getAllSymptoms;
-import static edu.ncsu.csc.controller.PatientPages.CheckIn.gotoSymptomMeta;
+import static edu.ncsu.csc.controller.PatientPages.CheckIn.*;
 
-public class CheckIn {
-  public static void display(int patientId) {
-    Scanner input = new Scanner(System.in);
-    String choice = "-1";
-    ArrayList<Symptom> symptoms = getAllSymptoms();
-    ArrayList<String> symptomsNumbers = new ArrayList<String>();
-    ArrayList<String> choices = new ArrayList<String>();
 
-//    display menu
-    int i = 0;
-    for (; i < symptoms.size(); i++) {
-//    symptom index = number - 1
-      choices.add(String.valueOf(i + 1));
-      symptomsNumbers.add(String.valueOf(i+1));
-      System.out.println(String.valueOf(i+1) + ". " + symptoms.get(i).getName());
-    }
-    choices.add(String.valueOf(i+1));
-    System.out.println(String.valueOf(i+1) + ". Other" );
-    choices.add(String.valueOf(i+2));
-    System.out.println(String.valueOf(i+2) + ". Done" );
+public class CheckIn extends BasePage implements PageView {
+    private Symptom symptom;
+    SymptomsManager symm;
 
-    choice = input.next();
-    while (!choices.contains(choice)) {
-      System.out.println("Invalid Input, please try again");
-      choice = input.next();
+    public CheckIn() {
+        choicePrompt = "Enter Choice (1-3)";
+        pageTitle = "==================== CHECKIN ====================";
+        symm = new SymptomsManager();
+        List<String> symptoms = symm.getSymtomsMenu();
+        for (int i = 0; i < symptoms.size(); i++) {
+            menueStrs.add(symptoms.get(i));
+        }
+        menueStrs.add("Other");
+        menueStrs.add("Done");
+
     }
 
-    if (symptomsNumbers.contains(choice)) {
-      gotoSymptomMeta();
+    @Override
+    public void display() {
+        running = true;
+        SymptomMeta smeta;
+        while (running) {
+            initPage();
+            while (running) {
+                initPage();
+                int index = getChoice(menueStrs);
+                if (index <= (menueStrs.size() - 2)) {
+                    symptom = symm.getSymtomsSelection(index);
+                    PageView p = new InputSymptomMeta(symptom);
+                    p.display();
+                    smeta = ((InputSymptomMeta) p).getSm();
+                } else if (index == menueStrs.size() - 1) {
+                    String smname = getStringFromInput("input a symptom :");
+                    symptom = new Symptom(smname, "unknow");
+                    PageView p = new InputSymptomMeta(symptom);
+                    p.display();
+                    smeta = ((InputSymptomMeta) p).getSm();
+                } else {
+                    if (symm.submit(symptom, symm)) {
+                        show("checkin successfuly.");
+                        running = false;
+                    } else {
+                        show("failed to checkin.");
+                        if (!getStringFromInput("retry(y/n)?").equals("y")) {
+                            running = false;
+                        }
+                    }
+                }
+            }
+        }
     }
-
-    if (choice.equals(String.valueOf(i+1))) {
-//      TODO: provide description for the symptom
-    }
-
-    if (choice.equals(String.valueOf(i+2))) {
-      return;
-    }
-  }
 }

@@ -1,9 +1,7 @@
 package edu.ncsu.csc.controller.CheckoutPages;
 
-import edu.ncsu.csc.view.CheckoutPages.*;
 import edu.ncsu.csc.view.CheckoutPages.UpdateDischarge;
 import edu.ncsu.csc.view.CheckoutPages.UpdateReferral;
-import edu.ncsu.csc.view.CheckoutPages.TreatDescription;
 import edu.ncsu.csc.view.CheckoutPages.UpdateNegative;
 import edu.ncsu.csc.view.CheckoutPages.ReportConfirm;
 

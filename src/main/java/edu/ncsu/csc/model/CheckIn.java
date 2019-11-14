@@ -10,7 +10,7 @@ public class CheckIn {
     private Date endTime;
     private Integer facilityId;
 
-    public CheckIn(){
+    public CheckIn() {
 
     }
 

@@ -5,13 +5,13 @@ import edu.ncsu.csc.model.ServiceDept;
 import java.util.List;
 
 public interface ServiceDeptDAO {
-  void addServiceDept(ServiceDept d);
+    void addServiceDept(ServiceDept d);
 
-  List<ServiceDept> getAllServiceDept();
+    List<ServiceDept> getAllServiceDept();
 
-  ServiceDept getServiceDeptByCode(String code);
+    ServiceDept getServiceDeptByCode(String code);
 
-  void updateServiceDept(ServiceDept d);
+    void updateServiceDept(ServiceDept d);
 
-  void deleteServiceDept(ServiceDept d);
+    void deleteServiceDept(ServiceDept d);
 }

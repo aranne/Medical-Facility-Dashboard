@@ -7,13 +7,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilityDAO {
+public class MedicalFacilityDAOImp extends AbstractDAO implements TemplateDAO<MedicalFacility> {
+
+
+//  public List<MedicalFacility> getAllServiceDept(MedicalFacility f) {
+//    List<ServiceDept> depts = new ArrayList<>();
+//    List<String> codes = new ArrayList<>();
+//    try {
+//      openConnection();
+//      preparedStatement = connection
+//              .prepareStatement("select dept_code from facility_has_dept where facility_id = ?");
+//      preparedStatement.setInt(1, f.getFacilityId());
+//      resultSet = preparedStatement.executeQuery();
+//      while (resultSet.next()) {
+//        codes.add(
+//                resultSet.getString("dept_code")
+//        );
+//      }
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    } finally {
+//      closeConnection();
+//    }
+//    /* Find all depts corresponding to dept_code. */
+//    ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
+//    for (String code : codes) {
+//      depts.add(deptDao.getServiceDeptByCode(code));
+//    }
+//    return depts;
+//  }
+
   @Override
-  public void addFacility(MedicalFacility f) {
+  public boolean addOneValue(MedicalFacility p) {
+    return false;
   }
 
   @Override
-  public List<MedicalFacility> getAllFacility() {
+  public List<MedicalFacility> getAllValues() {
     List<MedicalFacility> facilities = new ArrayList<>();
     try {
       openConnection();
@@ -38,7 +68,17 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilit
   }
 
   @Override
-  public MedicalFacility getFacilityById(int id) {
+  public List<MedicalFacility> getBatchByQuery(String queryStr) {
+    return null;
+  }
+
+  @Override
+  public MedicalFacility getOneByQuery(String queryStr) {
+    return null;
+  }
+
+  @Override
+  public MedicalFacility getOneById(int id) {
     MedicalFacility f = null;
     try {
       openConnection();
@@ -64,40 +104,17 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements MedicalFacilit
   }
 
   @Override
-  public void updateFacility(MedicalFacility m) {
-
+  public MedicalFacility getOneById(String id) {
+    return null;
   }
 
   @Override
-  public void deleteFacility(MedicalFacility m) {
-
+  public boolean updateValue(MedicalFacility p) {
+    return false;
   }
 
   @Override
-  public List<ServiceDept> getAllServiceDept(MedicalFacility f) {
-    List<ServiceDept> depts = new ArrayList<>();
-    List<String> codes = new ArrayList<>();
-    try {
-      openConnection();
-      preparedStatement = connection
-              .prepareStatement("select dept_code from facility_has_dept where facility_id = ?");
-      preparedStatement.setInt(1, f.getFacilityId());
-      resultSet = preparedStatement.executeQuery();
-      while (resultSet.next()) {
-        codes.add(
-                resultSet.getString("dept_code")
-        );
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      closeConnection();
-    }
-    /* Find all depts corresponding to dept_code. */
-    ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
-    for (String code : codes) {
-      depts.add(deptDao.getServiceDeptByCode(code));
-    }
-    return depts;
+  public boolean deleteRecord(MedicalFacility p) {
+    return false;
   }
 }

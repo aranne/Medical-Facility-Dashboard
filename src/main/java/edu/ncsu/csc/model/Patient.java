@@ -23,7 +23,21 @@ public class Patient {
 
     public Patient() {
     }
-
+    public Patient(String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, String addrStreet, int addrZip) {
+        this.id = -1;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.phone = phone;
+        this.addrCountry = addrCountry;
+        this.addrState = addrState;
+        this.addrCity = addrCity;
+        this.addrStreet = addrStreet;
+        this.addrZip = addrZip;
+        this.priorityStatus = null;
+        this.treatmentDate = null;
+        facilities = new ArrayList<>();
+    }
     public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, String addrStreet, int addrZip, String priorityStatus, Date treatmentDate) {
         this.id = id;
         this.firstName = firstName;

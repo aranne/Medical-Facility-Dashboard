@@ -1,8 +1,8 @@
 package edu.ncsu.csc.controller.StaffPages;
 
 
-import edu.ncsu.csc.DAO.CheckInDAO;
 import edu.ncsu.csc.DAO.CheckInDAOImp;
+import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.CheckIn;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class TreatedPatients {
         reloadCheckinList();
     }
     public void reloadCheckinList(){
-        CheckInDAO checkDao=new CheckInDAOImp();
-        checkIns=checkDao.getAllCheckIn();
+        TemplateDAO<CheckIn> checkDao=new CheckInDAOImp();
+        checkIns=checkDao.getAllValues();
     }
     public  List<String> getChechinChoices(){
         List<String> choices = new ArrayList<String>(0);

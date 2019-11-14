@@ -6,19 +6,19 @@ import edu.ncsu.csc.view.StartPages.SignUp;
 import java.text.ParseException;
 
 public class Home {
-  public static void signIn() {
-    SignIn.display();
-  }
+    public static void signIn() {
+        SignIn.display();
+    }
 
-  public static void signUp() {
-    SignUp.display();
-  }
+    public static void signUp() {
+        SignUp.display();
+    }
 
-  public static void demoQueries() {
+    public static void demoQueries() {
 
-  }
+    }
 
-  public static void exit() {
+    public static void exit() {
 
-  }
+    }
 }

@@ -8,7 +8,7 @@ public class Certification {
     private Date dateCertified;
     private Date expirationDate;
 
-    public Certification(){
+    public Certification() {
 
     }
 

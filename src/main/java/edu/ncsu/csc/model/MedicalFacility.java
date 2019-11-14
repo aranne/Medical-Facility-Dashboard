@@ -4,83 +4,83 @@ import java.util.List;
 import java.util.Objects;
 
 public class MedicalFacility {
-  private Integer facilityId;
-  private String name;
-  private String classification;
-  private String address;
-  private String capacity;
+    private Integer facilityId;
+    private String name;
+    private String classification;
+    private String address;
+    private String capacity;
 
-  private List<ServiceDept> depts;
+    private List<ServiceDept> depts;
 
-  public MedicalFacility(){
-  }
+    public MedicalFacility() {
+    }
 
-  public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
-    this.facilityId = facilityId;
-    this.name = name;
-    this.classification = classification;
-    this.address = address;
-    this.capacity = capacity;
-  }
+    public MedicalFacility(Integer facilityId, String name, String classification, String address, String capacity) {
+        this.facilityId = facilityId;
+        this.name = name;
+        this.classification = classification;
+        this.address = address;
+        this.capacity = capacity;
+    }
 
-  public Integer getFacilityId() {
-    return facilityId;
-  }
+    public Integer getFacilityId() {
+        return facilityId;
+    }
 
-  public void setFacilityId(Integer facilityId) {
-    this.facilityId = facilityId;
-  }
+    public void setFacilityId(Integer facilityId) {
+        this.facilityId = facilityId;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    MedicalFacility that = (MedicalFacility) o;
-    return facilityId.equals(that.facilityId);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MedicalFacility that = (MedicalFacility) o;
+        return facilityId.equals(that.facilityId);
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(facilityId);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(facilityId);
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getClassification() {
-    return classification;
-  }
+    public String getClassification() {
+        return classification;
+    }
 
-  public void setClassification(String classification) {
-    this.classification = classification;
-  }
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public String getAddress() {
+        return address;
+    }
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-  public String getCapacity() {
-    return capacity;
-  }
+    public String getCapacity() {
+        return capacity;
+    }
 
-  public void setCapacity(String capacity) {
-    this.capacity = capacity;
-  }
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
 
-  public void addServiceDept(ServiceDept d) {
-    depts.add(d);
-  }
+    public void addServiceDept(ServiceDept d) {
+        depts.add(d);
+    }
 
-  public List<ServiceDept> getAllServiceDept() {
-    return depts;
-  }
+    public List<ServiceDept> getAllServiceDept() {
+        return depts;
+    }
 }

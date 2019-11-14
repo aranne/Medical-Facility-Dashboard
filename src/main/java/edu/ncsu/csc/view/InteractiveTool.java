@@ -14,8 +14,8 @@ public class InteractiveTool {
     protected Scanner scanner;
     protected DateFormat dateFormat;
     protected DateFormat timeFormat;
-//    protected String pageTitle;
-//    protected String choicePrompt;
+    protected String pageTitle;
+    protected String choicePrompt;
 
     public InteractiveTool() {
         scanner = new Scanner(System.in);
@@ -39,7 +39,8 @@ public class InteractiveTool {
         int index = -1;
         while (true) {
             try {
-                index = Integer.parseInt(getStringFromInput(""));
+                String choice = scanner.next();
+                index = Integer.parseInt(choice);
             } catch (Exception e) {
                 System.out.println("Invalid Menue id");
                 continue;

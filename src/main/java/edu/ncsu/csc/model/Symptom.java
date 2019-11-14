@@ -3,7 +3,6 @@ package edu.ncsu.csc.model;
 public class Symptom {
   private String name;
   private String symCode;
-
   public Symptom() {
   }
 
