@@ -1,7 +1,7 @@
 package edu.ncsu.csc.controller.StaffPages;
 
 import edu.ncsu.csc.DAO.BodyPartDAO;
-import edu.ncsu.csc.DAO.SymptomDAO;
+import edu.ncsu.csc.DAO.SymptomDAOImpl;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.BodyPart;
 import edu.ncsu.csc.model.Symptom;
@@ -15,7 +15,7 @@ public class AddAssessments {
         reloadDatas();
     }
     public void reloadDatas(){
-        TemplateDAO m_dao=new SymptomDAO();
+        TemplateDAO m_dao=new SymptomDAOImpl();
         symptoms=m_dao.getAllValues();
     }
     public List<BodyPart> getBodyparts(Symptom s){

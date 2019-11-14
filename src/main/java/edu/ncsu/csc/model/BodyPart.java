@@ -4,7 +4,7 @@ public class BodyPart {
     private String bodyCode;
     private String bodyName;
 
-    public BodyPart(){
+    public BodyPart() {
 
     }
 

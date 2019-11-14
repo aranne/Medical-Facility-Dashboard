@@ -1,6 +1,7 @@
 package edu.ncsu.csc.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Report {
     private int id;
@@ -12,6 +13,10 @@ public class Report {
     private int facilityId;
     private int employeeId;
 
+
+
+    private ReferralStatus referralStatus=null;
+    private List<NagativeExperience> nagexps=null;
     public Report() {
     }
 
@@ -88,5 +93,21 @@ public class Report {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public ReferralStatus getReferralStatus() {
+        return referralStatus;
+    }
+
+    public void setReferralStatus(ReferralStatus referralStatus) {
+        this.referralStatus = referralStatus;
+    }
+
+    public List<NagativeExperience> getNagexps() {
+        return nagexps;
+    }
+
+    public void setNagexps(List<NagativeExperience> nagexps) {
+        this.nagexps = nagexps;
     }
 }

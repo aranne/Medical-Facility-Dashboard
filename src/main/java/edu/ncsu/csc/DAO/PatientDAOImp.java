@@ -9,29 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PatientDAOImp extends AbstractDAO implements PatientDAO {
+public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
   public void addPatient(Patient p) {
-    try {
-      openConnection();
-      preparedStatement = connection
-              .prepareStatement("insert into PATIENTS " +
-                      "(FIRST_NAME, LAST_NAME, DOB, Address_Country, Address_State, Address_City, Address_Street, Address_Zip, Phone) " +
-                      "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      preparedStatement.setString(1, p.getFirstName());
-      preparedStatement.setString(2, p.getLastName());
-      preparedStatement.setDate(3, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setString(4, p.getAddrCountry());
-      preparedStatement.setString(5, p.getAddrState());
-      preparedStatement.setString(6, p.getAddrCity());
-      preparedStatement.setString(7, p.getAddrStreet());
-      preparedStatement.setInt(8, p.getAddrZip());
-      preparedStatement.setString(9, p.getPhone());
-      preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      closeConnection();
-    }
+
   }
 
   public List<Patient> getAllPatient() {
@@ -70,14 +50,99 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
     return patient;
   }
 
-  public Patient getPatientByNameAndDob(String lastName, Date dob) {
+
+  public void addFacility(Patient p) {
+    try {
+      openConnection();
+      for (MedicalFacility f : p.getFacilities()) {
+        preparedStatement = connection
+                .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
+        preparedStatement.setInt(1, f.getFacilityId());
+        preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+        preparedStatement.setString(3, p.getLastName());
+        preparedStatement.executeUpdate();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+  }
+
+  public List<MedicalFacility> getAllFacility(Patient p) {
+    List<MedicalFacility> facilities = new ArrayList<>();
+//    /* Store all facility id selected from relationship table. */
+//    List<Integer> ids = new ArrayList<>();
+//    try {
+//      openConnection();
+//      preparedStatement = connection
+//              .prepareStatement("select facility_id from patient_has_facility where dob = ? and last_name = ?");
+//      preparedStatement.setDate(1, new java.sql.Date(p.getDob().getTime()));
+//      preparedStatement.setString(2, p.getLastName());
+//      resultSet = preparedStatement.executeQuery();
+//      while (resultSet.next()) {
+//        int facilityId = resultSet.getInt("facility_id");
+//        ids.add(facilityId);
+//      }
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    } finally {
+//      closeConnection();
+//    }
+//    /* Find all MedicalFacility corresponding to id. */
+//    MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+//    for (int id : ids) {
+//      MedicalFacility f = facilityDao.getFacilityById(id);
+//      facilities.add(f);
+//    }
+    return facilities;
+  }
+
+  @Override
+  public boolean addOneValue(Patient p) {
+    boolean rest=false;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("insert into PATIENTS " +
+                      "(FIRST_NAME, LAST_NAME, DOB, Address_Country, Address_State, Address_City, Address_Street, Address_Zip, Phone) " +
+                      "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      preparedStatement.setString(1, p.getFirstName());
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setDate(3, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setString(4, p.getAddrCountry());
+      preparedStatement.setString(5, p.getAddrState());
+      preparedStatement.setString(6, p.getAddrCity());
+      preparedStatement.setString(7, p.getAddrStreet());
+      preparedStatement.setInt(8, p.getAddrZip());
+      preparedStatement.setString(9, p.getPhone());
+      preparedStatement.executeUpdate();
+      rest=true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
+
+  @Override
+  public List getAllValues() {
+    return null;
+  }
+
+  @Override
+  public List getBatchByQuery(String queryStr) {
+    return null;
+  }
+
+  @Override
+  public Patient getOneByQuery(String queryStr) {
     Patient patient = null;
     try {
       openConnection();
       preparedStatement = connection
-              .prepareStatement("select * from PATIENTS where last_name = ? and dob = ?");
-      preparedStatement.setString(1, lastName);
-      preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+              .prepareStatement("select * from PATIENTS where"+queryStr);
       resultSet = preparedStatement.executeQuery();
       if (resultSet.next()) {
         patient = new Patient(
@@ -103,7 +168,20 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
     return patient;
   }
 
-  public void updatePatient(Patient p) {
+  @Override
+  public Patient getOneById(int id) {
+    return null;
+  }
+
+  @Override
+  public Patient getOneById(String id) {
+    return null;
+  }
+
+
+  @Override
+  public boolean updateValue(Patient p) {
+    boolean rest=false;
     try {
       openConnection();
       preparedStatement = connection
@@ -128,62 +206,18 @@ public class PatientDAOImp extends AbstractDAO implements PatientDAO {
       }
       preparedStatement.setInt(12, p.getId());
       preparedStatement.executeUpdate();
+      rest=true;
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       closeConnection();
     }
+    return rest;
   }
 
-  public void deletePatient(Patient p) {
-
+  @Override
+  public boolean deleteRecord(Patient p) {
+    return false;
   }
 
-
-  public void addFacility(Patient p) {
-    try {
-      openConnection();
-      for (MedicalFacility f : p.getFacilities()) {
-        preparedStatement = connection
-                .prepareStatement("insert into PATIENT_HAS_FACILITY values (?, ?, ?)");
-        preparedStatement.setInt(1, f.getFacilityId());
-        preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
-        preparedStatement.setString(3, p.getLastName());
-        preparedStatement.executeUpdate();
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      closeConnection();
-    }
-  }
-
-  public List<MedicalFacility> getAllFacility(Patient p) {
-    List<MedicalFacility> facilities = new ArrayList<>();
-    /* Store all facility id selected from relationship table. */
-    List<Integer> ids = new ArrayList<>();
-    try {
-      openConnection();
-      preparedStatement = connection
-              .prepareStatement("select facility_id from patient_has_facility where dob = ? and last_name = ?");
-      preparedStatement.setDate(1, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setString(2, p.getLastName());
-      resultSet = preparedStatement.executeQuery();
-      while (resultSet.next()) {
-        int facilityId = resultSet.getInt("facility_id");
-        ids.add(facilityId);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      closeConnection();
-    }
-    /* Find all MedicalFacility corresponding to id. */
-    MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
-    for (int id : ids) {
-      MedicalFacility f = facilityDao.getFacilityById(id);
-      facilities.add(f);
-    }
-    return facilities;
-  }
 }
