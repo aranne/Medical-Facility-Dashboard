@@ -14,7 +14,7 @@ public class CheckIn {
   public static void display(int patientId) {
     List<String> menueStrs = new ArrayList<String>(0);
     List<Symptom> symptomsList = getAllSymptoms();
-    ArrayList<Symptom> symptomsToBeSaved = new ArrayList<Symptom>();
+    List<Symptom> symptomsToBeSaved = new ArrayList<Symptom>();
     Boolean running = true;
     InteractiveTool intertool = new InteractiveTool();
     for (Symptom symptom : symptomsList) {

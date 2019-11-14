@@ -14,11 +14,11 @@ public class CheckIn {
     return symptoms;
   }
 
-  public static void gotoMetaSymptomPage(ArrayList<Symptom> symptoms, int patientId) {
+  public static void gotoMetaSymptomPage(List<Symptom> symptoms, int patientId) {
 //    TODO: goto Meta Symptom Page
   }
 
-  public static void saveSymptoms(ArrayList<Symptom> symptoms, int patientId) {
+  public static void saveSymptoms(List<Symptom> symptoms, int patientId) {
 //    TODO: save symptoms
   }
 
