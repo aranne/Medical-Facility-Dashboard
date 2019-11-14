@@ -1,17 +1,18 @@
 package edu.ncsu.csc.view.PatientPages;
 
-import edu.ncsu.csc.controller.SymptomMetaManager;
+import edu.ncsu.csc.controller.PatientPages.CheckinSymptomMeta;
 import edu.ncsu.csc.model.BodyPart;
 import edu.ncsu.csc.model.Symptom;
 import edu.ncsu.csc.model.SymptomMeta;
 import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
 import java.util.List;
 
 public class InputSymptomMeta extends BasePage implements PageView {
     SymptomMeta sm;
-    SymptomMetaManager smm;
+    CheckinSymptomMeta smm;
     public SymptomMeta getSm() {
         return sm;
     }
@@ -24,7 +25,8 @@ public class InputSymptomMeta extends BasePage implements PageView {
         menueStrs.add("Reoccurring?");
         menueStrs.add("Severity");
         menueStrs.add("Cause(Incident)");
-        smm=new SymptomMetaManager(s);
+        smm=new CheckinSymptomMeta(s);
+        sm=new SymptomMeta();
 //        bps = (List<Bodypart>) s.getBodypartys();
 //        if(bps.size()<=0)
 //        {
@@ -41,7 +43,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
         running = true;
         while (running) {
             initPage();
-            switch (getChoice(menueStrs)) {
+            switch (getChoice()) {
                 case 1:
                     inputPart();
                     break;
@@ -71,9 +73,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
         List<String> bps=smm.getBodyMenu();
 
         if (bps.size() > 0) {
-            show(bps);
-            show("choose a bodypart:");
-            int ch = getChoice(bps);
+            int ch =ComboBoxPage.getInstance().select(bps,"choose a bodypart:");
             sm.setBodypart(smm.getBodySelection(ch));
         } else {
             String bodypart = getStringFromInput("input a bodypart name:");

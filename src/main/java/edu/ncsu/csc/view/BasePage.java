@@ -21,6 +21,8 @@ public class BasePage {
     public BasePage() {
         running=false;
         scanner = new Scanner(System.in);
+        pageTitle="";
+        choicePrompt="";
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         timeFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         menueStrs=new ArrayList<String>();
@@ -33,7 +35,7 @@ public class BasePage {
     }
     protected void show(String s) {
         if (s.length() > 0)
-            System.out.printf(s + ":\n");
+            System.out.printf(s + "\n");
     }
     protected void show(List<String> strs) {
         for (int i = 0; i < strs.size(); i++) {
@@ -41,17 +43,17 @@ public class BasePage {
         }
     }
 
-    protected int getChoice(List<String> strs) {
+    protected int getChoice() {
         int index = -1;
         while (true) {
             try {
-                String choice = scanner.next();
+                String choice = scanner.nextLine();
                 index = Integer.parseInt(choice);
             } catch (Exception e) {
                 System.out.println("Invalid Menue id");
                 continue;
             }
-            if (index < 1 || index > strs.size()) {
+            if (index < 1 || index > menueStrs.size()) {
                 System.out.println("Invalid Menue id");
             } else {
                 break;
@@ -113,14 +115,14 @@ public class BasePage {
     public String getPhoneFromInput(String prompt) {
         while (true) {
             String phone = getStringFromInput(prompt);
-            Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
-            Matcher matcher = pattern.matcher(phone);
-
-            if (matcher.matches()) {
-                return phone;
-            } else {
-                System.out.println("Invalid phone number");
-            }
+            ///////////////验证电话号码格式
+//            Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
+//            Matcher matcher = pattern.matcher(phone);
+//            if (matcher.matches()) {
+//                return phone;
+//            } else {
+//                System.out.println("Invalid phone number");
+//            }
         }
     }
 

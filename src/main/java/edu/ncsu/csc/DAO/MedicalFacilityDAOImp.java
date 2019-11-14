@@ -64,6 +64,8 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements TemplateDAO<Me
     } finally {
       closeConnection();
     }
+    if(facilities.size()==0)
+      facilities=null;
     return facilities;
   }
 

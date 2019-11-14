@@ -1,9 +1,10 @@
 package edu.ncsu.csc.view.StartPages;
 
+import edu.ncsu.csc.controller.StartPages.MedicalFacilityManager;
 import edu.ncsu.csc.controller.StartPages.UserManager;
 import edu.ncsu.csc.model.MedicalFacility;
-import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
 import java.util.Date;
@@ -12,15 +13,13 @@ import java.util.Date;
 public class SignUp extends BasePage implements PageView {
 
 
-  private MedicalFacility facility;
   UserManager um;
-  public SignUp(MedicalFacility facility) {
+  public SignUp() {
     super();
     menueStrs.add("Sign up");
     menueStrs.add("Go Back");
     pageTitle = "==================== SIGN UP ====================";
     choicePrompt = "input your choice:";
-    this.facility = facility;
     um=new UserManager();
   }
 
@@ -28,7 +27,7 @@ public class SignUp extends BasePage implements PageView {
         running = true;
         while (running) {
             initPage();
-            switch (getChoice(menueStrs)) {
+            switch (getChoice()) {
                 case 1:
                   if (doSignUp()) {
                     show("Sign up successfully, please login");
@@ -43,7 +42,6 @@ public class SignUp extends BasePage implements PageView {
             }
         }
     }
-
     private boolean doSignUp() {
         String firstName = getStringFromInput("A. First Name");
         String lastName = getStringFromInput("B. Last Name");
@@ -54,6 +52,10 @@ public class SignUp extends BasePage implements PageView {
         String addrCountry = getStringFromInput("D. Country of address");
         int addrZip = getNum("D. Zip of address");
         String phone = getPhoneFromInput("E. Phone Number");
+        ////////////////获取医院ID,用途不明
+        MedicalFacilityManager umm = new MedicalFacilityManager();
+        int index1=ComboBoxPage.getInstance().select(umm.getFacilityMenu(),"Select a Medical Facility:");
+        MedicalFacility facility=umm.getFacilitySelection(index1);
         return um.signUp(firstName, lastName, dob, addrStreet, addrCity, addrState, addrCountry, addrZip, phone);
     }
 }

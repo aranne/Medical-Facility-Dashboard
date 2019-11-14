@@ -21,7 +21,7 @@ public class UpdateDischarge extends BasePage implements PageView {
     @Override
     public void display() {
         initPage();
-        dischargeStatus = menueStrs.get(getChoice(menueStrs));
+        dischargeStatus = menueStrs.get(getChoice());
     }
 
     public String getDischargeStatus() {

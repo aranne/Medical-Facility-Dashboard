@@ -1,30 +1,46 @@
 package edu.ncsu.csc.DAO;
 
+import edu.ncsu.csc.model.Service;
 import edu.ncsu.csc.model.ServiceDept;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ServiceDeptDAOImp extends AbstractDAO implements ServiceDeptDAO {
+public class ServiceDeptDAOImp extends AbstractDAO implements TemplateDAO<ServiceDept> {
 
     @Override
-    public void addServiceDept(ServiceDept d) {
-
+    public boolean addOneValue(ServiceDept p) {
+        return false;
     }
 
     @Override
-    public List<ServiceDept> getAllServiceDept() {
+    public List<ServiceDept> getAllValues() {
         return null;
     }
 
     @Override
-    public ServiceDept getServiceDeptByCode(String code) {
+    public List<ServiceDept> getBatchByQuery(String queryStr) {
+        return null;
+    }
+
+    @Override
+    public ServiceDept getOneByQuery(String queryStr) {
+        return null;
+    }
+
+    @Override
+    public ServiceDept getOneById(int id) {
+        return null;
+    }
+
+    @Override
+    public ServiceDept getOneById(String id) {
         ServiceDept dept = null;
         try {
             openConnection();
             preparedStatement = connection
                     .prepareStatement("select * from service_depts where dept_code = ?");
-            preparedStatement.setString(1, code);
+            preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 dept = new ServiceDept(
@@ -42,12 +58,12 @@ public class ServiceDeptDAOImp extends AbstractDAO implements ServiceDeptDAO {
     }
 
     @Override
-    public void updateServiceDept(ServiceDept d) {
-
+    public boolean updateValue(ServiceDept p) {
+        return false;
     }
 
     @Override
-    public void deleteServiceDept(ServiceDept d) {
-
+    public boolean deleteRecord(ServiceDept p) {
+        return false;
     }
 }

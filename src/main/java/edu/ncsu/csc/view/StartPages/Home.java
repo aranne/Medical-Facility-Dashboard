@@ -1,51 +1,49 @@
 package edu.ncsu.csc.view.StartPages;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import edu.ncsu.csc.controller.StartPages.MedicalFacilityManager;
+import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
+import edu.ncsu.csc.view.PageView;
 
-import static edu.ncsu.csc.controller.StartPages.Home.*;
+import java.util.List;
 
-public class Home {
 
-    public static void display() {
-        Scanner input = new Scanner(System.in);
-        ArrayList<String> choices = new ArrayList<>();
-        choices.add("1");
-        choices.add("2");
-        choices.add("3");
-        choices.add("4");
-        String choice = "-1";
+public class Home extends BasePage implements PageView {
+    public Home() {
+        super();
+        menueStrs.add("Sign in");
+        menueStrs.add("Sign Up(Patient)");
+        menueStrs.add("Demo Queries");
+        menueStrs.add("Go Back");
+        pageTitle = "==================== HOME ====================";
+        choicePrompt = "input your choice:";
+    }
 
-        while (!choice.equals("4") && !choice.equals("3") && !choice.equals("2") && !choice.equals("1")) {
-            System.out.println("==================== HOME ====================");
-            System.out.println("1. Sign In");
-            System.out.println("2. Sign Up(Patient)");
-            System.out.println("3. Demo Queries");
-            System.out.println("4. Exit");
-            choice = input.next();
-            while (!choices.contains(choice)) {
-                System.out.println("Invalid Input, please try again");
-                System.out.println("1. Sign In");
-                System.out.println("2. Sign Up(Patient)");
-                System.out.println("3. Demo Queries");
-                System.out.println("4. Exit");
-                choice = input.next();
-            }
-            switch (Integer.parseInt(choice)) {
+    public void display() {
+        running = true;
+        MedicalFacilityManager umm = new MedicalFacilityManager();
+        List<String> facilityMenu=umm.getFacilityMenu();
+        while (running) {
+            initPage();
+            PageView p = null;
+            switch (getChoice()) {
                 case 1:
-                    signIn();
+                    int index=ComboBoxPage.getInstance().select(facilityMenu,"Choose A Medical Facility:");
+                    p = new SignIn(umm.getFacilitySelection(index));
+                    p.display();
                     break;
                 case 2:
-                    signUp();
+                    p = new SignUp();
+                    p.display();
                     break;
                 case 3:
-                    demoQueries();
-                    break;
+                //TODO
+                	break;
                 case 4:
-                    exit();
+                    running = false;
                     break;
             }
         }
     }
+
 }

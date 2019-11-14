@@ -2,6 +2,9 @@ package edu.ncsu.csc.DAO;
 
 import java.util.List;
 
+import edu.ncsu.csc.model.Staff;
+import edu.ncsu.csc.model.Vital;
+
 public interface TemplateDAO<T>{
     boolean addOneValue(T p);
 

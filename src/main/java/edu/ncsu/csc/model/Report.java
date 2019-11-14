@@ -12,6 +12,7 @@ public class Report {
     private String treatment;
     private int facilityId;
     private int employeeId;
+    private CheckIn checkIn;
 
 
 
@@ -109,5 +110,12 @@ public class Report {
 
     public void setNagexps(List<NagativeExperience> nagexps) {
         this.nagexps = nagexps;
+    }
+    public CheckIn getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(CheckIn checkIn) {
+        this.checkIn = checkIn;
     }
 }

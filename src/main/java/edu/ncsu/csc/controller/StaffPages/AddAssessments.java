@@ -15,7 +15,7 @@ public class AddAssessments {
         reloadDatas();
     }
     public void reloadDatas(){
-        TemplateDAO m_dao=new SymptomDAOImpl();
+        TemplateDAO<Symptom> m_dao=new SymptomDAOImpl();
         symptoms=m_dao.getAllValues();
     }
     public List<BodyPart> getBodyparts(Symptom s){

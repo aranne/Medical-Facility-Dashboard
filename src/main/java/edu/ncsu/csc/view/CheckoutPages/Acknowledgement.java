@@ -19,13 +19,13 @@ public class Acknowledgement extends BasePage implements PageView {
     @Override
     public void display() {
         initPage();
-        int index = getChoice(menueStrs);
+        int index = getChoice();
         if(index==2)
         {
 
         }
         //TODO
-        getEmailFromInput("input your reasons:");
+        getStringFromInput("input your reasons:");
     }
 
 }
