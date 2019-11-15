@@ -73,19 +73,19 @@ end patient_id_TRIGGER;
 
 -- 3.
 create table patient_has_facility
- (
-     facility_id number not null
-         constraint FACILITY_ID_fk
-             references MEDICAL_FACILITIES
-                 on delete cascade,
-     dob date not null,
-     last_name varchar2(255) not null,
-     constraint patient_has_facility_pk
-         primary key (facility_id, dob, last_name),
-     constraint NAME_DOB_fk
-         foreign key (last_name, dob) references PATIENTS
-             on delete cascade
- )
+(
+    facility_id number not null
+        constraint FACILITY_ID_fk
+            references MEDICAL_FACILITIES
+                on delete cascade,
+    dob date not null,
+    last_name varchar2(255) not null,
+    constraint patient_has_facility_pk
+        primary key (facility_id, dob, last_name),
+    constraint NAME_DOB_fk
+        foreign key (last_name, dob) references PATIENTS
+            on delete cascade
+)
 /
 
 -- 4.
@@ -99,12 +99,12 @@ create table check_ins
     facility_id number not null,
         foreign key (facility_id) references MEDICAL_FACILITIES
             on delete cascade,
-    constraint check_ins_pk
-        primary key (last_name, dob, start_time, facility_id),
-    constraint PHF_NAME_DOB_fk
-        foreign key (last_name, dob) references PATIENTS
-            on delete cascade
-)
+                   constraint check_ins_pk
+                   primary key (last_name, dob, start_time, facility_id),
+                   constraint PHF_NAME_DOB_fk
+                   foreign key (last_name, dob) references PATIENTS
+                       on delete cascade
+                      )
 /
 create sequence check_in_ID_SEQ
     nocache
@@ -326,6 +326,7 @@ create table staff_directs_dept
 )
 /
 
+/
 -- 20.
 create table vitals
 (

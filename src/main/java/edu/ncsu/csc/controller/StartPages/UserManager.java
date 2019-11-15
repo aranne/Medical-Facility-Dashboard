@@ -30,13 +30,13 @@ public class UserManager {
     public Patient signInAsPatient(int facilityId, String lastName, Date dob, String city) {
         PatientDAOImp patientDAO = new PatientDAOImp();
         Patient p =null;
-        p= (Patient) patientDAO.patientExist(lastName,dob);
+        p= patientDAO.patientExist(lastName,dob);
         if (p == null || !p.getAddrCity().equals(city)) {
-            return p;
+            return null;
         } else {
             //Register to facility o
-            if(!((PatientDAOImp)patientDAO).patientInFacility(facilityId,p)){
-                if(!((PatientDAOImp)patientDAO).registerToFacility(facilityId,p)){
+            if(!patientDAO.patientInFacility(facilityId,p)){
+                if(!patientDAO.registerToFacility(facilityId,p)){
                     p=null;
                 }
             }
@@ -48,12 +48,12 @@ public class UserManager {
         StaffDAOImp staffDao = new StaffDAOImp();
         Staff staff = null;
         staff= staffDao.getStaffByNameAndDob(lastName,dob);
-//        if(staff!=null)
-//        {
-//            if(!((StaffDAOImp)staffDao).staffInFacility(facilityId,staff)) {
-//                staff=null;
-//            }
-//        }
+        if(staff!=null)
+        {
+            if(!staffDao.staffInFacility(facilityId,staff)) {
+                staff=null;
+            }
+        }
         return staff;
     }
 }

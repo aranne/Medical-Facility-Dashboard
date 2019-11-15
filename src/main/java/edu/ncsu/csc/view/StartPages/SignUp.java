@@ -52,7 +52,7 @@ public class SignUp extends BasePage implements PageView {
         String addrCountry = getStringFromInput("D. Country of address");
         int addrZip = getNum("D. Zip of address");
         String phone = getPhoneFromInput("E. Phone Number");
-        ////////////////��ȡҽԺID,��;����
+//        get facility is, unknown use
         MedicalFacilityManager umm = new MedicalFacilityManager();
         int index1=ComboBoxPage.getInstance().select(umm.getFacilityMenu(),"Select a Medical Facility:");
         MedicalFacility facility=umm.getFacilitySelection(index1);
