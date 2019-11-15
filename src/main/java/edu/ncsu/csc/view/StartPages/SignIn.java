@@ -1,42 +1,49 @@
 package edu.ncsu.csc.view.StartPages;
 
+import edu.ncsu.csc.controller.StartPages.MedicalFacilityManager;
 import edu.ncsu.csc.controller.StartPages.UserManager;
 import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.view.BasePage;
+import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 import edu.ncsu.csc.view.PatientPages.PatientRoutingPage;
 import edu.ncsu.csc.view.StaffPages.StaffMenu;
 
 import java.util.Date;
+import java.util.List;
 
 public class SignIn extends BasePage implements PageView {
     private MedicalFacility facility;
     private Staff m_staff;
     private Patient m_patient;
     private boolean isPatient;
-    public SignIn(MedicalFacility facility) {
+    public SignIn() {
         super();
         menueStrs.add("Sign in");
         menueStrs.add("Go Back");
         pageTitle = "==================== SIGN IN ====================";
         choicePrompt = "input your choice:";
-        this.facility = facility;
         m_staff=null;
         m_patient=null;
         isPatient=false;
     }
     public void display() {
+        MedicalFacilityManager umm = new MedicalFacilityManager();
+        List<String> facilityMenu=umm.getFacilityMenu();
         running = true;
         while (running) {
-            initPage();
             m_staff=null;
             m_patient=null;
             isPatient=false;
+            int index = ComboBoxPage.getInstance().select(facilityMenu, "Choose A Medical Facility:");
+            facility = umm.getFacilitySelection(index);
+            boolean canSignIn = doSignIn();
+            initPage();
             switch (getChoice()) {
                 case 1:
-                    if (doSignIn()) {
+                    if (canSignIn) {
                         if(isPatient)
                         {
                             show("Login successfully\n" + "Thanks for choosing " + facility.getName());

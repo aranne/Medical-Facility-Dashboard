@@ -1,6 +1,5 @@
 package edu.ncsu.csc.view.StartPages;
 
-import edu.ncsu.csc.controller.StartPages.MedicalFacilityManager;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
@@ -21,15 +20,12 @@ public class Home extends BasePage implements PageView {
 
     public void display() {
         running = true;
-        MedicalFacilityManager umm = new MedicalFacilityManager();
-        List<String> facilityMenu=umm.getFacilityMenu();
         while (running) {
             initPage();
             PageView p = null;
             switch (getChoice()) {
                 case 1:
-                    int index=ComboBoxPage.getInstance().select(facilityMenu,"Choose A Medical Facility:");
-                    p = new SignIn(umm.getFacilitySelection(index));
+                    p = new SignIn();
                     p.display();
                     break;
                 case 2:

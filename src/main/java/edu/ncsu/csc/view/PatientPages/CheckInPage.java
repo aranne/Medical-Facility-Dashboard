@@ -45,7 +45,7 @@ public class CheckInPage extends BasePage implements PageView {
                     smeta = ((InputSymptomMeta) p).getSm();
                 } else if (index == menueStrs.size() - 1) {
                     String smname = getStringFromInput("input a symptom :");
-                    symptom = new Symptom(smname, "unknow");
+                    symptom = new Symptom(smname, "unknown");
                     PageView p = new InputSymptomMeta(symptom);
                     p.display();
                     smeta = ((InputSymptomMeta) p).getSm();

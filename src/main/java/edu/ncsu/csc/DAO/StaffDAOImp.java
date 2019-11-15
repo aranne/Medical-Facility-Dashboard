@@ -39,19 +39,20 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
         }
         return staff;
     }
-    ///如何获取与当前员工在同一家医院的其他员工
     public List<Staff> getWorkmates(Staff staff) {
         List<Staff> mates=null;
         try {
             openConnection();
             preparedStatement = connection
-                    .prepareStatement("select * from STAFFS where facility_has_dept where   facility_has_dept.dept_code=?");
+                    .prepareStatement("select * from STAFFS where primary_dept_code=? " +
+                            "UNION select * from STAFFS where employee_id in (select employee_id from staff_seco_works_dept where dept_code=? )");
             preparedStatement.setString(1, staff.getPrimaryDeptCode());
+            preparedStatement.setString(2, staff.getPrimaryDeptCode());
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next())
-            {
-                int facilityId=resultSet.getInt("facility_id");
-            }
+//            if(resultSet.next())
+//            {
+//                int facilityId=resultSet.getInt("facility_id");
+//            }
             while (resultSet.next()) {
                 staff = new Staff(
                         resultSet.getInt("employee_id"),
@@ -77,7 +78,7 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
             preparedStatement = connection
                     .prepareStatement("select * from body_parts where body_code in "
                     		+ "(select body_code from dept_has_body_part where dept_code in "
-                    		+ "(select dept_code=? \n UNION \n select dept_code from staff_seco_works_dept where staff_code=? \n)"
+                    		+ "(select primary_dept_code from Staffs S where S.employee_id=? UNION select dept_code from staff_seco_works_dept where employee_id=?)"
                     		+ ")");
             preparedStatement.setInt(1, staff.getEmployeeId());
             preparedStatement.setInt(2, staff.getEmployeeId());
@@ -97,9 +98,13 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
         try {
             openConnection();
             preparedStatement = connection
-                    .prepareStatement("select * from STAFFS,facility_has_dept where STAFFS.primary_dept_code= ? and facility_has_dept.facility_id = ? and STAFFS.primary_dept_code = facility_has_dept.dept_code");
+                    .prepareStatement("(select STAFFS.employee_id from STAFFS,facility_has_dept where STAFFS.primary_dept_code= ? and facility_has_dept.facility_id = ? and STAFFS.primary_dept_code = facility_has_dept.dept_code)" +
+                            "UNION (select s.employee_id from STAFFS s, staff_seco_works_dept sd, facility_has_dept f where s.employee_id = sd.employee_id " +
+                            "and sd.dept_code = f.dept_code and f.facility_id = ? and s.employee_id = ?)");
             preparedStatement.setString(1, staff.getPrimaryDeptCode());
             preparedStatement.setInt(2, facilityId);
+            preparedStatement.setInt(3, facilityId);
+            preparedStatement.setInt(4, staff.getEmployeeId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
             	rest=true;
