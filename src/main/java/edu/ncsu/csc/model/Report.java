@@ -12,8 +12,8 @@ public class Report {
     private String treatment;
     private int facilityId;
     private int employeeId;
+    private String reason;
     private CheckIn checkIn;
-
 
 
     private ReferralStatus referralStatus=null;
@@ -21,7 +21,7 @@ public class Report {
     public Report() {
     }
 
-    public Report(int id, Date time, Date dob, String lastName, String dischargeStatus, String treatment, int facilityId, int employeeId) {
+    public Report(int id, Date time, Date dob, String lastName, String dischargeStatus, String treatment, int facilityId, int employeeId, String reason) {
         this.id = id;
         this.time = time;
         this.dob = dob;
@@ -30,6 +30,7 @@ public class Report {
         this.treatment = treatment;
         this.facilityId = facilityId;
         this.employeeId = employeeId;
+        this.reason = reason;
     }
 
     public int getId() {
@@ -117,5 +118,13 @@ public class Report {
 
     public void setCheckIn(CheckIn checkIn) {
         this.checkIn = checkIn;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class ReportConfirm extends BasePage implements PageView {
     private Report report;
     private ReportManager rpm;
-    public ReportConfirm(Report report,ReportManager rpm) {
+    public ReportConfirm(Report report, ReportManager rpm) {
         choicePrompt = "input your choice:";
         menuStrs.add("Confirm");
         menuStrs.add("Go Back");
@@ -38,7 +38,7 @@ public class ReportConfirm extends BasePage implements PageView {
             ReferralStatus rs = report.getReferralStatus();
             int fid=rs.getFacility().getFacilityId();
             if (fid== 0) {
-                show("Facility:unknow");
+                show("Facility:unknown");
             } else {
                 show("Facility:" + fid);
             }

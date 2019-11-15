@@ -33,11 +33,14 @@ public class ReportMenu extends BasePage implements PageView {
     public  void display() {       
         running = true;
         while (running) {
+            initPage();
             int index = getChoice();
             switch (index) {
                 case 1:
-                    UpdateDischarge up=new UpdateDischarge();
-                    report.setDischargeStatus(up.getDischargeStatus());
+                    show("Please update discharge status");
+//                    UpdateDischarge up=new UpdateDischarge();
+//                    report.setDischargeStatus(up.getDischargeStatus());
+                    new UpdateDischarge().display();
                     break;
                 case 2:
                     if(report.getDischargeStatus().equals("Referred")){

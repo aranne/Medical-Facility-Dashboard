@@ -1,18 +1,17 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import java.util.List;
-
 import edu.ncsu.csc.controller.StaffPages.StaffProcessPatient;
 import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.model.Vital;
 import edu.ncsu.csc.view.BasePage;
-import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
 public class ProcessPatient  extends BasePage implements PageView {
+    CheckIn checkIn;
     Staff m_staff;
-    public ProcessPatient(Staff staff) {
+    public ProcessPatient(CheckIn checkIn, Staff staff) {
+        this.checkIn = checkIn;
         this.m_staff=staff;
         pageTitle="===================ProcessPatient=========================";
         choicePrompt="select a operation:";
@@ -21,29 +20,24 @@ public class ProcessPatient  extends BasePage implements PageView {
         menuStrs.add("Go back");
     }
     public void display() {
+        StaffProcessPatient staffp = new StaffProcessPatient();
         running = true;
         while (running) {
             initPage();
-            StaffProcessPatient staffp=new StaffProcessPatient();
-            List<String> checkins= staffp.getChechinChoices();//��ȡ�Ѿ�check_in�Ĳ����б�
-            if(checkins.size()<=0)
-            {
-                show("the patient checklist is empty!");
-                break;
-            }
-            CheckIn checkIn=staffp.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
             switch (getChoice()) {
                 case 1:
-                    //进入指标输入页面，并传入病人信息参数
-                	Vital vital=new Vital();
-                	vital.setLastName(checkIn.getLastName());
-                    vital.setDob(checkIn.getDob());
-                    new EnterVital(vital).display();
-                    if(staffp.enterVital(vital,checkIn,m_staff))
+                    Vital vital=new Vital();
+                    if (checkIn.getEndTime() == null) {
+                        vital.setLastName(checkIn.getLastName());
+                        vital.setDob(checkIn.getDob());
+                        new EnterVital(vital).display();
+                    }
+                    if(vital.getLastName() != null && staffp.enterVital(vital,checkIn,m_staff))
                     {
-                        show("enter vital successfully!");
+                        show("enter vitals successfully!");
+                        running = false;
                     }else{
-                        show("faild to enter a vital !!!");
+                        show("fail to enter a vital !!!");
                     }
                     break;
                 case 2:
