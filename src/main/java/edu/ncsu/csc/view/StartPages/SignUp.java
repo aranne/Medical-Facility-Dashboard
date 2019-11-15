@@ -16,8 +16,8 @@ public class SignUp extends BasePage implements PageView {
   UserManager um;
   public SignUp() {
     super();
-    menueStrs.add("Sign up");
-    menueStrs.add("Go Back");
+    menuStrs.add("Sign up");
+    menuStrs.add("Go Back");
     pageTitle = "==================== SIGN UP ====================";
     choicePrompt = "input your choice:";
     um=new UserManager();
@@ -52,7 +52,7 @@ public class SignUp extends BasePage implements PageView {
         String addrCountry = getStringFromInput("D. Country of address");
         int addrZip = getNum("D. Zip of address");
         String phone = getPhoneFromInput("E. Phone Number");
-        ////////////////获取医院ID,用途不明
+        ////////////////锟斤拷取医院ID,锟斤拷途锟斤拷锟斤拷
         MedicalFacilityManager umm = new MedicalFacilityManager();
         int index1=ComboBoxPage.getInstance().select(umm.getFacilityMenu(),"Select a Medical Facility:");
         MedicalFacility facility=umm.getFacilitySelection(index1);

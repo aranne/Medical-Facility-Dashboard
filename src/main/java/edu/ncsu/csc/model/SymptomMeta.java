@@ -3,11 +3,11 @@ package edu.ncsu.csc.model;
 public class SymptomMeta {
     private float duration;
 
-    private Boolean neworre;
+    private Boolean isFirstTime;
     private String incident;
     private Severity severity;
     private Symptom symptom;
-    private BodyPart bodypart;
+    private BodyPart bodyPart;
 
     public float getDuration() {
         return duration;
@@ -17,12 +17,12 @@ public class SymptomMeta {
         this.duration = duration;
     }
 
-    public Boolean getNeworre() {
-        return neworre;
+    public Boolean getIsFirstTime() {
+        return isFirstTime;
     }
 
-    public void setNeworre(Boolean neworre) {
-        this.neworre = neworre;
+    public void setIsFirstTime(Boolean isFirstTime) {
+        this.isFirstTime = isFirstTime;
     }
 
     public String getIncident() {
@@ -49,12 +49,12 @@ public class SymptomMeta {
         this.symptom = symptom;
     }
 
-    public BodyPart getBodypart() {
-        return bodypart;
+    public BodyPart getBodyPart() {
+        return bodyPart;
     }
 
-    public void setBodypart(BodyPart bodypart) {
-        this.bodypart = bodypart;
+    public void setBodyPart(BodyPart bodyPart) {
+        this.bodyPart = bodyPart;
     }
 
 }

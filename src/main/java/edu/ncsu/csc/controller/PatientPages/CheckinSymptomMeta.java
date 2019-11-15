@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CheckinSymptomMeta {
     private List<Severity> severities;
-    private List<BodyPart> bodyparts;
+    private List<BodyPart> bodyParts;
     private Symptom symptom;
     public CheckinSymptomMeta(Symptom symptom) {
         this.symptom=symptom;
@@ -21,20 +21,19 @@ public class CheckinSymptomMeta {
         SeverityDAOImp severdao=new SeverityDAOImp();
         severities=severdao.getAllValues();
         SymptomDAOImpl symps=new SymptomDAOImpl();
-        bodyparts=symps.getBodysbySymptom(symptom);
+        bodyParts =symps.getBodysbySymptom(symptom);
     }
     public List<String> getBodyMenu(){
         List<String> choices = new ArrayList<String>(0);
-        for(int i=0;i<bodyparts.size();i++)
+        for(int i = 0; i< bodyParts.size(); i++)
         {
-            choices.add(bodyparts.get(i).getBodyName());
+            choices.add(bodyParts.get(i).getBodyName());
         }
         return choices;
     }
     public List<String> getSeverityMenu(){
         List<String> choices = new ArrayList<String>(0);
-        for(int i=0;i<severities.size();i++)
-        {
+        for(int i=0;i<severities.size();i++) {
             choices.add(severities.get(i).getName());
         }
         return choices;
@@ -44,6 +43,6 @@ public class CheckinSymptomMeta {
     }
 
     public BodyPart getBodySelection(int index){
-        return bodyparts.get(index);
+        return bodyParts.get(index);
     }
 }

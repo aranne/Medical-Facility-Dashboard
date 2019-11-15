@@ -48,7 +48,7 @@ public class MedicalFacilityDAOImp extends AbstractDAO implements TemplateDAO<Me
     try {
       openConnection();
       preparedStatement = connection
-              .prepareStatement("select * from medical_facilities");
+              .prepareStatement("select * from MEDICAL_FACILITIES");
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         facilities.add(new MedicalFacility(

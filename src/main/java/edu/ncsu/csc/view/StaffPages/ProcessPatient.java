@@ -2,14 +2,12 @@ package edu.ncsu.csc.view.StaffPages;
 
 import java.util.List;
 
-import edu.ncsu.csc.controller.StaffPages.StaffMenuController;
 import edu.ncsu.csc.controller.StaffPages.StaffProcessPatient;
 import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.model.Vital;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.ComboBoxPage;
-import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
 import edu.ncsu.csc.view.PageView;
 
 public class ProcessPatient  extends BasePage implements PageView {
@@ -18,16 +16,16 @@ public class ProcessPatient  extends BasePage implements PageView {
         this.m_staff=staff;
         pageTitle="===================ProcessPatient=========================";
         choicePrompt="select a operation:";
-        menueStrs.add("Enter Vitals");
-        menueStrs.add("Treat patient");
-        menueStrs.add("Go back");
+        menuStrs.add("Enter Vitals");
+        menuStrs.add("Treat patient");
+        menuStrs.add("Go back");
     }
     public void display() {
         running = true;
         while (running) {
             initPage();
             StaffProcessPatient staffp=new StaffProcessPatient();
-            List<String> checkins= staffp.getChechinChoices();//»ñÈ¡ÒÑ¾­check_inµÄ²¡ÈËÁÐ±í
+            List<String> checkins= staffp.getChechinChoices();//ï¿½ï¿½È¡ï¿½Ñ¾ï¿½check_inï¿½Ä²ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
             if(checkins.size()<=0)
             {
                 show("the patient checklist is empty!");

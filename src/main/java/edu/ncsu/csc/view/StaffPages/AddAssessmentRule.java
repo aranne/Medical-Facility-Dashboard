@@ -3,15 +3,12 @@ package edu.ncsu.csc.view.StaffPages;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddAssessmentRule extends BasePage implements PageView {
     public AddAssessmentRule() {
         pageTitle="=================== AddAssessmentRule =============================";
         choicePrompt="input your choice:";
-        menueStrs.add("Record");
-        menueStrs.add("Go Back");
+        menuStrs.add("Record");
+        menuStrs.add("Go Back");
     }
 
     @Override

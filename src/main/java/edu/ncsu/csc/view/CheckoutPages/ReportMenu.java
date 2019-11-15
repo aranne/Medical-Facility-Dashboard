@@ -5,9 +5,6 @@ import edu.ncsu.csc.model.*;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ReportMenu extends BasePage implements PageView {
     private Report report;
@@ -18,12 +15,12 @@ public class ReportMenu extends BasePage implements PageView {
     	super();
     	 pageTitle="=================ReportMenu==============================";
     	 choicePrompt="input your choice:";
-    	 menueStrs.add("Discharge Status");
-         menueStrs.add("Referral Status");
-         menueStrs.add("Treatment");
-         menueStrs.add("Negative Experience");
-         menueStrs.add("Go back");
-         menueStrs.add("Submit");
+    	 menuStrs.add("Discharge Status");
+         menuStrs.add("Referral Status");
+         menuStrs.add("Treatment");
+         menuStrs.add("Negative Experience");
+         menuStrs.add("Go back");
+         menuStrs.add("Submit");
         this.staff=staff;
         report =new Report();
         report.setLastName(checkIn.getLastName());

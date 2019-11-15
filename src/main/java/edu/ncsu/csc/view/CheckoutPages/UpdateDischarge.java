@@ -12,16 +12,16 @@ public class UpdateDischarge extends BasePage implements PageView {
         this.dischargeStatus = "";
         pageTitle = "";
         choicePrompt = "input your choice:";
-        menueStrs.add("Treated Successfully");
-        menueStrs.add("Deceased");
-        menueStrs.add("Referred");
+        menuStrs.add("Treated Successfully");
+        menuStrs.add("Deceased");
+        menuStrs.add("Referred");
 
     }
 
     @Override
     public void display() {
         initPage();
-        dischargeStatus = menueStrs.get(getChoice());
+        dischargeStatus = menuStrs.get(getChoice());
     }
 
     public String getDischargeStatus() {

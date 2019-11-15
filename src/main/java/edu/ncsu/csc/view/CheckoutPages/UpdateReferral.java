@@ -7,18 +7,16 @@ import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
-import java.util.List;
-
 public class UpdateReferral extends BasePage implements PageView {
     private ReferralStatus referralStatus;
     private ReportManager repm;
     public UpdateReferral(ReferralStatus referralStatus,ReportManager repm) {
         this.referralStatus = referralStatus;
         this.repm=repm;
-        menueStrs.add("Facility id");
-        menueStrs.add("Referrer id");
-        menueStrs.add("add a reason");
-        menueStrs.add("done");
+        menuStrs.add("Facility id");
+        menuStrs.add("Referrer id");
+        menuStrs.add("add a reason");
+        menuStrs.add("done");
     }
     @Override
     public void display() {

@@ -2,20 +2,28 @@ package edu.ncsu.csc.model;
 
 public class Severity {
     private int id;
+//    value: 0 is normal, 1 is high, 2 is Quarantine
     private int value;
     private String name;
     private String scale;
-    private String bleeding;
 
     public Severity() {
     }
 
-    public Severity(int id, int value, String name, String scale, String bleeding) {
+    @Override
+    public String toString() {
+        return "Severity{" +
+            "value=" + value +
+            ", name='" + name + '\'' +
+            ", scale='" + scale + '\'' +
+            '}';
+    }
+
+    public Severity(int id, int value, String name, String scale) {
         this.id = id;
         this.value = value;
         this.name = name;
         this.scale = scale;
-        this.bleeding = bleeding;
     }
 
     public int getId() {
@@ -50,11 +58,4 @@ public class Severity {
         this.scale = scale;
     }
 
-    public String getBleeding() {
-        return bleeding;
-    }
-
-    public void setBleeding(String bleeding) {
-        this.bleeding = bleeding;
-    }
 }
