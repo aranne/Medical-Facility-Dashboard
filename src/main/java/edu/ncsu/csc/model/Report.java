@@ -1,5 +1,5 @@
 package edu.ncsu.csc.model;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +16,8 @@ public class Report {
     private CheckIn checkIn;
 
 
-    private ReferralStatus referralStatus=null;
-    private List<NagativeExperience> nagexps=null;
+    private ReferralStatus referralStatus= new ReferralStatus();
+    private List<NagativeExperience> nagexps=new ArrayList<NagativeExperience>();
     public Report() {
     }
 
