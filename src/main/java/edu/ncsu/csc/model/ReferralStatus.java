@@ -1,11 +1,17 @@
 package edu.ncsu.csc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReferralStatus {
     private MedicalFacility facility;
     private Staff staff;
     List<Reason> reasons;
+    public ReferralStatus(){
+        facility=new MedicalFacility();
+        staff=new Staff();
+        reasons=new ArrayList<Reason>();
+    }
     public MedicalFacility getFacility() {
         return facility;
     }

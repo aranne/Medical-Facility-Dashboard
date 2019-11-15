@@ -45,11 +45,6 @@ public class StaffProcessPatient {
         return rest;
     }
     public  boolean checkPrivilege(CheckIn checkin, Staff staff){
-        System.out.println("数据库中无法找到:check if user could\r\n" +
-                "treat body part\r\n" +
-                "associated to patient\r\n" +
-                "symptoms, if yes, move\r\n" +
-                "patient to treated list,");
 //        StaffDAOImp staffdao=new StaffDAOImp();
 //        List<BodyPart> bodys=staffdao.getBodysCanTreatByStaff(staff);
 //

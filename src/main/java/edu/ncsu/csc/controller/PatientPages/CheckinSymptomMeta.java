@@ -40,10 +40,10 @@ public class CheckinSymptomMeta {
         return choices;
     }
     public Severity getSeveritySelection(int index){
-        return severities.get(index);
+        index=index-1;return severities.get(index);
     }
 
     public BodyPart getBodySelection(int index){
-        return bodyparts.get(index);
+        index=index-1;return bodyparts.get(index);
     }
 }

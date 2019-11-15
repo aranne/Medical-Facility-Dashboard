@@ -29,7 +29,7 @@ public class ReportManager {
         TemplateDAO<Service> tdao1 = new ServiceDAOImp();
         services = tdao1.getAllValues();
         StaffDAOImp staffdao=new StaffDAOImp();
-        staffs=staffdao.getWorkmates(checkouter);
+        staffs=staffdao.getAllValues();//staffdao.getWorkmates(checkouter);
     }
     public List<String> getStaffMenu() {
         List<String> choices = new ArrayList<String>(0);
@@ -69,6 +69,7 @@ public class ReportManager {
     }
 
     public boolean submit(Report report) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
     	ReportDAOImp repdao=new ReportDAOImp();
         return repdao.addOneValue(report);
     }

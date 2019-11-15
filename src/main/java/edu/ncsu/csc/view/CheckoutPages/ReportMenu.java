@@ -36,29 +36,36 @@ public class ReportMenu extends BasePage implements PageView {
     public  void display() {       
         running = true;
         while (running) {
+            initPage();
             int index = getChoice();
             switch (index) {
                 case 1:
                     UpdateDischarge up=new UpdateDischarge();
+                    up.display();
                     report.setDischargeStatus(up.getDischargeStatus());
                     break;
                 case 2:
-                    if(report.getDischargeStatus().equals("Referred")){
-                        if(referralStatus==null)
-                            referralStatus=new ReferralStatus();
-                        new UpdateReferral(referralStatus,repm).display();;
-                        report.setReferralStatus(referralStatus);
-                }else{
-                        show("This field is valid only if Discharge Status is Referred");
+                    if(report.getDischargeStatus()==null){
+                        show("input Discharge Status is Referred firstly!!");
+                    }else{
+                        if(report.getDischargeStatus().equals("Referred")){
+                            if(referralStatus==null)
+                                referralStatus=new ReferralStatus();
+                            new UpdateReferral(referralStatus,repm).display();;
+                            report.setReferralStatus(referralStatus);
+                        }else{
+                            show("This field is valid only if Discharge Status is Referred");
+                        }
                     }
+
 
                     break;
                 case 3:
-                    String tratment=getEmailFromInput("input treatment text description");
+                    String tratment=getStringFromInput("input treatment text description");
                     while(null==tratment||tratment.length()<=0)
                     {
                         show("treatment description must not be empty!!!");
-                        tratment=getEmailFromInput("input treatment text description");
+                        tratment=getStringFromInput("input treatment text description");
                     }
                     report.setTreatment(tratment);
                     break;

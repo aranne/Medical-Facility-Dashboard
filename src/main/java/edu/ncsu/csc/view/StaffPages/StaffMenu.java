@@ -28,24 +28,13 @@ public class StaffMenu extends BasePage implements PageView {
         while (running) {
             initPage();
             int index = getChoice();
-            CheckIn checkIn=null;
-            if(index==1||index==2)
-            {
-            	StaffMenuController checkmm=new StaffMenuController();
-                List<String> checkins= checkmm.getChechinChoices();//获取已经check_in的病人列表
-                if(checkins.size()<=0)
-                {
-                    show("the patient checklist is empty!");
-                    break;
-                }
-                checkIn=checkmm.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
-              }
+
             switch (index) {
                 case 1:
                     new ProcessPatient(m_staff).display();
                     break;
                 case 2:
-                    new TreatedPatient(checkIn,m_staff).display();
+                    new TreatedPatient(m_staff).display();
                     break;
                 case 3:
                     new AddSymptoms().display();

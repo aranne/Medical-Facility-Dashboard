@@ -27,7 +27,7 @@ public class AddSymptom {
         List<BodyPart> seleteds=new ArrayList<BodyPart>(0);
         for(int i=0;i<indexs.size();i++)
         {
-            seleteds.add(bodyParts.get(indexs.get(i)));
+            seleteds.add(bodyParts.get(indexs.get(i)-1));
         }
         return seleteds;
     }

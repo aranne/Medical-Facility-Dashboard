@@ -39,7 +39,7 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
         }
         return staff;
     }
-    ///ÈçºÎ»ñÈ¡Óëµ±Ç°Ô±¹¤ÔÚÍ¬Ò»¼ÒÒ½ÔºµÄÆäËûÔ±¹¤
+    ///ï¿½ï¿½Î»ï¿½È¡ï¿½ëµ±Ç°Ô±ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½Ò½Ôºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½
     public List<Staff> getWorkmates(Staff staff) {
         List<Staff> mates=null;
         try {
@@ -161,7 +161,28 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
 
     @Override
     public List<Staff> getAllValues() {
-        return null;
+        List<Staff> mates=new ArrayList<Staff>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from STAFFS ");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                mates.add(new Staff(
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getBoolean("is_medical"),
+                        resultSet.getDate("dob"),
+                        resultSet.getDate("hire_date"),
+                        resultSet.getString("primary_dept_code")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return mates;
     }
 
     @Override

@@ -61,7 +61,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
 	    try {
 	      openConnection();
 	      preparedStatement = connection
-	              .prepareStatement("SELECT * FROM check_ins where start_time is not null and end_time is not null");
+	              .prepareStatement("SELECT * FROM check_ins where start_time is not null");
 	      resultSet = preparedStatement.executeQuery();
 	      while (resultSet.next()) {
 	    	  rests.add(new CheckIn(
@@ -159,12 +159,9 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
 	    try {
 	      openConnection();
 	      preparedStatement = connection
-	              .prepareStatement("update check_ins set LAST_NAME=?, DOB=?, START_TIME=?, END_TIME=?,FACILITY_ID=?");
-	      preparedStatement.setString(1, p.getLastName());
-	      preparedStatement.setDate(2, (Date) p.getDob());
-	      preparedStatement.setDate(3, (Date) p.getStartTime());
-	      preparedStatement.setDate(4, (Date) p.getEndTime());
-	      preparedStatement.setInt(5, p.getFacilityId());
+	              .prepareStatement("update check_ins set  END_TIME=?");
+
+			preparedStatement.setDate(1, (Date) p.getEndTime());
 	      if(preparedStatement.executeUpdate()>0)
 	    	  rest=true;;
 	    } catch (SQLException e) {

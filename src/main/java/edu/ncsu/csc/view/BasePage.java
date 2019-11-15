@@ -113,9 +113,10 @@ public class BasePage {
     }
 
     public String getPhoneFromInput(String prompt) {
-        while (true) {
-            String phone = getStringFromInput(prompt);
-            ///////////////ÑéÖ¤µç»°ºÅÂë¸ñÊ½
+        //while (true)
+        String phone = getStringFromInput(prompt);
+        return phone;
+            ///////////////ï¿½ï¿½Ö¤ï¿½ç»°ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 //            Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
 //            Matcher matcher = pattern.matcher(phone);
 //            if (matcher.matches()) {
@@ -123,20 +124,20 @@ public class BasePage {
 //            } else {
 //                System.out.println("Invalid phone number");
 //            }
-        }
+
     }
 
-    public String getEmailFromInput(String prompt) {
-        while (true) {
-            String email = getStringFromInput(prompt).toLowerCase();
-            Pattern pattern = Pattern.compile("^[\\w.%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");
-            Matcher matcher = pattern.matcher(email);
-
-            if (matcher.matches()) {
-                return email;
-            } else {
-                System.out.println("Invalid email address");
-            }
-        }
-    }
+//    public String getEmailFromInput(String prompt) {
+//        while (true) {
+//            String email = getStringFromInput(prompt).toLowerCase();
+//            Pattern pattern = Pattern.compile("^[\\w.%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");
+//            Matcher matcher = pattern.matcher(email);
+//
+//            if (matcher.matches()) {
+//                return email;
+//            } else {
+//                System.out.println("Invalid email address");
+//            }
+//        }
+//    }
 }

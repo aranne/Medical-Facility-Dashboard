@@ -34,7 +34,7 @@ public class CheckinSymptoms {
         return choices;
     }
     public Symptom getSymtomsSelection(int index ){
-        return symptoms.get(index);
+        index=index-1;return symptoms.get(index);
     }
     public List<String> getBodyPartsMenu(int index){
         List<BodyPart> bodies=getBodyparts(symptoms.get(index));
@@ -49,7 +49,7 @@ public class CheckinSymptoms {
         List<BodyPart> seleteds=new ArrayList<BodyPart>(0);
         for(int i=0;i<indexs.size();i++)
         {
-            seleteds.add(bodyParts.get(indexs.get(i)));
+            seleteds.add(bodyParts.get(indexs.get(i)-1));
         }
         return seleteds;
     }

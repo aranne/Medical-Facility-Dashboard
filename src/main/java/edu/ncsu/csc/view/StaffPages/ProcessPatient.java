@@ -25,7 +25,6 @@ public class ProcessPatient  extends BasePage implements PageView {
     public void display() {
         running = true;
         while (running) {
-            initPage();
             StaffProcessPatient staffp=new StaffProcessPatient();
             List<String> checkins= staffp.getChechinChoices();//获取已经check_in的病人列表
             if(checkins.size()<=0)
@@ -34,6 +33,7 @@ public class ProcessPatient  extends BasePage implements PageView {
                 break;
             }
             CheckIn checkIn=staffp.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
+            initPage();
             switch (getChoice()) {
                 case 1:
                     //杩涘叆鎸囨爣杈撳叆椤甸潰锛屽苟浼犲叆鐥呬汉淇℃伅鍙傛暟
@@ -51,7 +51,8 @@ public class ProcessPatient  extends BasePage implements PageView {
                 case 2:
                 	StaffProcessPatient stp=new StaffProcessPatient();
                     if(stp.checkPrivilege(checkIn,m_staff)){
-                        new TreatedPatient(checkIn,m_staff).display();
+                        new ReportMenu(checkIn,m_staff).display();
+//                        new TreatedPatient(m_staff).display();
 //                        if(stp.treating(checkIn)){
 //                            show("faild to traet patient !!!");
 //                        }else{

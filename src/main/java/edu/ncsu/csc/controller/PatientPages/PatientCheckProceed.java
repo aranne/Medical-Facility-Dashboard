@@ -37,7 +37,7 @@ public class PatientCheckProceed {
         return choices;
     }
     public Symptom getSymtomsSelection(int index ){
-        return symptoms.get(index);
+        index=index-1;return symptoms.get(index);
     }
 
 }

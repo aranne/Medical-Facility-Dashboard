@@ -18,7 +18,7 @@ public class ComboBoxPage extends BasePage {
         this.choicePrompt=promp;
         this.menueStrs=munue;
         initPage();
-        return getChoice();
+        return getChoice()-1;
     }
     public List<Integer> mutilSelect(List<String> munue, String promp){
         this.choicePrompt=promp;
@@ -28,8 +28,8 @@ public class ComboBoxPage extends BasePage {
         String s=getStringFromInput("");
         String [] values=s.split(",");
         for(int i=0;i<values.length;i++){
-            int v=Integer.parseInt(values[i]);
-            if (v<=menueStrs.size()&& i>0) {
+            int v=Integer.parseInt(values[i])-1;
+            if (v<=menueStrs.size()&& v>0) {
                 indexes.add(Integer.parseInt(values[i]));
             }else{
                 throw new NumberFormatException("input index is invalid");

@@ -1,17 +1,19 @@
 package edu.ncsu.csc.view.StaffPages;
 
+import edu.ncsu.csc.controller.StaffPages.StaffMenuController;
+import edu.ncsu.csc.controller.StaffPages.StaffProcessPatient;
 import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
+import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
-public class TreatedPatient extends BasePage implements PageView {
+import java.util.List;
 
-    CheckIn checkIn;
+public class TreatedPatient extends BasePage implements PageView {
     Staff staff;
-    public TreatedPatient(CheckIn checkIn, Staff staff) {
-        this.checkIn = checkIn;
+    public TreatedPatient(Staff staff) {
         this.staff=staff;
         pageTitle="=======================TreatedPatient=============================";
         choicePrompt="input your choice:";
@@ -21,6 +23,14 @@ public class TreatedPatient extends BasePage implements PageView {
     public void display() {
         running = true;
         while (running) {
+                StaffMenuController checkmm=new StaffMenuController();
+                List<String> checkins= checkmm.getChechinChoices();//获取已经check_in的病人列表
+                if(checkins.size()<=0)
+                {
+                    show("the patient checklist is empty!");
+                    break;
+                }
+            CheckIn   checkIn=checkmm.getCheckInSelection( ComboBoxPage.getInstance().select(checkins,"please select a checkin record:"));
             initPage();
             switch (getChoice()) {
                 case 1:
