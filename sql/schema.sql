@@ -1,470 +1,533 @@
-create sequence patient_ID_SEQ
-    nocache
-/
-
-
-create sequence check_in_ID_SEQ
-    nocache
-/
-
-
-create sequence sever_ID_SEQ
-    nocache
-/
-
-
-create sequence vital_ID_SEQ
-    nocache
-/
-
-
-create sequence report_ID_SEQ
-    nocache
-/
-
-
-create sequence nega_exp_ID_SEQ
-    nocache
-/
-
-create sequence reason_ID_SEQ
-    nocache
-/
-
-create sequence rule_ID_SEQ
-    nocache
-/
-
-
+-- 1.
 create table MEDICAL_FACILITIES
 (
-    FACILITY_ID NUMBER not null
+    FACILITY_ID    NUMBER        not null
         constraint MEDICAL_FACILITIES_PK
             primary key,
-    NAME VARCHAR2(255) not null,
+    NAME           VARCHAR2(255) not null,
     CLASSIFICATION VARCHAR2(255) not null,
-    ADDRESS VARCHAR2(255) not null,
-    CAPACITY VARCHAR2(255) not null
+    ADDRESS        VARCHAR2(255) not null,
+    CAPACITY       VARCHAR2(255) not null
 )
 /
 
+create table CERTIFICATIONS
+(
+    ACRONYM            VARCHAR2(255) not null
+        constraint CERTIFICATIONS_PK
+            primary key,
+    NAME               VARCHAR2(255) not null,
+    DATE_CERTIFIED     DATE not null,
+    EXPIRATION_DATE    DATE not null
+)
+/
+
+create table facility_has_certification
+(
+    facility_id number not null
+        constraint FACILITY_fk
+            references MEDICAL_FACILITIES
+                on delete cascade,
+    acronym varchar2(255) not null
+        constraint CERTIFICATIONS_fk
+            references CERTIFICATIONS
+                on delete cascade,
+    constraint facility_has_certification_pk
+        primary key (FACILITY_ID, ACRONYM)
+)
+/
+
+-- 2.
 create table PATIENTS
 (
-    PATIENT_ID NUMBER,
-    FIRST_NAME VARCHAR2(255),
-    LAST_NAME VARCHAR2(255) not null,
-    DOB DATE not null,
-    PHONE VARCHAR2(255),
+    PATIENT_ID      NUMBER,
+    FIRST_NAME       VARCHAR2(255),
+    LAST_NAME        VARCHAR2(255) not null,
+    DOB             DATE          not null,
+    PHONE           VARCHAR2(255),
     ADDRESS_COUNTRY VARCHAR2(255),
-    ADDRESS_STATE VARCHAR2(255),
-    ADDRESS_CITY VARCHAR2(255),
-    ADDRESS_STREET VARCHAR2(255),
-    ADDRESS_ZIP NUMBER,
+    ADDRESS_STATE   VARCHAR2(255),
+    ADDRESS_CITY    VARCHAR2(255),
+    ADDRESS_STREET  VARCHAR2(255),
+    ADDRESS_ZIP     NUMBER,
     PRIORITY_STATUS VARCHAR2(255),
-    TREATMENT_TIME DATE,
+    TREATMENT_TIME  DATE,
     constraint PETIENTS_PK
         primary key (LAST_NAME, DOB)
 )
 /
-
-create trigger PATIENT_ID_TRIGGER
+create sequence patient_ID_SEQ
+    nocache
+/
+create trigger patient_id_TRIGGER
     before insert
-    on PATIENTS
-    for each row when (NEW.PATIENT_ID is null)
+    on patients
+    for each row
+    when (NEW.PATIENT_ID is null)
 begin
     select patient_ID_SEQ.nextval into :new.patient_id from dual;
 
 end patient_id_TRIGGER;
 /
 
-create table PATIENT_HAS_FACILITY
+
+-- 3.
+create table patient_has_facility
 (
-    FACILITY_ID NUMBER not null
-        constraint FACILITY_ID_FK
+    facility_id number not null
+        constraint FACILITY_ID_fk
             references MEDICAL_FACILITIES
                 on delete cascade,
-    DOB DATE not null,
-    LAST_NAME VARCHAR2(255) not null,
-    constraint PATIENT_HAS_FACILITY_PK
-        primary key (FACILITY_ID, DOB, LAST_NAME),
-    constraint NAME_DOB_FK
-        foreign key (LAST_NAME, DOB) references PATIENTS
+    dob date not null,
+    last_name varchar2(255) not null,
+    constraint patient_has_facility_pk
+        primary key (facility_id, dob, last_name),
+    constraint NAME_DOB_fk
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade
 )
 /
 
-create table SYMPTOMS
+-- 4.
+create table check_ins
 (
-    NAME VARCHAR2(255) not null,
-    SYM_CODE VARCHAR2(255) not null
-        constraint SYMPTOMS_PK
+    id number not null,
+    PATIENT_ID number not null;
+start_time date not null,
+    end_time date,
+    facility_id number not null,
+        foreign key (facility_id) references MEDICAL_FACILITIES
+            on delete cascade,
+                   constraint check_ins_pk
+                   primary key (last_name, dob, start_time, facility_id),
+                   constraint PHF_NAME_DOB_fk
+                   foreign key (PATIENT_ID) references PATIENTS
+               on delete cascade
+                      )
+/
+create sequence check_in_ID_SEQ
+    nocache
+/
+create trigger check_in_id_TRIGGER
+    before insert
+    on check_ins
+    for each row
+    when (NEW.id is null)
+begin
+    select check_in_ID_SEQ.nextval into :new.id from dual;
+
+end check_in_id_TRIGGER;
+/
+
+-- 5.
+create table symptoms
+(
+    name varchar2(255) not null,
+    sym_code varchar2(255) not null
+        constraint symptoms_pk
             primary key
 )
 /
 
-create table SEVERITIES
+-- 6.
+create table severities
 (
-    ID NUMBER not null,
-    VALUE NUMBER not null,
-    NAME VARCHAR2(255) not null,
-    SCALE VARCHAR2(255) not null,
-    BLEEDING VARCHAR2(255),
-    constraint SEVERITIES_PK
-        primary key (VALUE, NAME, SCALE)
+    id number not null,
+    value number not null,
+    name varchar2(255) not null,
+    scale varchar2(255) not null,
+    bleeding varchar2(255),
+    constraint severities_pk
+        primary key (value, name, scale)
 )
 /
-
-create trigger SEVER_ID_TRIGGER
+create sequence sever_ID_SEQ
+    nocache
+/
+create trigger sever_id_TRIGGER
     before insert
-    on SEVERITIES
-    for each row when (NEW.id is null)
+    on severities
+    for each row
+    when (NEW.id is null)
 begin
     select sever_ID_SEQ.nextval into :new.id from dual;
 
 end sever_id_TRIGGER;
 /
 
-create table PATIENT_HAS_SYM_SERVERITY
+-- 7.
+create table patient_has_sym_serverity
 (
-    SYM_CODE VARCHAR2(255) not null
-        constraint PHSE_SYM_CODE_FK
+    sym_code varchar2(255) not null
+        constraint PHSE_SYM_CODE_fk
             references SYMPTOMS
                 on delete cascade,
-    VALUE NUMBER not null,
-    SNAME VARCHAR2(255) not null,
-    SCALE VARCHAR2(255) not null,
-    LAST_NAME VARCHAR2(255) not null,
-    DOB DATE not null,
-    DURATION FLOAT not null,
-    CAUSE_INCIDENT VARCHAR2(255) not null,
-    FIRST_OCCURRENCE CHAR default 0 not null,
-    constraint PATIENT_HAS_SYM_SEVERITY_PK
-        primary key (SYM_CODE, VALUE, SNAME, SCALE, LAST_NAME, DOB),
-    constraint PHSE_PATIENT_FK
-        foreign key (LAST_NAME, DOB) references PATIENTS
+    value number not null,
+    sname varchar2(255) not null,
+    scale varchar2(255) not null,
+    last_name varchar2(255) not null,
+    dob date not null,
+    duration float not null,
+    cause_incident varchar2(255) not null,
+    first_occurrence char(1) default 0 not null,
+    constraint PATIENT_HAS_SYM_SEVERITY_pk
+        primary key (sym_code, value, sname, scale, last_name, dob),
+    constraint PHSE_PATIENT_fk
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade,
-    constraint PHSE_SEVERITY_FK
-        foreign key (VALUE, SNAME, SCALE) references SEVERITIES
+    constraint PHSE_SEVERITY_fk
+        foreign key (value, sname, scale) references SEVERITIES
             on delete cascade
 )
 /
 
-create table BODY_PARTS
+-- 8.
+create table body_parts
 (
-    BODY_CODE VARCHAR2(255) not null
-        constraint BODY_PARTS_PK
+    body_code varchar2(255) not null
+        constraint body_parts_pk
             primary key,
-    BODY_NAME VARCHAR2(255) not null
+    body_name varchar2(255) not null
 )
 /
 
-create table SYM_HAS_BODY_PART
+-- 9.
+create table sym_has_body_part
 (
-    SYM_CODE VARCHAR2(255) not null
-        constraint SHBP_SYM_CODE_FK
+    sym_code varchar2(255) not null
+        constraint SHBP_SYM_CODE_fk
             references SYMPTOMS
                 on delete cascade,
-    BODY_CODE VARCHAR2(255) not null
-        constraint SHBP_BODY_CODE_FK
+    body_code varchar2(255) not null
+        constraint SHBP_BODY_CODE_fk
             references BODY_PARTS
                 on delete cascade,
-    constraint SYM_HAS_BODY_PART_PK
-        primary key (SYM_CODE, BODY_CODE)
+    constraint sym_has_body_part_pk
+        primary key (sym_code, body_code)
 )
 /
 
-create table SERVICE_DEPTS
+-- 10.
+create table service_depts
 (
-    DEPT_CODE VARCHAR2(255) not null
-        constraint MEDICAL_DEPTS_PK
+    dept_code varchar2(255) not null
+        constraint medical_depts_pk
             primary key,
-    NAME VARCHAR2(255) not null,
-    IS_MEDICAL CHAR
+    name varchar2(255) not null,
+    is_Medical char(1)
 )
 /
 
-create table SERVICES
+-- 12.
+create table services
 (
-    SERVICE_CODE VARCHAR2(255) not null
-        constraint SERVICES_PK
+    service_code varchar2(255) not null
+        constraint services_pk
             primary key,
-    NAME VARCHAR2(255) not null
+    name varchar2(255) not null
 )
 /
 
-create table DEPT_HAS_SERVICE
+-- 13.
+create table dept_has_service
 (
-    SERVICE_CODE VARCHAR2(255) not null
-        constraint DHS_SERVICE_CODE_FK
+    service_code varchar2(255) not null
+        constraint DHS_SERVICE_CODE_fk
             references SERVICES
                 on delete cascade,
-    DEPT_CODE VARCHAR2(255) not null
-        constraint DHS_DEPT_CODE_FK
+    dept_code varchar2(255) not null
+        constraint DHS_DEPT_CODE_fk
             references SERVICE_DEPTS
                 on delete cascade,
-    constraint DEPT_HAS_SERVICE_PK
-        primary key (SERVICE_CODE, DEPT_CODE)
+    constraint dept_has_service_pk
+        primary key (service_code, dept_code)
 )
 /
 
-create table DEPT_HAS_BODY_PART
+-- 14.
+create table dept_has_body_part
 (
-    DEPT_CODE VARCHAR2(255) not null
-        constraint DHBP_DEPT_CODE_FK
+    dept_code varchar2(255) not null
+        constraint DHBP_DEPT_CODE_fk
             references SERVICE_DEPTS
                 on delete cascade,
-    BODY_CODE VARCHAR2(255) not null
-        constraint DHBP_BODY_CODE_FK
+    body_code varchar2(255)
+        constraint DHBP_BODY_CODE_fk
             references BODY_PARTS
                 on delete cascade,
-    constraint DEPT_HAS_BODY_PART_PK
-        primary key (DEPT_CODE, BODY_CODE)
+    constraint dept_has_body_part_pk
+        primary key (dept_code, body_code)
 )
 /
 
-create table FACILITY_HAS_DEPT
+-- 15.
+create table facility_has_dept
 (
-    FACILITY_ID NUMBER not null
-        constraint FHD_FACILITY_ID_FK
+    facility_id number not null
+        constraint FHD_FACILITY_ID_fk
             references MEDICAL_FACILITIES
                 on delete cascade,
-    DEPT_CODE VARCHAR2(255) not null
-        constraint FHD_MEDICAL_DEPTS__FK
+    dept_code varchar2(255) not null
+        constraint FHD_MEDICAL_DEPTS__fk
             references SERVICE_DEPTS
                 on delete cascade,
-    constraint FACILITY_HAS_DEPT_PK
-        primary key (FACILITY_ID, DEPT_CODE)
+    constraint facility_has_dept_pk
+        primary key (facility_id, dept_code)
 )
 /
 
+-- 16.
 create table STAFFS
 (
-    EMPLOYEE_ID NUMBER not null
+    EMPLOYEE_ID NUMBER         not null
         constraint STAFF_PK
             primary key,
-    FIRST_NAME VARCHAR2(255) not null,
-    LAST_NAME VARCHAR2(255) not null,
-    IS_MEDICAL CHAR default 1 not null,
-    DOB DATE,
-    HIRE_DATE DATE,
-    PRIMARY_DEPT_CODE VARCHAR2(255) not null
-        constraint FHD_STAFFS_FK
+    FIRST_NAME VARCHAR2(255)  not null,
+    LAST_NAME VARCHAR2(255)  not null,
+    IS_MEDICAL  CHAR default 1 not null,
+    DOB         DATE,
+    HIRE_DATE    DATE,
+    primary_dept_code varchar2(255) not null
+        constraint FHD_STAFFS_fk
             references SERVICE_DEPTS
                 on delete cascade
 )
 /
 
-create table STAFF_SECO_WORKS_DEPT
+-- 18.
+create table staff_seco_works_dept
 (
-    EMPLOYEE_ID NUMBER not null
-        constraint SWD_SECO_EMPLOYEE_ID_FK
+    employee_id number not null
+        constraint SWD_SECO_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    DEPT_CODE VARCHAR2(255) not null
-        constraint SWD_SECO_DEPT_CODE_FK
+    dept_code varchar2(255) not null
+        constraint SWD_SECO_DEPT_CODE_fk
             references SERVICE_DEPTS
                 on delete cascade,
-    constraint STAFF_SECO_WORKS_DEPT_PK
-        primary key (EMPLOYEE_ID, DEPT_CODE)
+    constraint staff_seco_works_dept_pk
+        primary key (employee_id, dept_code)
 )
 /
 
-create table STAFF_DIRECTS_DEPT
+create table staff_directs_dept
 (
-    EMPLOYEE_ID NUMBER not null
-        constraint SWD_DIR_EMPLOYEE_ID_FK
+    employee_id number not null
+        constraint SWD_DIR_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    DEPT_CODE VARCHAR2(255) not null
-        constraint SWD_DIR_DEPT_CODE_FK
+    dept_code varchar2(255) not null
+        constraint SWD_DIR_DEPT_CODE_fk
             references SERVICE_DEPTS
                 on delete cascade,
-    constraint STAFF_DIR_WORKS_DEPT_PK
-        primary key (EMPLOYEE_ID, DEPT_CODE)
+    constraint staff_dir_works_dept_pk
+        primary key (employee_id, dept_code)
 )
 /
 
-create table VITALS
+/
+-- 20.
+create table vitals
 (
-    ID NUMBER not null,
-    LAST_NAME VARCHAR2(255) not null,
-    DOB DATE not null,
-    TEMPERATURE FLOAT not null,
-    BLOOD_PRESSURE_SYSTOLIC FLOAT not null,
-    BLOOD_PRESSURE_DIASTOLIC FLOAT not null,
-    constraint VITALS_PK
-        primary key (LAST_NAME, DOB, TEMPERATURE, BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC),
-    constraint V_NAME_DOB_FK
-        foreign key (LAST_NAME, DOB) references PATIENTS
+    id number not null,
+    last_name varchar2(255) not null,
+    dob date not null,
+    temperature float not null,
+    blood_pressure_systolic float not null,
+    blood_pressure_diastolic float not null,
+    constraint vitals_pk
+        primary key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
+    constraint V_NAME_DOB_fk
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade
 )
 /
-
-create trigger VITAL_ID_TRIGGER
+create sequence vital_ID_SEQ
+    nocache
+/
+create trigger vital_id_TRIGGER
     before insert
-    on VITALS
-    for each row when (NEW.id is null)
+    on vitals
+    for each row
+    when (NEW.id is null)
 begin
     select vital_ID_SEQ.nextval into :new.id from dual;
 
 end vital_id_TRIGGER;
 /
 
-create table STAFF_RECORDS_VITAL
+
+-- 21.
+create table staff_records_vital
 (
-    EMPLOYEE_ID NUMBER not null
-        constraint SRV_EMPLOYEE_ID_FK
+    employee_id number not null
+        constraint SRV_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    LAST_NAME VARCHAR2(255) not null,
-    DOB DATE not null,
-    TEMPERATURE FLOAT not null,
-    BLOOD_PRESSURE_SYSTOLIC FLOAT not null,
-    BLOOD_PRESSURE_DIASTOLIC FLOAT not null,
-    constraint STAFF_RECORDS_VITAL_PK
-        primary key (EMPLOYEE_ID, LAST_NAME, DOB, TEMPERATURE, BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC),
-    constraint SRV_VITALS_FK
-        foreign key (LAST_NAME, DOB, TEMPERATURE, BLOOD_PRESSURE_SYSTOLIC, BLOOD_PRESSURE_DIASTOLIC) references VITALS
+    last_name varchar2(255) not null,
+    dob date not null,
+    temperature float not null,
+    blood_pressure_systolic float not null,
+    blood_pressure_diastolic float not null,
+    constraint staff_records_vital_pk
+        primary key (employee_id, last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
+    constraint SRV_VITALS_fk
+        foreign key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic) references VITALS
             on delete cascade
 )
 /
 
-create table REPORTS
+-- 22.
+create table reports
 (
-    ID NUMBER not null,
-    TIME DATE not null,
-    DOB DATE not null,
-    LAST_NAME VARCHAR2(255) not null,
-    DISCHARGE_STATUS VARCHAR2(255) not null,
-    TREATMENT VARCHAR2(255) not null,
-    FACILITY_ID NUMBER not null
-        constraint R_FACILITY_ID_FK
+    id number not null,
+    time date not null,
+    dob date not null,
+    last_name varchar2(255) not null,
+    discharge_status varchar2(255) not null,
+    treatment varchar2(255) not null,
+    facility_id number not null
+        constraint R_FACILITY_ID_fk
             references MEDICAL_FACILITIES
                 on delete cascade,
-    EMPLOYEE_ID NUMBER not null
-        constraint R_EMPLOYEE_ID_FK
+    employee_id number not null
+        constraint R_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    constraint REPORTS_PK
-        primary key (TIME, DOB, LAST_NAME),
-    constraint R_DOB_NAME_FK
-        foreign key (LAST_NAME, DOB) references PATIENTS
+    constraint reports_pk
+        primary key (time, dob, last_name),
+    constraint R_DOB_NAME_fk
+        foreign key (last_name, dob) references PATIENTS
             on delete cascade
 )
 /
-
-create trigger REPORT_ID_TRIGGER
+create sequence report_ID_SEQ
+    nocache
+/
+create trigger report_id_TRIGGER
     before insert
-    on REPORTS
-    for each row when (NEW.id is null)
+    on reports
+    for each row
+    when (NEW.id is null)
 begin
     select report_ID_SEQ.nextval into :new.id from dual;
 
 end report_id_TRIGGER;
 /
 
-create table STAFF_PROCESSES_REPORT
+
+-- 23.
+create table staff_processes_report
 (
-    EMPLOYEE_ID NUMBER not null
-        constraint SPR_EMPLOYEE_ID_FK
+    employee_id number not null
+        constraint SPR_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
-    TIME DATE not null,
-    DOB DATE not null,
-    LAST_NAME VARCHAR2(255) not null,
-    constraint STAFF_PROCESSES_REPORT_PK
-        primary key (EMPLOYEE_ID, TIME, DOB, LAST_NAME),
-    constraint SPR_REPOT_FK
-        foreign key (TIME, DOB, LAST_NAME) references REPORTS
+    time date not null,
+    dob date not null,
+    last_name varchar2(255) not null,
+    constraint staff_processes_report_pk
+        primary key (employee_id, time, dob, last_name),
+    constraint SPR_REPOT_fk
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /
 
-create table NEGATIVE_EXPERIENCES
+-- 24.
+create table negative_experiences
 (
-    ID NUMBER not null,
-    NEGA_CODE VARCHAR2(255) not null,
-    DESCRIPTION VARCHAR2(255) not null,
-    TIME DATE not null,
-    DOB DATE not null,
-    LAST_NAME VARCHAR2(255) not null,
-    constraint NEGATIVE_EXPERIENCES_PK
-        primary key (NEGA_CODE, DESCRIPTION, TIME, DOB, LAST_NAME),
-    constraint NE_REPORT_FK
-        foreign key (TIME, DOB, LAST_NAME) references REPORTS
+    id number not null,
+    nega_code varchar2(255) not null,
+    description varchar2(255) not null,
+    time date not null,
+    dob date not null,
+    last_name varchar2(255) not null,
+    constraint negative_experiences_pk
+        primary key (nega_code, description, time, dob, last_name),
+    constraint NE_REPORT_fk
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /
-
-create trigger NEGA_EXP_ID_TRIGGER
+create sequence nega_exp_ID_SEQ
+    nocache
+/
+create trigger nega_exp_id_TRIGGER
     before insert
-    on NEGATIVE_EXPERIENCES
-    for each row when (NEW.id is null)
+    on negative_experiences
+    for each row
+    when (NEW.id is null)
 begin
     select nega_exp_ID_SEQ.nextval into :new.id from dual;
 
 end nega_exp_id_TRIGGER;
 /
 
-create table REASONS
+-- 25.
+create table reasons
 (
-    ID NUMBER not null,
-    REASON_CODE VARCHAR2(255) not null
-        constraint R_SERVICE_CODE_FK
+    id number not null,
+    reason_code varchar2(255) not null
+        constraint R_SERVICE_CODE_fk
             references SERVICES
                 on delete cascade,
-    DESCRIPTION VARCHAR2(255) not null,
-    SERVICE_CODE VARCHAR2(255) not null,
-    TIME DATE not null,
-    DOB DATE not null,
-    LAST_NAME VARCHAR2(255) not null,
-    constraint REASONS_PK
-        primary key (REASON_CODE, DESCRIPTION, SERVICE_CODE, TIME, DOB, LAST_NAME),
-    constraint R_REPORT_FK
-        foreign key (TIME, DOB, LAST_NAME) references REPORTS
+    description varchar2(255) not null,
+    service_code varchar2(255) not null,
+    time date not null,
+    dob date not null,
+    last_name varchar2(255) not null,
+    constraint reasons_pk
+        primary key (reason_code, description, service_code, time, dob, last_name),
+    constraint R_REPORT_fk
+        foreign key (time, dob, last_name) references REPORTS
             on delete cascade
 )
 /
-
-create trigger REASON_ID_TRIGGER
+create sequence reason_ID_SEQ
+    nocache
+/
+create trigger reason_id_TRIGGER
     before insert
-    on REASONS
-    for each row when (NEW.id is null)
+    on reasons
+    for each row
+    when (NEW.id is null)
 begin
     select reason_ID_SEQ.nextval into :new.id from dual;
 
 end reason_id_TRIGGER;
 /
 
-create table RULES
+
+-- 26.
+create table rules
 (
-    ID NUMBER not null,
-    BODY_CODE VARCHAR2(255) not null
-        constraint R_BODY_CODE_FK
+    id number not null,
+    body_code varchar2(255) not null
+        constraint R_BODY_CODE_fk
             references BODY_PARTS
                 on delete cascade,
-    SYM_CODE VARCHAR2(255) not null
-        constraint R_SYM_CODE_FK
+    sym_code varchar2(255) not null
+        constraint R_SYM_CODE_fk
             references SYMPTOMS
                 on delete cascade,
-    SCALE_LOW NUMBER,
-    SCALE_HIGH NUMBER,
-    constraint RULES_PK
-        primary key (BODY_CODE, SYM_CODE)
+    scale_low number,
+    scale_high number,
+    constraint rules_pk
+        primary key (body_code, sym_code)
 )
 /
-
-create trigger RULE_ID_TRIGGER
+create sequence rule_ID_SEQ
+    nocache
+/
+create trigger rule_id_TRIGGER
     before insert
-    on RULES
-    for each row when (NEW.id is null)
+    on rules
+    for each row
+    when (NEW.id is null)
 begin
     select rule_ID_SEQ.nextval into :new.id from dual;
 
 end rule_id_TRIGGER;
 /
-
-
-
-
 
