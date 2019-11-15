@@ -49,6 +49,7 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
     }
     return patient;
   }
+
   public Patient patientExist(String lastName,Date dob) {
     Patient patient = null;
     try {
@@ -81,6 +82,39 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
     }
     return patient;
   }
+
+  public Patient treatedPatient(Date treatmentDate) {
+    Patient patient = null;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from PATIENTS where treatmentDate = ?");
+      preparedStatement.setDate(1, new java.sql.Date(treatmentDate.getTime()));
+      resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        patient = new Patient(
+                resultSet.getInt("patient_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getDate("dob"),
+                resultSet.getString("phone"),
+                resultSet.getString("address_country"),
+                resultSet.getString("address_state"),
+                resultSet.getString("address_city"),
+                resultSet.getString("address_street"),
+                resultSet.getInt("address_zip"),
+                resultSet.getString("priority_status"),
+                resultSet.getDate("treatment_time")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return patient;
+  }
+
 
   public void addFacility(Patient p) {
     try {

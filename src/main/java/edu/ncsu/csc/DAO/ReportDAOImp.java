@@ -3,6 +3,7 @@ package edu.ncsu.csc.DAO;
 import edu.ncsu.csc.model.Report;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
@@ -52,15 +53,66 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return null;
     }
 
+    public Report getReportByTimeNameAndDob(Date time, String lastName, Date dob) {
+        Report report = null;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from REPORTS where time = ? and last_name = ? and dob = ?");
+            preparedStatement.setDate(1, new java.sql.Date(time.getTime()));
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setDate(3, new java.sql.Date(dob.getTime()));
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                report = new Report(
+                        resultSet.getInt("id"),
+                        resultSet.getDate("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("discharge_status"),
+                        resultSet.getString("treatment"),
+                        resultSet.getInt("facility_id"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("reason")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return report;
+    }
+
     @Override
     public Report getOneById(String id) {
         return null;
     }
-
     @Override
     public boolean updateValue(Report p) {
         return false;
     }
+
+    public Report updateDischarge(int id) {
+        Report report = null;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("UPDATE reports " +
+                            " SET discharge_status = ? " +
+                            " WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, report.getDischargeStatus());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return report;
+    }
+
+
 
     @Override
     public boolean deleteRecord(Report p) {
