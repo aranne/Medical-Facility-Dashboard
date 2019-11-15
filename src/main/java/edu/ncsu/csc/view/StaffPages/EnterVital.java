@@ -14,16 +14,16 @@ public class EnterVital extends BasePage implements PageView {
         menuStrs.add("Go back");
     }
     @Override
-    public  void display() {
+    public void display() {
+        vital.setTemperature(getRealValue("input Temperature:"));
+        vital.setBloodPressureSystolic(getRealValue("input Systolic blood pressure:"));
+        vital.setBloodPressureDiastolic(getRealValue("input Diastolic blood pressure:"));
         initPage();
         switch (getChoice()) {
             case 1:
-                vital.setTemperature(getRealValue("input Temperature:"));
-                vital.setBloodPressureSystolic(getRealValue("input Systolic blood pressure:"));
-                vital.setBloodPressureDiastolic(getRealValue("input Diastolic blood pressure:"));                
                 break;
             case 2:
-                running = false;
+                vital.setLastName(null);
                 break;
         }
     }

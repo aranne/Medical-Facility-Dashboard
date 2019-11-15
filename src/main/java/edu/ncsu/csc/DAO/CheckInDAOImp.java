@@ -159,11 +159,11 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
 	    try {
 	      openConnection();
 	      preparedStatement = connection
-	              .prepareStatement("update check_ins set LAST_NAME=?, DOB=?, START_TIME=?, END_TIME=?,FACILITY_ID=?");
-	      preparedStatement.setString(1, p.getLastName());
-	      preparedStatement.setDate(2, (Date) p.getDob());
-	      preparedStatement.setDate(3, (Date) p.getStartTime());
-	      preparedStatement.setDate(4, (Date) p.getEndTime());
+	              .prepareStatement("update check_ins set START_TIME=?, END_TIME=? where LAST_NAME=? and DOB=? and FACILITY_ID=?");
+	      preparedStatement.setDate(1, new java.sql.Date(p.getStartTime().getTime()));
+	      preparedStatement.setDate(2, new java.sql.Date(p.getEndTime().getTime()));
+		  preparedStatement.setString(3, p.getLastName());
+		  preparedStatement.setDate(4, new java.sql.Date(p.getDob().getTime()));
 	      preparedStatement.setInt(5, p.getFacilityId());
 	      if(preparedStatement.executeUpdate()>0)
 	    	  rest=true;;

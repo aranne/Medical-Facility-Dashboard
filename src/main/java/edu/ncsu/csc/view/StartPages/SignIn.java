@@ -50,7 +50,7 @@ public class SignIn extends BasePage implements PageView {
                             new PatientRoutingPage(m_patient,facility).display();
                         }else{
                             show("Login successfully\n" );
-                            new StaffMenu(m_staff).display();
+                            new StaffMenu(m_staff,facility).display();
                         }
                         running = false;
                     } else {

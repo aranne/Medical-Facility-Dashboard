@@ -1,10 +1,7 @@
 package edu.ncsu.csc.view.StartPages;
 
 import edu.ncsu.csc.view.BasePage;
-import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
-
-import java.util.List;
 
 
 public class Home extends BasePage implements PageView {
