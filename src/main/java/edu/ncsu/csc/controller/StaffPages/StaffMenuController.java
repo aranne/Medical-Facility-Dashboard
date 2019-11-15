@@ -8,7 +8,7 @@ import edu.ncsu.csc.model.MedicalFacility;
 
 import java.util.ArrayList;
 import java.util.List;
-// similarity with ChecKInManager,use this calss to manage the "Trated Patient list"
+// similarity with ChecKInManager,use this class to manage the "Treated Patient list"
 public class StaffMenuController {
 
     List<CheckIn> checkIns;
@@ -21,8 +21,8 @@ public class StaffMenuController {
         reload();
     }
     public void reload(){
-        TemplateDAO<CheckIn> checkDao=new CheckInDAOImp();
-        //应该获取treated patient lsit
+        TemplateDAO<CheckIn> checkDao = new CheckInDAOImp();
+        //应该获取treated patient list
         checkIns=checkDao.getAllValues();
     }
     public  List<String> getChechinChoices(MedicalFacility facility){
@@ -37,7 +37,7 @@ public class StaffMenuController {
     }
     public CheckIn getCheckInSelection(int index){
         if(index<0 || index>=checkIns.size())
-            throw new NullPointerException("invalidate checkin idnex");
+            throw new NullPointerException("invalidate checkin index");
         return checkIns.get(index - 1);
     }
     
