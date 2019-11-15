@@ -16,8 +16,8 @@ public class SignUp extends BasePage implements PageView {
   UserManager um;
   public SignUp() {
     super();
-    menueStrs.add("Sign up");
-    menueStrs.add("Go Back");
+    menuStrs.add("Sign up");
+    menuStrs.add("Go Back");
     pageTitle = "==================== SIGN UP ====================";
     choicePrompt = "input your choice:";
     um=new UserManager();

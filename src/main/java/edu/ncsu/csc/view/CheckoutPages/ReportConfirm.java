@@ -15,8 +15,8 @@ public class ReportConfirm extends BasePage implements PageView {
     private ReportManager rpm;
     public ReportConfirm(Report report,ReportManager rpm) {
         choicePrompt = "input your choice:";
-        menueStrs.add("Confirm");
-        menueStrs.add("Go Back");
+        menuStrs.add("Confirm");
+        menuStrs.add("Go Back");
         this.report=report;
         this.rpm=rpm;
     }

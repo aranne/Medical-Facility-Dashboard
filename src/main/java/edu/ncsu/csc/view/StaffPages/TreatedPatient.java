@@ -15,8 +15,8 @@ public class TreatedPatient extends BasePage implements PageView {
         this.staff=staff;
         pageTitle="=======================TreatedPatient=============================";
         choicePrompt="input your choice:";
-        menueStrs.add("Check out");
-        menueStrs.add("Go Back");
+        menuStrs.add("Check out");
+        menuStrs.add("Go Back");
     }
     public void display() {
         running = true;

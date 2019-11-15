@@ -17,9 +17,9 @@ public class PatientRoutingPage extends BasePage implements PageView {
     this.f = f;
     choicePrompt = "Enter Choice (1-3)";
     pageTitle = "==================== MENU ====================";
-    menueStrs.add("Check-in");
-    menueStrs.add("Check-out acknowledgement");
-    menueStrs.add("Go Back");
+    menuStrs.add("Check-in");
+    menuStrs.add("Check-out acknowledgement");
+    menuStrs.add("Go Back");
   }
   @Override
   public void display() {

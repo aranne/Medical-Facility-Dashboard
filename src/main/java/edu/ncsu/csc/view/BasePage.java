@@ -16,7 +16,7 @@ public class BasePage {
     protected DateFormat timeFormat;
     protected String pageTitle;
     protected String choicePrompt;
-    protected List<String> menueStrs;
+    protected List<String> menuStrs;
     protected boolean running;
     public BasePage() {
         running=false;
@@ -25,12 +25,12 @@ public class BasePage {
         choicePrompt="";
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         timeFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        menueStrs=new ArrayList<String>();
+        menuStrs =new ArrayList<String>();
     }
 
     protected void initPage(){
         show(pageTitle);
-        show(menueStrs);
+        show(menuStrs);
         show(choicePrompt);
     }
     protected void show(String s) {
@@ -53,7 +53,7 @@ public class BasePage {
                 System.out.println("Invalid Menue id");
                 continue;
             }
-            if (index < 1 || index > menueStrs.size()) {
+            if (index < 1 || index > menuStrs.size()) {
                 System.out.println("Invalid Menue id");
             } else {
                 break;
@@ -71,7 +71,7 @@ public class BasePage {
         int rest = 0;
         while (true) {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt);
                 rest = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
                 System.out.println("Invalid date");
@@ -85,7 +85,7 @@ public class BasePage {
         float rest = 0.0f;
         while (true) {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt);
                 rest = Float.parseFloat(scanner.nextLine());
             } catch (Exception e) {
                 System.out.println("Invalid date");
@@ -99,7 +99,7 @@ public class BasePage {
         Date date;
 
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
 
             try {
                 date = dateFormat.parse(scanner.nextLine());
@@ -115,13 +115,14 @@ public class BasePage {
     public String getPhoneFromInput(String prompt) {
         while (true) {
             String phone = getStringFromInput(prompt);
-           Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
-            Matcher matcher = pattern.matcher(phone);
-            if (matcher.matches()) {
-                return phone;
-            } else {
-                System.out.println("Invalid phone number");
-            }
+            ///////////////��֤�绰�����ʽ
+//            Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
+//            Matcher matcher = pattern.matcher(phone);
+//            if (matcher.matches()) {
+//                return phone;
+//            } else {
+//                System.out.println("Invalid phone number");
+//            }
         }
     }
 

@@ -15,9 +15,9 @@ public class UpdateReason extends BasePage implements PageView {
         this.reason = reason;
         this.rpm=rpm;
         choicePrompt = "choose a reason";
-        menueStrs.add("service unavailable at time of visit");
-        menueStrs.add("service not present at facility");
-        menueStrs.add("non payment");
+        menuStrs.add("service unavailable at time of visit");
+        menuStrs.add("service not present at facility");
+        menuStrs.add("non payment");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class UpdateReason extends BasePage implements PageView {
         List<String> services=rpm.getServiceMenu();
         int index= ComboBoxPage.getInstance().select(services,"choose a service");
         reason.setServiceCode(rpm.getServiceSelection(index).getServiceCode());
-        show(menueStrs);
+        show(menuStrs);
         initPage();
         reason.setReasonCode(String.valueOf(index));
         reason.setDescription(getEmailFromInput("input some disciption:"));

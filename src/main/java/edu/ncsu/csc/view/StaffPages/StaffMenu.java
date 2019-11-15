@@ -17,12 +17,12 @@ public class StaffMenu extends BasePage implements PageView {
         this.m_staff = m_staff;
         pageTitle="======================STAFF MENU===============";
         choicePrompt="select a job:";
-        menueStrs.add("Checked-in patient list");
-        menueStrs.add("Threated patient list");
-        menueStrs.add("Add symptoms");
-        menueStrs.add("Add severity scale");
-        menueStrs.add("Add assessment rule");
-        menueStrs.add("Go back");
+        menuStrs.add("Checked-in patient list");
+        menuStrs.add("Threated patient list");
+        menuStrs.add("Add symptoms");
+        menuStrs.add("Add severity scale");
+        menuStrs.add("Add assessment rule");
+        menuStrs.add("Go back");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class StaffMenu extends BasePage implements PageView {
                     new AddSymptoms().display();
                     break;
                 case 4:
-                    new AddSeverityScale().display();
+                    new ChooseSymptom().display();
                     break;
                 case 5:
                     new AddAssessmentRule();

@@ -21,8 +21,8 @@ public class SignIn extends BasePage implements PageView {
     private boolean isPatient;
     public SignIn() {
         super();
-        menueStrs.add("Sign in");
-        menueStrs.add("Go Back");
+        menuStrs.add("Sign in");
+        menuStrs.add("Go Back");
         pageTitle = "==================== SIGN IN ====================";
         choicePrompt = "input your choice:";
         m_staff=null;

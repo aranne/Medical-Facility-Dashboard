@@ -11,8 +11,8 @@ import java.util.List;
 public class AddSymptoms extends BasePage implements PageView {
 
     public AddSymptoms() {
-        menueStrs.add("Record");
-        menueStrs.add("Go Back");
+        menuStrs.add("Record");
+        menuStrs.add("Go Back");
         choicePrompt="input your choice:";
         pageTitle="====================== AddSymptoms ==========================";
     }

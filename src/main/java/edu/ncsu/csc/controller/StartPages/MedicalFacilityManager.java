@@ -27,6 +27,6 @@ public class MedicalFacilityManager {
         return choices;
     }
     public MedicalFacility getFacilitySelection(int index){
-        return facilities.get(index - 1);
+        return facilities.get(index-1);
     }
 }
