@@ -71,7 +71,7 @@ public class BasePage {
         int rest = 0;
         while (true) {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt);
                 rest = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
                 System.out.println("Invalid date");
@@ -85,7 +85,7 @@ public class BasePage {
         float rest = 0.0f;
         while (true) {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt);
                 rest = Float.parseFloat(scanner.nextLine());
             } catch (Exception e) {
                 System.out.println("Invalid date");
@@ -99,7 +99,7 @@ public class BasePage {
         Date date;
 
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
 
             try {
                 date = dateFormat.parse(scanner.nextLine());
@@ -115,13 +115,14 @@ public class BasePage {
     public String getPhoneFromInput(String prompt) {
         while (true) {
             String phone = getStringFromInput(prompt);
-           Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
-            Matcher matcher = pattern.matcher(phone);
-            if (matcher.matches()) {
-                return phone;
-            } else {
-                System.out.println("Invalid phone number");
-            }
+            ///////////////��֤�绰�����ʽ
+//            Pattern pattern = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
+//            Matcher matcher = pattern.matcher(phone);
+//            if (matcher.matches()) {
+//                return phone;
+//            } else {
+//                System.out.println("Invalid phone number");
+//            }
         }
     }
 

@@ -55,7 +55,7 @@ public class StaffMenu extends BasePage implements PageView {
                     new AddSymptoms().display();
                     break;
                 case 4:
-                    new AddSeverityScale().display();
+                    new ChooseSymptom().display();
                     break;
                 case 5:
                     new AddAssessmentRule();

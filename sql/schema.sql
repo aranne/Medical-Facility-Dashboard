@@ -131,15 +131,15 @@ create table symptoms
 /
 
 -- 6.
-create table severities
+-- auto-generated definition
+create table SEVERITIES
 (
-    id number not null,
-    value number not null,
-    name varchar2(255) not null,
-    scale varchar2(255) not null,
-    bleeding varchar2(255),
-    constraint severities_pk
-        primary key (value, name, scale)
+    ID       NUMBER        not null
+        constraint SEVERITIES_PK
+            primary key,
+    PRIORITY NUMBER,
+    SYM_CODE VARCHAR2(255) not null,
+    SCALE    VARCHAR2(255) not null
 )
 /
 create sequence sever_ID_SEQ

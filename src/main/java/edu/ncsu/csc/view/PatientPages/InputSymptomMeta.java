@@ -11,22 +11,22 @@ import edu.ncsu.csc.view.PageView;
 import java.util.List;
 
 public class InputSymptomMeta extends BasePage implements PageView {
-    SymptomMeta sm;
-    CheckinSymptomMeta smm;
-    public SymptomMeta getSm() {
-        return sm;
+    SymptomMeta symptomMeta;
+    CheckinSymptomMeta checkinSymptomMeta;
+    public SymptomMeta getSymptomMeta() {
+        return symptomMeta;
     }
 
     public InputSymptomMeta(Symptom s) {
-        choicePrompt = "Enter Choice (1-4)";
+        choicePrompt = "Enter Choice (1-5)";
         pageTitle = "#Symptom meta";
         menuStrs.add("Body part");
         menuStrs.add("Duration");
         menuStrs.add("Reoccurring?");
         menuStrs.add("Severity");
         menuStrs.add("Cause(Incident)");
-        smm=new CheckinSymptomMeta(s);
-        sm=new SymptomMeta();
+        checkinSymptomMeta =new CheckinSymptomMeta(s);
+        symptomMeta =new SymptomMeta();
 //        bps = (List<Bodypart>) s.getBodypartys();
 //        if(bps.size()<=0)
 //        {
@@ -48,7 +48,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
                     inputPart();
                     break;
                 case 2:
-                    inputDure();
+                    inputDuration();
                     break;
                 case 3:
                     inputReoccur();
@@ -70,32 +70,32 @@ public class InputSymptomMeta extends BasePage implements PageView {
 
     public void inputPart() {
 
-        List<String> bps=smm.getBodyMenu();
+        List<String> bps= checkinSymptomMeta.getBodyMenu();
 
         if (bps.size() > 0) {
             int ch =ComboBoxPage.getInstance().select(bps,"choose a bodypart:");
-            sm.setBodypart(smm.getBodySelection(ch));
+            symptomMeta.setBodyPart(checkinSymptomMeta.getBodySelection(ch));
         } else {
-            String bodypart = getStringFromInput("input a bodypart name:");
+            String bodyPart = getStringFromInput("input a bodyPart name:");
             //TODO
-            sm.setBodypart(new BodyPart(bodypart,bodypart));
+            symptomMeta.setBodyPart(new BodyPart(bodyPart,bodyPart));
         }
 
     }
 
-    public void inputDure() {
-        sm.setDuration(getRealValue("input Duration:"));
+    public void inputDuration() {
+        symptomMeta.setDuration(getRealValue("input Duration:"));
     }
 
     public void inputReoccur() {
         String s = "";
         do {
             s = getStringFromInput("Reoccurring(yes/no)?");
-        } while (!s.equals("yes") || !s.equals("no"));
+        } while (!s.equals("yes") && !s.equals("no"));
         if (s.equals("yes"))
-            sm.setNeworre(true);
+            symptomMeta.setIsFirstTime(true);
         else
-            sm.setNeworre(false);
+            symptomMeta.setIsFirstTime(false);
     }
 
     //TODO
@@ -116,7 +116,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
     }
 
     public void inputCause() {
-        sm.setIncident(getStringFromInput("input a Cause"));
+        symptomMeta.setIncident(getStringFromInput("input a Cause"));
     }
 
 
