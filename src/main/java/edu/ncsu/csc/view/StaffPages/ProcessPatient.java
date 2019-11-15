@@ -37,7 +37,7 @@ public class ProcessPatient  extends BasePage implements PageView {
                         show("enter vitals successfully!");
                         running = false;
                     }else{
-                        show("faild to enter a vital !!!");
+                        show("fail to enter a vital !!!");
                     }
                     break;
                 case 2:
