@@ -92,8 +92,9 @@ create table patient_has_facility
 create table check_ins
 (
     id number not null,
-    PATIENT_ID number not null;
-start_time date not null,
+    last_name varchar2(255) not null,
+    dob date not null,
+    start_time date not null,
     end_time date,
     facility_id number not null,
         foreign key (facility_id) references MEDICAL_FACILITIES
@@ -101,8 +102,8 @@ start_time date not null,
                    constraint check_ins_pk
                    primary key (last_name, dob, start_time, facility_id),
                    constraint PHF_NAME_DOB_fk
-                   foreign key (PATIENT_ID) references PATIENTS
-               on delete cascade
+                   foreign key (last_name, dob) references PATIENTS
+                       on delete cascade
                       )
 /
 create sequence check_in_ID_SEQ
