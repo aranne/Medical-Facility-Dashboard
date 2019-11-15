@@ -1,19 +1,16 @@
 package edu.ncsu.csc.view.StartPages;
 
 import edu.ncsu.csc.view.BasePage;
-import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
-
-import java.util.List;
 
 
 public class Home extends BasePage implements PageView {
     public Home() {
         super();
-        menueStrs.add("Sign in");
-        menueStrs.add("Sign Up(Patient)");
-        menueStrs.add("Demo Queries");
-        menueStrs.add("Go Back");
+        menuStrs.add("Sign in");
+        menuStrs.add("Sign Up(Patient)");
+        menuStrs.add("Demo Queries");
+        menuStrs.add("Go Back");
         pageTitle = "==================== HOME ====================";
         choicePrompt = "input your choice:";
     }

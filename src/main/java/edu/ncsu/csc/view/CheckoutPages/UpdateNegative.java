@@ -10,8 +10,8 @@ public class UpdateNegative extends BasePage implements PageView {
     public UpdateNegative(NagativeExperience nagexp) {
         this.nagexp = nagexp;
         choicePrompt = "input your choice:";
-        menueStrs.add("Misdiagnosis");
-        menueStrs.add("Patient acquired an infection during hospital stay");
+        menuStrs.add("Misdiagnosis");
+        menuStrs.add("Patient acquired an infection during hospital stay");
     }
 
     @Override

@@ -20,11 +20,11 @@ public class InputSymptomMeta extends BasePage implements PageView {
     public InputSymptomMeta(Symptom s) {
         choicePrompt = "Enter Choice (1-4)";
         pageTitle = "#Symptom meta";
-        menueStrs.add("Body part");
-        menueStrs.add("Duration");
-        menueStrs.add("Reoccurring?");
-        menueStrs.add("Severity");
-        menueStrs.add("Cause(Incident)");
+        menuStrs.add("Body part");
+        menuStrs.add("Duration");
+        menuStrs.add("Reoccurring?");
+        menuStrs.add("Severity");
+        menuStrs.add("Cause(Incident)");
         smm=new CheckinSymptomMeta(s);
         sm=new SymptomMeta();
 //        bps = (List<Bodypart>) s.getBodypartys();

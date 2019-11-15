@@ -1,7 +1,5 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import edu.ncsu.csc.controller.StaffPages.StaffMenuController;
-import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Vital;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
@@ -12,8 +10,8 @@ public class EnterVital extends BasePage implements PageView {
     public EnterVital(Vital vital) {
         this.vital = vital;
         choicePrompt="input your choice:";
-        menueStrs.add("Record");
-        menueStrs.add("Go back");
+        menuStrs.add("Record");
+        menuStrs.add("Go back");
     }
     @Override
     public void display() {

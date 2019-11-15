@@ -11,9 +11,9 @@ public class Acknowledgement extends BasePage implements PageView {
         this.report = report;
         choicePrompt = "Enter Choice (1-3)";
         pageTitle = "===========Check-out Acknowledgement===============";
-        menueStrs.add("Yes");
-        menueStrs.add("No");
-        menueStrs.add("Go back");
+        menuStrs.add("Yes");
+        menuStrs.add("No");
+        menuStrs.add("Go back");
     }
 
     @Override

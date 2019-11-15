@@ -16,7 +16,7 @@ public class BasePage {
     protected DateFormat timeFormat;
     protected String pageTitle;
     protected String choicePrompt;
-    protected List<String> menueStrs;
+    protected List<String> menuStrs;
     protected boolean running;
     public BasePage() {
         running=false;
@@ -25,12 +25,12 @@ public class BasePage {
         choicePrompt="";
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         timeFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        menueStrs=new ArrayList<String>();
+        menuStrs =new ArrayList<String>();
     }
 
     protected void initPage(){
         show(pageTitle);
-        show(menueStrs);
+        show(menuStrs);
         show(choicePrompt);
     }
     protected void show(String s) {
@@ -53,7 +53,7 @@ public class BasePage {
                 System.out.println("Invalid Menue id");
                 continue;
             }
-            if (index < 1 || index > menueStrs.size()) {
+            if (index < 1 || index > menuStrs.size()) {
                 System.out.println("Invalid Menue id");
             } else {
                 break;

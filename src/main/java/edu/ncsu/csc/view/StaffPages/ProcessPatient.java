@@ -1,14 +1,10 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import java.util.List;
-
 import edu.ncsu.csc.controller.StaffPages.StaffProcessPatient;
 import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.model.Vital;
 import edu.ncsu.csc.view.BasePage;
-import edu.ncsu.csc.view.ComboBoxPage;
-import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
 import edu.ncsu.csc.view.PageView;
 
 public class ProcessPatient  extends BasePage implements PageView {
@@ -19,9 +15,9 @@ public class ProcessPatient  extends BasePage implements PageView {
         this.m_staff=staff;
         pageTitle="===================ProcessPatient=========================";
         choicePrompt="select a operation:";
-        menueStrs.add("Enter Vitals");
-        menueStrs.add("Treat patient");
-        menueStrs.add("Go back");
+        menuStrs.add("Enter Vitals");
+        menuStrs.add("Treat patient");
+        menuStrs.add("Go back");
     }
     public void display() {
         StaffProcessPatient staffp = new StaffProcessPatient();

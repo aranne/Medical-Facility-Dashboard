@@ -20,10 +20,10 @@ public class CheckInPage extends BasePage implements PageView {
         symm = new CheckinSymptoms();
         List<String> symptoms = symm.getSymtomsMenu();
         for (int i = 0; i < symptoms.size(); i++) {
-            menueStrs.add(symptoms.get(i));
+            menuStrs.add(symptoms.get(i));
         }
-        menueStrs.add("Other");
-        menueStrs.add("Done");
+        menuStrs.add("Other");
+        menuStrs.add("Done");
         this.checkIn=checkIn;
     }
 
@@ -38,12 +38,12 @@ public class CheckInPage extends BasePage implements PageView {
                 initPage();
 
                 int index = getChoice();
-                if (index <= (menueStrs.size() - 2)) {
+                if (index <= (menuStrs.size() - 2)) {
                     symptom = symm.getSymtomsSelection(index);
                     PageView p = new InputSymptomMeta(symptom);
                     p.display();
                     smeta = ((InputSymptomMeta) p).getSm();
-                } else if (index == menueStrs.size() - 1) {
+                } else if (index == menuStrs.size() - 1) {
                     String smname = getStringFromInput("input a symptom :");
                     symptom = new Symptom(smname, "unknown");
                     PageView p = new InputSymptomMeta(symptom);

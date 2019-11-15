@@ -16,20 +16,20 @@ public class ComboBoxPage extends BasePage {
     }
     public int select(List<String> munue, String promp){
         this.choicePrompt=promp;
-        this.menueStrs=munue;
+        this.menuStrs =munue;
         initPage();
         return getChoice();
     }
     public List<Integer> mutilSelect(List<String> munue, String promp){
         this.choicePrompt=promp;
-        this.menueStrs=munue;
+        this.menuStrs =munue;
         List<Integer> indexes=new ArrayList<Integer>();
         initPage();
         String s=getStringFromInput("");
         String [] values=s.split(",");
         for(int i=0;i<values.length;i++){
             int v=Integer.parseInt(values[i]);
-            if (v<=menueStrs.size()&& i>0) {
+            if (v<= menuStrs.size()&& i>0) {
                 indexes.add(Integer.parseInt(values[i]));
             }else{
                 throw new NumberFormatException("input index is invalid");

@@ -9,9 +9,9 @@ import edu.ncsu.csc.view.PageView;
 public class AddSeverityScale extends BasePage implements PageView {
     public AddSeverityScale() {
         choicePrompt="input your choice:";
-        menueStrs.add("There's another level for this scale");
-        menueStrs.add("There's no more levels");
-        menueStrs.add("Go back");
+        menuStrs.add("There's another level for this scale");
+        menuStrs.add("There's no more levels");
+        menuStrs.add("Go back");
     }
 
 
