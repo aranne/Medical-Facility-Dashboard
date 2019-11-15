@@ -1,8 +1,6 @@
 package edu.ncsu.csc.DAO;
 
-import edu.ncsu.csc.model.BodyPart;
-import edu.ncsu.csc.model.CheckIn;
-import edu.ncsu.csc.model.Staff;
+import edu.ncsu.csc.model.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -180,4 +178,65 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
   public boolean deleteRecord(CheckIn p) {
     return false;
   }
+
+  public boolean addSymptomMeta(ArrayList<SymptomMeta> symptomMetaList, Patient pd) {
+		for (SymptomMeta sm: symptomMetaList) {
+			String bodyCode;
+			if (sm.getBodyPart() == null) {
+				bodyCode = null;
+			} else {
+				bodyCode = sm.getBodyPart().getBodyCode();
+			}
+
+
+//			String symCode = sm.getSymptom().getSymCode();
+			String symCode;
+			if (sm.getSymptom().getSymCode().equals("unknown")) {
+				symCode = sm.getSymptom().getName();
+			} else {
+				symCode = sm.getSymptom().getSymCode();
+			}
+
+			String scale;
+			if (sm.getSeverity() == null) {
+				scale = null;
+			} else {
+				scale = sm.getSeverity().getScale();
+			}
+			String lastName = pd.getLastName();
+			Date dob = (Date) pd.getDob();
+			float duration = sm.getDuration();
+			String incident = sm.getIncident();
+			char isFirst;
+			if (sm.getIsFirstTime()) {
+				isFirst = '1';
+			} else {
+				isFirst = '0';
+			}
+
+
+			try {
+				openConnection();
+				preparedStatement = connection
+						.prepareStatement("insert into PATIENT_HAS_SYM_SERVERITY " +
+								"(BODY_CODE, SYM_CODE, SCALE, LAST_NAME,DOB,DURATION, CAUSE_INCIDENT, FIRST_OCCURRENCE) values " +
+								"(?, ?, ?,?,?,?,?,?)");
+				preparedStatement.setString(1, bodyCode);
+				preparedStatement.setString(2, symCode);
+				preparedStatement.setString(3, scale);
+				preparedStatement.setString(4, lastName);
+				preparedStatement.setDate(5, dob);
+				preparedStatement.setFloat(6, duration);
+				preparedStatement.setString(7, incident);
+				preparedStatement.setString(8, String.valueOf(isFirst));
+				resultSet = preparedStatement.executeQuery();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			} finally {
+				closeConnection();
+			}
+		}
+	 	return true;
+	}
 }

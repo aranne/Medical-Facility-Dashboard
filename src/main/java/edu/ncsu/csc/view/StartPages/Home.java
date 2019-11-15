@@ -33,7 +33,7 @@ public class Home extends BasePage implements PageView {
                     p.display();
                     break;
                 case 3:
-                //TODO
+                    running = false;
                 	break;
                 case 4:
                     running = false;

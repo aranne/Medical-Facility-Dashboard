@@ -2,6 +2,7 @@ package edu.ncsu.csc.view.PatientPages;
 
 import edu.ncsu.csc.controller.PatientPages.CheckinSymptoms;
 import edu.ncsu.csc.model.CheckIn;
+import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.model.Symptom;
 import edu.ncsu.csc.model.SymptomMeta;
 import edu.ncsu.csc.view.BasePage;
@@ -12,11 +13,13 @@ import java.util.List;
 
 
 public class CheckInPage extends BasePage implements PageView {
+  Patient patient;
   private CheckIn checkIn;
   CheckinSymptoms checkinSymptoms;
   ArrayList<SymptomMeta> symptomMetaList;
 
-  public CheckInPage(CheckIn checkIn) {
+  public CheckInPage(CheckIn checkIn, Patient patient) {
+    this.patient = patient;
     choicePrompt = "Enter Choice";
     pageTitle = "==================== CHECKIN ====================";
     checkinSymptoms = new CheckinSymptoms();
@@ -37,21 +40,25 @@ public class CheckInPage extends BasePage implements PageView {
     Symptom symptom = null;
     while (running) {
       initPage();
-
+      smeta = null;
       int index = getChoice();
       if (index <= (menuStrs.size() - 2)) {
         symptom = checkinSymptoms.getSymtomsSelection(index);
         PageView p = new InputSymptomMeta(symptom);
         p.display();
         smeta = ((InputSymptomMeta) p).getSymptomMeta();
+        if (smeta != null)
+          symptomMetaList.add(smeta);
       } else if (index == menuStrs.size() - 1) {
         String smname = getStringFromInput("input a symptom :");
         symptom = new Symptom(smname, "unknown");
         PageView p = new InputSymptomMeta(symptom);
         p.display();
         smeta = ((InputSymptomMeta) p).getSymptomMeta();
+        if (smeta != null)
+          symptomMetaList.add(smeta);
       } else {
-        if (checkinSymptoms.submit(symptom, checkinSymptoms)) {
+        if (checkinSymptoms.submit(symptomMetaList,patient)) {
           show("checkin successfully.");
           running = false;
         } else {

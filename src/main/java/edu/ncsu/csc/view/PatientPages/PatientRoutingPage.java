@@ -29,13 +29,14 @@ public class PatientRoutingPage extends BasePage implements PageView {
       switch (getChoice()) {
         case 1:
           CheckIn checkIn=new CheckIn();
-          new CheckInPage(checkIn).display();
+          new CheckInPage(checkIn, this.pd).display();
           break;
         case 2:
           PatientCheckProceed  pcp=new PatientCheckProceed(f);
           new Acknowledgement(pcp.getReport(pd)).display();
           break;
         case 3:
+          running = false;
           break;
       }
     }

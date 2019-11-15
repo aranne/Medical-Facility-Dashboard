@@ -14,15 +14,15 @@ public class ComboBoxPage extends BasePage {
         }
         return instance;
     }
-    public int select(List<String> munue, String promp){
+    public int select(List<String> munu, String promp){
         this.choicePrompt=promp;
-        this.menuStrs =munue;
+        this.menuStrs =munu;
         initPage();
         return getChoice();
     }
-    public List<Integer> mutilSelect(List<String> munue, String promp){
+    public List<Integer> mutilSelect(List<String> munu, String promp){
         this.choicePrompt=promp;
-        this.menuStrs =munue;
+        this.menuStrs =munu;
         List<Integer> indexes=new ArrayList<Integer>();
         initPage();
         String s=getStringFromInput("");

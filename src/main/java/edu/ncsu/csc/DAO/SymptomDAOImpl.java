@@ -16,7 +16,7 @@ public class SymptomDAOImpl extends AbstractDAO implements TemplateDAO<Symptom> 
 		    try {
 		      openConnection();
 		      preparedStatement = connection
-		              .prepareStatement("SELECT * FROM SYMPTOMS WHERE sym_code IN (SELECT sym_code FROM patient_has_sym_serverity WHERE last_name=? AND dob=?)");
+		              .prepareStatement("SELECT * FROM SYMPTOMS WHERE sym_code IN (SELECT BODY_CODE FROM patient_has_sym_serverity WHERE last_name=? AND dob=?)");
 		      preparedStatement.setString(1, checkin.getLastName());
 		      preparedStatement.setDate(2, new java.sql.Date(checkin.getDob().getTime()));
 		      resultSet = preparedStatement.executeQuery();

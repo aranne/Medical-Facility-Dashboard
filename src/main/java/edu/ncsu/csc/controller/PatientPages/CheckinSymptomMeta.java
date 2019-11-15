@@ -43,6 +43,6 @@ public class CheckinSymptomMeta {
     }
 
     public BodyPart getBodySelection(int index){
-        return bodyParts.get(index);
+        return bodyParts.get(index - 1);
     }
 }
