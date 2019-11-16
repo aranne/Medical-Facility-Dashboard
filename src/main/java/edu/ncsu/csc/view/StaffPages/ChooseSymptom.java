@@ -9,8 +9,10 @@ import java.util.List;
 
 public class ChooseSymptom extends BasePage implements PageView {
   List<Symptom> symptoms;
+  int page;
 
-  public ChooseSymptom() {
+  public ChooseSymptom(int page) {
+    this.page = page;
     SymptomDAOImpl symptomDAO = new SymptomDAOImpl();
     this.symptoms = symptomDAO.getAllValues();
     choicePrompt = "Enter Choice";
@@ -30,7 +32,17 @@ public class ChooseSymptom extends BasePage implements PageView {
       if (index == menuStrs.size()) {
         running = false;
       } else {
-        new AddSeverityScale(symptoms.get(index - 1)).display();
+        switch (page) {
+          case 4:
+            new AddSeverityScale(symptoms.get(index - 1)).display();
+            break;
+          case 5:
+            new AddAssessmentRule(symptoms.get(index - 1)).display();
+            break;
+          default:
+            break;
+        }
+
       }
 
     }

@@ -3,7 +3,7 @@ package edu.ncsu.csc.model;
 public class Severity {
     private int id;
 //    value: 0 is normal, 1 is high, 2 is Quarantine
-    private int value;
+    private int priority;
     private String name;
     private String scale;
 
@@ -13,15 +13,15 @@ public class Severity {
     @Override
     public String toString() {
         return "Severity{" +
-            "value=" + value +
-            ", name='" + name + '\'' +
-            ", scale='" + scale + '\'' +
+            "priority: " + priority +
+            ", name code: '" + name + '\'' +
+            ", scale: '" + scale + '\'' +
             '}';
     }
 
-    public Severity(int id, int value, String name, String scale) {
+    public Severity(int id, int priority, String name, String scale) {
         this.id = id;
-        this.value = value;
+        this.priority = priority;
         this.name = name;
         this.scale = scale;
     }
@@ -34,12 +34,12 @@ public class Severity {
         this.id = id;
     }
 
-    public int getValue() {
-        return value;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public String getName() {

@@ -36,7 +36,6 @@ public class SeverityDAOImp extends AbstractDAO implements TemplateDAO<Severity>
   }
 
   public boolean addSeverity(Severity severity) {
-    boolean rest = false;
     try {
       openConnection();
       preparedStatement = connection
@@ -46,12 +45,33 @@ public class SeverityDAOImp extends AbstractDAO implements TemplateDAO<Severity>
       preparedStatement.setString(2, severity.getScale());
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
+      closeConnection();
       e.printStackTrace();
-      rest = false;
+      return false;
     } finally {
       closeConnection();
     }
-    return rest;
+    return true;
+  }
+
+  public boolean setPriority(Severity severity, int value) {
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("update SEVERITIES set PRIORITY = ?" +
+              "where SYM_CODE = ? and scale  = ?");
+      preparedStatement.setInt(1, value);
+      preparedStatement.setString(2, severity.getName());
+      preparedStatement.setString(3, severity.getScale());
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      closeConnection();
+      e.printStackTrace();
+      return false;
+    } finally {
+      closeConnection();
+    }
+    return true;
   }
 
   @Override
