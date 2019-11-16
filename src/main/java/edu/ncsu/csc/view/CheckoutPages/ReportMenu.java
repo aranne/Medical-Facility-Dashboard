@@ -50,9 +50,9 @@ public class ReportMenu extends BasePage implements PageView {
                     if(report.getDischargeStatus().equals("Referred")){
                         if(referralStatus == null)
                             referralStatus = new ReferralStatus();
-                        new UpdateReferral(referralStatus,repm).display();;
+                        new UpdateReferral(referralStatus,repm).display();
                         report.setReferralStatus(referralStatus);
-                }else{
+                    }else{
                         show("This field is valid only if Discharge Status is Referred");
                     }
 

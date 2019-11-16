@@ -14,7 +14,7 @@ public class Report {
     private int employeeId;
     private String reason;
 
-    private ReferralStatus referralStatus= new ReferralStatus();
+    private ReferralStatus referralStatus;
     private List<NagativeExperience> nagexps=new ArrayList<NagativeExperience>();
     public Report() {
     }

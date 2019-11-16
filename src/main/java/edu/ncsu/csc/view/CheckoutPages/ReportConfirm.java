@@ -34,7 +34,7 @@ public class ReportConfirm extends BasePage implements PageView {
     public void showReport() {
         String stat = report.getDischargeStatus();
         show("Discharge Status:\t" + stat);
-        show("Referral Status:");
+        show("Referral Status:\t");
         if(report.getReferralStatus() == null){
             show("null");
         }else if(report.getReferralStatus() != null){
