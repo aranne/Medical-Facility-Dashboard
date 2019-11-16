@@ -22,12 +22,12 @@ public class UpdateReason extends BasePage implements PageView {
 
     @Override
     public void display() {
-        List<String> services=rpm.getServiceMenu();
+        List<String> services = rpm.getServiceMenu();
         int index= ComboBoxPage.getInstance().select(services,"choose a service");
         reason.setServiceCode(rpm.getServiceSelection(index).getServiceCode());
         show(menuStrs);
         initPage();
         reason.setReasonCode(String.valueOf(index));
-        reason.setDescription(getStringFromInput("input some disciption:"));
+        reason.setDescription(getStringFromInput("input some description:"));
     }
 }

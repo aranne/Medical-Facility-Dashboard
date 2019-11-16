@@ -28,8 +28,9 @@ public class ReportMenu extends BasePage implements PageView {
         report.setTime(new Date(System.currentTimeMillis()));
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
-        report.setFacilityId(checkIn.getFacilityId());;
-        repm=new ReportManager(checkIn,staff);
+        report.setFacilityId(checkIn.getFacilityId());
+        report.setEmployeeId(staff.getEmployeeId());
+        repm = new ReportManager(checkIn,staff);
     }
 
     @Override
@@ -40,9 +41,8 @@ public class ReportMenu extends BasePage implements PageView {
             int index = getChoice();
             switch (index) {
                 case 1:
-                    show("Please update discharge status");
                     UpdateDischarge up = new UpdateDischarge();
-                    new UpdateDischarge().display();
+                    up.display();
                     report.setDischargeStatus(up.getDischargeStatus());
                     break;
                 case 2:
@@ -57,13 +57,15 @@ public class ReportMenu extends BasePage implements PageView {
 
                     break;
                 case 3:
-                    String tratment = getStringFromInput("input treatment text description");
-                    while(null == tratment || tratment.length() <= 0)
+                    String treatment = getStringFromInput("input treatment text description");
+                    while(null == treatment || treatment.length() <= 0)
                     {
                         show("treatment description must not be empty!!!");
-                        tratment = getStringFromInput("input treatment text description");
+                        treatment = getStringFromInput("input treatment text description");
+
                     }
-                    report.setTreatment(tratment);
+                    report.setTreatment(treatment);
+
                     break;
                 case 4:
                     NagativeExperience nagexp = new NagativeExperience();
