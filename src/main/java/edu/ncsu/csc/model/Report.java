@@ -12,10 +12,28 @@ public class Report {
     private String treatment;
     private int facilityId;
     private int employeeId;
+    private int referrerId;
+    private int referFacilityId;
     private String reason;
 
+    public int getReferrerId() {
+        return referrerId;
+    }
+
+    public void setReferrerId(int referrerId) {
+        this.referrerId = referrerId;
+    }
+
+    public int getReferFacilityId() {
+        return referFacilityId;
+    }
+
+    public void setReferFacilityId(int referFacilityId) {
+        this.referFacilityId = referFacilityId;
+    }
+
     private ReferralStatus referralStatus;
-    private List<NagativeExperience> nagexps=new ArrayList<NagativeExperience>();
+    private List<NegativeExperience> nagexps=new ArrayList<NegativeExperience>();
     public Report() {
     }
 
@@ -103,11 +121,11 @@ public class Report {
         this.referralStatus = referralStatus;
     }
 
-    public List<NagativeExperience> getNagexps() {
+    public List<NegativeExperience> getNagexps() {
         return nagexps;
     }
 
-    public void setNagexps(List<NagativeExperience> nagexps) {
+    public void setNagexps(List<NegativeExperience> nagexps) {
         this.nagexps = nagexps;
     }
 

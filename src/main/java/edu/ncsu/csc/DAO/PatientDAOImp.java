@@ -91,7 +91,7 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
     try {
       openConnection();
       preparedStatement = connection
-              .prepareStatement("select * from PATIENTS where treatmentDate = ?");
+              .prepareStatement("select * from PATIENTS where treatment_time = ?");
       preparedStatement.setDate(1, new java.sql.Date(treatmentDate.getTime()));
       resultSet = preparedStatement.executeQuery();
       if (resultSet.next()) {
@@ -284,6 +284,24 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
       preparedStatement.setInt(12, p.getId());
       preparedStatement.executeUpdate();
       rest=true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
+
+  public boolean updateTreatment(Patient p) {
+    boolean rest = false;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("update patients set treatment_time = ? where patient_id = ?");
+      preparedStatement.setDate(1, new java.sql.Date(p.getTreatmentDate().getTime()));
+      preparedStatement.setInt(2, p.getId());
+      preparedStatement.executeUpdate();
+      rest = true;
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {

@@ -1,7 +1,7 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
 import edu.ncsu.csc.controller.CheckoutPages.ReportManager;
-import edu.ncsu.csc.model.NagativeExperience;
+import edu.ncsu.csc.model.NegativeExperience;
 import edu.ncsu.csc.model.Reason;
 import edu.ncsu.csc.model.ReferralStatus;
 import edu.ncsu.csc.model.Report;
@@ -58,8 +58,8 @@ public class ReportConfirm extends BasePage implements PageView {
 
         }
         show("Treatment:\t" + report.getTreatment());
-        List<NagativeExperience> rrs = report.getNagexps();
-        for (NagativeExperience rr : rrs) {
+        List<NegativeExperience> rrs = report.getNagexps();
+        for (NegativeExperience rr : rrs) {
             show(rr.getNagativeCode());
             show(rr.getDiscription());
         }

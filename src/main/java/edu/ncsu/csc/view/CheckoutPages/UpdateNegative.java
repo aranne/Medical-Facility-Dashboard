@@ -1,13 +1,13 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
-import edu.ncsu.csc.model.NagativeExperience;
+import edu.ncsu.csc.model.NegativeExperience;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
 
 public class UpdateNegative extends BasePage implements PageView {
-    NagativeExperience nagexp;
-    public UpdateNegative(NagativeExperience nagexp) {
+    NegativeExperience nagexp;
+    public UpdateNegative(NegativeExperience nagexp) {
         this.nagexp = nagexp;
         choicePrompt = "input your choice:";
         menuStrs.add("Misdiagnosis");
