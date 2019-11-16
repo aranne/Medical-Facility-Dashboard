@@ -88,7 +88,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
   }
 
   public void inputDuration() {
-    symptomMeta.setDuration(getRealValue("input Duration:"));
+    symptomMeta.setDuration(getStringFromInput("input Duration:"));
   }
 
   public void inputReoccur() {
@@ -127,6 +127,5 @@ public class InputSymptomMeta extends BasePage implements PageView {
   public void inputCause() {
     symptomMeta.setIncident(getStringFromInput("input a Cause"));
   }
-
 
 }

@@ -1,7 +1,7 @@
 package edu.ncsu.csc.model;
 
 public class SymptomMeta {
-    private float duration;
+    private String duration;
 
     private Boolean isFirstTime;
     private String incident;
@@ -9,11 +9,11 @@ public class SymptomMeta {
     private Symptom symptom;
     private BodyPart bodyPart;
 
-    public float getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(float duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

@@ -157,27 +157,18 @@ end sever_id_TRIGGER;
 /
 
 -- 7.
-create table patient_has_sym_serverity
+create table patient_sym_meta
 (
-    sym_code varchar2(255) not null
-        constraint PHSE_SYM_CODE_fk
-            references SYMPTOMS
-                on delete cascade,
-    value number not null,
-    sname varchar2(255) not null,
-    scale varchar2(255) not null,
-    last_name varchar2(255) not null,
-    dob date not null,
-    duration float not null,
-    cause_incident varchar2(255) not null,
-    first_occurrence char(1) default 0 not null,
-    constraint PATIENT_HAS_SYM_SEVERITY_pk
-        primary key (sym_code, value, sname, scale, last_name, dob),
-    constraint PHSE_PATIENT_fk
+    body_code varchar2(255),
+    sym_code varchar2(255),
+    scale varchar2(255),
+    last_name varchar2(255),
+    dob date,
+    duration varchar2(255),
+    cause_incident varchar2(255),
+    first_occurrence char(1) default 1,
+    constraint PSMLAST_NAME_DOB_fk
         foreign key (last_name, dob) references PATIENTS
-            on delete cascade,
-    constraint PHSE_SEVERITY_fk
-        foreign key (value, sname, scale) references SEVERITIES
             on delete cascade
 )
 /
