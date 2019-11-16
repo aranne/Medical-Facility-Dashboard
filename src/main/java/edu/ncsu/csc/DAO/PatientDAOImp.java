@@ -1,11 +1,14 @@
 package edu.ncsu.csc.DAO;
 
+import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.MedicalFacility;
 import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.model.Symptom;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -295,4 +298,25 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
   }
 
 
+  public boolean addTreatmentTime(CheckIn checkIn) {
+    boolean rest=false;
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("update patients " +
+              "set TREATMENT_TIME = ? " +
+              "where LAST_NAME = ? and DOB = ?");
+
+      preparedStatement.setDate(1, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+      preparedStatement.setString(2, checkIn.getLastName());
+      preparedStatement.setDate(3, (java.sql.Date) checkIn.getDob());
+      preparedStatement.executeUpdate();
+      rest=true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
 }
