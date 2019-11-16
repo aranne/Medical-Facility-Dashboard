@@ -5,6 +5,7 @@ import edu.ncsu.csc.model.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
@@ -245,4 +246,27 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
 
     return true;
   }
+
+  public boolean addCheckin(Patient p, MedicalFacility mf) {
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("insert into CHECK_INS" +
+              "(LAST_NAME, DOB, START_TIME, FACILITY_ID) values " +
+              "(?,?,?,?)");
+      preparedStatement.setString(1, p.getLastName());
+      preparedStatement.setDate(2, (Date) p.getDob());
+      preparedStatement.setDate(3, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+      preparedStatement.setInt(4, mf.getFacilityId());
+      resultSet = preparedStatement.executeQuery();
+    } catch (SQLException e) {
+      closeConnection();
+      e.printStackTrace();
+      return false;
+    } finally {
+      closeConnection();
+    }
+    return true;
+  }
+
 }

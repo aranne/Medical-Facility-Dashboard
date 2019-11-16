@@ -4,10 +4,7 @@ import edu.ncsu.csc.DAO.BodyPartDAO;
 import edu.ncsu.csc.DAO.CheckInDAOImp;
 import edu.ncsu.csc.DAO.SymptomDAOImpl;
 import edu.ncsu.csc.DAO.TemplateDAO;
-import edu.ncsu.csc.model.BodyPart;
-import edu.ncsu.csc.model.Patient;
-import edu.ncsu.csc.model.Symptom;
-import edu.ncsu.csc.model.SymptomMeta;
+import edu.ncsu.csc.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,5 +82,10 @@ public class CheckinSymptoms {
   public boolean submit(ArrayList<SymptomMeta> symptomMetaList, Patient patient) {
     CheckInDAOImp checkInDAOImp = new CheckInDAOImp();
     return checkInDAOImp.addSymptomMeta(symptomMetaList, patient);
+  }
+
+  public boolean addCheckIn(Patient patient, MedicalFacility medicalFacility) {
+    CheckInDAOImp checkInDAOImp = new CheckInDAOImp();
+    return checkInDAOImp.addCheckin(patient, medicalFacility);
   }
 }

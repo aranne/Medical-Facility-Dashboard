@@ -1,10 +1,7 @@
 package edu.ncsu.csc.view.PatientPages;
 
 import edu.ncsu.csc.controller.PatientPages.CheckinSymptoms;
-import edu.ncsu.csc.model.CheckIn;
-import edu.ncsu.csc.model.Patient;
-import edu.ncsu.csc.model.Symptom;
-import edu.ncsu.csc.model.SymptomMeta;
+import edu.ncsu.csc.model.*;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
@@ -14,12 +11,14 @@ import java.util.List;
 
 public class CheckInPage extends BasePage implements PageView {
   Patient patient;
+  MedicalFacility medicalFacility;
   private CheckIn checkIn;
   CheckinSymptoms checkinSymptoms;
   ArrayList<SymptomMeta> symptomMetaList;
 
-  public CheckInPage(CheckIn checkIn, Patient patient) {
+  public CheckInPage(CheckIn checkIn, Patient patient, MedicalFacility medicalFacility) {
     this.patient = patient;
+    this.medicalFacility = medicalFacility;
     choicePrompt = "Enter Choice";
     pageTitle = "==================== CHECKIN ====================";
     checkinSymptoms = new CheckinSymptoms();
@@ -58,7 +57,7 @@ public class CheckInPage extends BasePage implements PageView {
         if (smeta != null)
           symptomMetaList.add(smeta);
       } else {
-        if (checkinSymptoms.submit(symptomMetaList,patient)) {
+        if (checkinSymptoms.submit(symptomMetaList,patient) && checkinSymptoms.addCheckIn(patient, medicalFacility)) {
           show("checkin successfully.");
           running = false;
         } else {
