@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import edu.ncsu.csc.DAO.CheckInDAOImp;
+import edu.ncsu.csc.DAO.PatientDAOImp;
 import edu.ncsu.csc.DAO.VitalDAOImp;
 import edu.ncsu.csc.model.CheckIn;
+import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.model.Staff;
 import edu.ncsu.csc.model.Vital;
 //Staff process patient page
@@ -39,7 +41,7 @@ public class StaffProcessPatient {
         return rest;
     }
     public  boolean checkPrivilege(CheckIn checkin, Staff staff){
-        System.out.println("can not find in database:check if user could\r\n" +
+        System.out.println("check if you could\r\n" +
                 "treat body part\r\n" +
                 "associated to patient\r\n" +
                 "symptoms, if yes, move\r\n" +
@@ -53,6 +55,14 @@ public class StaffProcessPatient {
 //        List<BodyPart> bodys1=sydao.getBodysbySymptom(symptom);
 //
 //        return staffdao.staffInFacility(checkin.getFacilityId(),staff);
-        return false;
+        return true;
+    }
+
+    public boolean treatPatient(CheckIn checkIn, Staff staff) {
+        boolean rest = false;
+        PatientDAOImp patientDao = new PatientDAOImp();
+        Patient p = patientDao.patientExist(checkIn.getLastName(), checkIn.getDob());
+        rest = patientDao.updateTreatment(p);
+        return rest;
     }
 }

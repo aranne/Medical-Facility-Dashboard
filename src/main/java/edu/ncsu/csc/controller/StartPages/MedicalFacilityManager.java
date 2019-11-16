@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicalFacilityManager {
+    private List<MedicalFacility> facilities;
     public MedicalFacilityManager() {
         reLoad();
     }
@@ -16,7 +17,6 @@ public class MedicalFacilityManager {
         TemplateDAO<MedicalFacility> tdao=new MedicalFacilityDAOImp();
         facilities=tdao.getAllValues();
     }
-    private List<MedicalFacility> facilities;
 
     public List<String> getFacilityMenu(){
         List<String> choices = new ArrayList<String>(0);

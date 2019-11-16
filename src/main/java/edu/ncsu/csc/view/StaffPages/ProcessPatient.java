@@ -44,13 +44,7 @@ public class ProcessPatient  extends BasePage implements PageView {
                 case 2:
                 	StaffProcessPatient stp=new StaffProcessPatient();
                     if(stp.checkPrivilege(checkIn,m_staff)){
-                        new TreatedPatient(checkIn,m_staff).display();
-//                        TODO: Check if this user has privilege.
-//                        if(stp.treating(checkIn)){
-//                            show("faild to traet patient !!!");
-//                        }else{
-//                            show("treat patient successfully!");
-//                        }
+                        stp.treatPatient(checkIn, m_staff);
                     }else{
                         show("you have no privilege for this operation!");
                     }
