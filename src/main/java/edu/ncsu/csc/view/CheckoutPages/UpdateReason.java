@@ -28,6 +28,6 @@ public class UpdateReason extends BasePage implements PageView {
         show(menuStrs);
         initPage();
         reason.setReasonCode(String.valueOf(index));
-        reason.setDescription(getEmailFromInput("input some disciption:"));
+        reason.setDescription(getStringFromInput("input some disciption:"));
     }
 }
