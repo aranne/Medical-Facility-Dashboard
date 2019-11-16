@@ -387,6 +387,14 @@ create table reports
         constraint R_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
+    referrer_id number
+        constraint R_Refer
+            references STAFFS
+                on delete cascade,
+    refer_facility_id number
+        constraint R_Refer1
+            references MEDICAL_FACILITIES
+                on delete cascade,
     constraint reports_pk
         primary key (time, dob, last_name),
     constraint R_DOB_NAME_fk

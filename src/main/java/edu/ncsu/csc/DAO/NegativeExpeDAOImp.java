@@ -1,5 +1,7 @@
 package edu.ncsu.csc.DAO;
 
+import edu.ncsu.csc.model.NegativeExperience;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO {
         return null;
     }
 
-    public List getAllByNameAndDob(String lastName, Date dob) {
+    public List<NegativeExperience> getAllByNameAndDob(String lastName, Date dob, Date time) {
         return null;
     }
 
