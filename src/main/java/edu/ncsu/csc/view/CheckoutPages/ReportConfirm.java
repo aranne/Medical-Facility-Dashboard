@@ -17,8 +17,9 @@ public class ReportConfirm extends BasePage implements PageView {
         choicePrompt = "input your choice:";
         menuStrs.add("Confirm");
         menuStrs.add("Go Back");
-        this.report=report;
-        this.rpm=rpm;
+        this.report = report;
+        this.rpm = rpm;
+        rpm.submit(report);
     }
 
     public  void display() {
@@ -34,19 +35,27 @@ public class ReportConfirm extends BasePage implements PageView {
         String stat = report.getDischargeStatus();
         show("Discharge Status:\t" + stat);
         show("Referral Status:");
-        if (report.getReferralStatus()!=null) {
+        if(report.getReferralStatus() == null){
+            show("null");
+        }else if(report.getReferralStatus() != null){
             ReferralStatus rs = report.getReferralStatus();
-            int fid=rs.getFacility().getFacilityId();
-            if (fid== 0) {
-                show("Facility:unknown");
-            } else {
-                show("Facility:" + fid);
+            String a =  "f";
+            if (rs != null){
+                int fid = rs.getFacility().getFacilityId();
+                if (fid == 0) {
+                    show("Facility:unknown");
+                } else {
+                    show("Facility:" + fid);
+                }
+                List<Reason> rrs = rs.getReasons();
+                for (Reason rr : rrs) {
+                    show(rr.getReasonCode());
+                    show(rr.getDescription());
+                }
+            }else{
+                show("null");
             }
-            List<Reason> rrs = rs.getReasons();
-            for (Reason rr : rrs) {
-                show(rr.getReasonCode());
-                show(rr.getDescription());
-            }
+
         }
         show("Treatment:\t" + report.getTreatment());
         List<NagativeExperience> rrs = report.getNagexps();

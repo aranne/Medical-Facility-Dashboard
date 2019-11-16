@@ -29,7 +29,8 @@ public class ReportMenu extends BasePage implements PageView {
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
         report.setFacilityId(checkIn.getFacilityId());
-        repm=new ReportManager(checkIn,staff);
+        report.setEmployeeId(staff.getEmployeeId());
+        repm = new ReportManager(checkIn,staff);
     }
 
     @Override
@@ -57,13 +58,15 @@ public class ReportMenu extends BasePage implements PageView {
 
                     break;
                 case 3:
-                    String tratment = getStringFromInput("input treatment text description");
-                    while(null == tratment || tratment.length() <= 0)
+                    String treatment = getStringFromInput("input treatment text description");
+                    while(null == treatment || treatment.length() <= 0)
                     {
                         show("treatment description must not be empty!!!");
-                        tratment = getStringFromInput("input treatment text description");
+                        treatment = getStringFromInput("input treatment text description");
+
                     }
-                    report.setTreatment(tratment);
+                    report.setTreatment(treatment);
+
                     break;
                 case 4:
                     NagativeExperience nagexp = new NagativeExperience();

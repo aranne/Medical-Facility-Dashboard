@@ -19,6 +19,6 @@ public class UpdateNegative extends BasePage implements PageView {
         initPage();
         int index=getChoice();
         nagexp.setNagativeCode(String.valueOf(index));
-        nagexp.setDiscription(getStringFromInput("input some disciptions:"));
+        nagexp.setDiscription(getStringFromInput("input some description:"));
     }
 }
