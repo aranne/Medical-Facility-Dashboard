@@ -13,8 +13,6 @@ public class Report {
     private int facilityId;
     private int employeeId;
     private String reason;
-    private CheckIn checkIn;
-
 
     private ReferralStatus referralStatus= new ReferralStatus();
     private List<NagativeExperience> nagexps=new ArrayList<NagativeExperience>();
@@ -111,13 +109,6 @@ public class Report {
 
     public void setNagexps(List<NagativeExperience> nagexps) {
         this.nagexps = nagexps;
-    }
-    public CheckIn getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(CheckIn checkIn) {
-        this.checkIn = checkIn;
     }
 
     public String getReason() {

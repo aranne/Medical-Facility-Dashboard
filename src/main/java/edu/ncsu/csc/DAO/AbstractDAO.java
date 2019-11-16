@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 class AbstractDAO {
-  private static final String URL = "jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01";
-  private static final String USERNAME = "jcai3";
-  private static final String PASSWORD = "200315852"; //200315852
+  private static final String URL = "jdbc:oracle:thin:@localhost:49161:xe";
+  private static final String USERNAME = "csc540";
+  private static final String PASSWORD = "csc540"; //200315852
   Connection connection;
   PreparedStatement preparedStatement;
   ResultSet resultSet;

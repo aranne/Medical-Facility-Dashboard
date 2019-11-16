@@ -385,13 +385,14 @@ create table reports
     time date not null,
     dob date not null,
     last_name varchar2(255) not null,
-    discharge_status varchar2(255) not null,
-    treatment varchar2(255) not null,
-    facility_id number not null
+    discharge_status varchar2(255),
+    treatment varchar2(255),
+    reason varchar2(255),
+    facility_id number
         constraint R_FACILITY_ID_fk
             references MEDICAL_FACILITIES
                 on delete cascade,
-    employee_id number not null
+    employee_id number
         constraint R_EMPLOYEE_ID_fk
             references STAFFS
                 on delete cascade,
