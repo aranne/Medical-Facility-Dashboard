@@ -50,11 +50,11 @@ public class BasePage {
                 String choice = scanner.nextLine();
                 index = Integer.parseInt(choice);
             } catch (Exception e) {
-                System.out.println("Invalid Menue id");
+                System.out.println("Invalid Menu id");
                 continue;
             }
             if (index < 1 || index > menuStrs.size()) {
-                System.out.println("Invalid Menue id");
+                System.out.println("Invalid Menu id");
             } else {
                 break;
             }

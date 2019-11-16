@@ -34,6 +34,7 @@ public class ProcessPatient  extends BasePage implements PageView {
                     }
                     if(vital.getLastName() != null && staffp.enterVital(vital,checkIn,m_staff))
                     {
+
                         show("enter vitals successfully!");
                         running = false;
                     }else{
@@ -44,6 +45,7 @@ public class ProcessPatient  extends BasePage implements PageView {
                 	StaffProcessPatient stp=new StaffProcessPatient();
                     if(stp.checkPrivilege(checkIn,m_staff)){
                         new TreatedPatient(checkIn,m_staff).display();
+//                        TODO: Check if this user has privilege.
 //                        if(stp.treating(checkIn)){
 //                            show("faild to traet patient !!!");
 //                        }else{

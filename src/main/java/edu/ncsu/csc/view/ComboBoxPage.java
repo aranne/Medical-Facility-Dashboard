@@ -14,9 +14,9 @@ public class ComboBoxPage extends BasePage {
         }
         return instance;
     }
-    public int select(List<String> munu, String promp){
-        this.choicePrompt=promp;
-        this.menuStrs =munu;
+    public int select(List<String> menu, String prompt){
+        this.choicePrompt=prompt;
+        this.menuStrs =menu;
         initPage();
         return getChoice();
     }

@@ -13,6 +13,9 @@ import java.util.List;
 public class StaffMenu extends BasePage implements PageView {
   private MedicalFacility m_facility;
   private Staff m_staff;
+  CheckIn checkIn;
+
+
 
   public StaffMenu(Staff m_staff, MedicalFacility facility) {
     this.m_facility = facility;
@@ -20,7 +23,7 @@ public class StaffMenu extends BasePage implements PageView {
     pageTitle = "======================STAFF MENU===============";
     choicePrompt = "select a job:";
     menuStrs.add("Checked-in patient list");
-    menuStrs.add("Threated patient list");
+    menuStrs.add("Treated patient list");
     menuStrs.add("Add symptoms");
     menuStrs.add("Add severity scale");
     menuStrs.add("Add assessment rule");
@@ -30,25 +33,37 @@ public class StaffMenu extends BasePage implements PageView {
   @Override
   public void display() {
     running = true;
+    StaffMenuController checkmm = new StaffMenuController(m_facility);
     while (running) {
+      checkmm.reload();
       initPage();
       int index = getChoice();
-      CheckIn checkIn = null;
+      checkIn = null;
       if (index == 1 || index == 2) {
-        StaffMenuController checkmm = new StaffMenuController();
-        List<String> checkins = checkmm.getChechinChoices(m_facility);//获取已经check_in的病人列表
-        if (checkins.size() <= 0) {
-          show("the patient checklist is empty!");
-          continue;
-        } else {
-          checkIn = checkmm.getCheckInSelection(ComboBoxPage.getInstance().select(checkins, "please select a checkin record:"));
-        }
+
       }
       switch (index) {
         case 1:
+
+          List<String> checkins = checkmm.getCheckedinPatientChoices();
+          if (checkins.size() <= 0) {
+            show("the patient checklist is empty!");
+            continue;
+          } else {
+            checkIn = checkmm.getCheckInSelection(ComboBoxPage.getInstance().select(checkins, "please select a checkin record:"));
+          }
           new ProcessPatient(checkIn, m_staff).display();
           break;
         case 2:
+
+          List<String> treateds = checkmm.getTreatedPatientChoices();
+          if (treateds.size() <= 0) {
+            show("the patient checklist is empty!");
+            continue;
+          } else {
+            checkIn = checkmm.getTreatedSelection(ComboBoxPage.getInstance().select(treateds, "please select a checkin record:"));
+          }
+
           new TreatedPatient(checkIn, m_staff).display();
           break;
         case 3:

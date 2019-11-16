@@ -11,10 +11,13 @@ import java.util.List;
 // similarity with ChecKInManager,use this class to manage the "Treated Patient list"
 public class StaffMenuController {
 
-    List<CheckIn> checkIns;
+    List<CheckIn> checkedinPatientsList;
+    List<CheckIn> treatedPatientsList;
+    MedicalFacility medicalFacility;
 
 
-    public StaffMenuController(){
+    public StaffMenuController(MedicalFacility medicalFacility){
+        this.medicalFacility = medicalFacility;
         reloadCheckinList();
     }
     public void reloadCheckinList(){
@@ -23,25 +26,38 @@ public class StaffMenuController {
     public void reload(){
         TemplateDAO<CheckIn> checkDao = new CheckInDAOImp();
         //应该获取treated patient list
-        checkIns=checkDao.getAllValues();
+        checkedinPatientsList = ((CheckInDAOImp) checkDao).getAllCheckedInPatientsByFacility(medicalFacility);
+        treatedPatientsList = ((CheckInDAOImp) checkDao).getAllTreatedPatientsByFacility(medicalFacility);
     }
-    public  List<String> getChechinChoices(MedicalFacility facility){
+    public  List<String> getCheckedinPatientChoices(){
         List<String> choices = new ArrayList<String>(0);
-        for(int i=0;i<checkIns.size();i++)
+        for(int i = 0; i< checkedinPatientsList.size(); i++)
         {
-            if (checkIns.get(i).getFacilityId().equals(facility.getFacilityId())) {
-                choices.add(checkIns.get(i).getLastName());
-            }
+                choices.add(checkedinPatientsList.get(i).getLastName());
         }
         return choices;
     }
-    public CheckIn getCheckInSelection(int index){
-        if(index<0 || index>=checkIns.size())
-            throw new NullPointerException("invalidate checkin index");
-        return checkIns.get(index - 1);
+    public  List<String> getTreatedPatientChoices(){
+        List<String> choices = new ArrayList<String>(0);
+        for(int i = 0; i< treatedPatientsList.size(); i++)
+        {
+            choices.add(treatedPatientsList.get(i).getLastName());
+        }
+        return choices;
     }
-    
-    
+
+    public CheckIn getCheckInSelection(int index){
+        if(index<0 || index> checkedinPatientsList.size())
+            throw new NullPointerException("invalidate checkin index");
+        return checkedinPatientsList.get(index - 1);
+    }
+
+    public CheckIn getTreatedSelection(int index){
+        if(index<0 || index> treatedPatientsList.size())
+            throw new NullPointerException("invalidate checkin index");
+        return treatedPatientsList.get(index - 1);
+    }
+
     public  boolean treating(CheckIn checkin){
         return false;
     }

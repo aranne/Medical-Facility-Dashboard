@@ -269,4 +269,57 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
     return true;
   }
 
+  public List<CheckIn> getAllCheckedInPatientsByFacility(MedicalFacility medicalFacility) {
+    List<CheckIn> rules = null;
+    try {
+      rules = new ArrayList<CheckIn>(0);
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("SELECT * FROM check_ins where FACILITY_ID = ? and END_TIME is null ");
+      preparedStatement.setInt(1, medicalFacility.getFacilityId());
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        rules.add(new CheckIn(
+            resultSet.getInt("id"),
+            resultSet.getString("last_name"),
+            resultSet.getDate("dob"),
+            resultSet.getDate("start_time"),
+            resultSet.getDate("end_time"),
+            resultSet.getInt("facility_id")
+        ));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rules;
+  }
+
+  public List<CheckIn> getAllTreatedPatientsByFacility(MedicalFacility medicalFacility) {
+    List<CheckIn> rules = null;
+    try {
+      rules = new ArrayList<CheckIn>(0);
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("SELECT * FROM check_ins where FACILITY_ID = ? and END_TIME is not null ");
+      preparedStatement.setInt(1, medicalFacility.getFacilityId());
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        rules.add(new CheckIn(
+            resultSet.getInt("id"),
+            resultSet.getString("last_name"),
+            resultSet.getDate("dob"),
+            resultSet.getDate("start_time"),
+            resultSet.getDate("end_time"),
+            resultSet.getInt("facility_id")
+        ));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rules;
+  }
 }
