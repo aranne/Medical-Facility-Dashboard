@@ -28,7 +28,7 @@ public class ReportMenu extends BasePage implements PageView {
         report.setTime(new Date(System.currentTimeMillis()));
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
-        report.setFacilityId(checkIn.getFacilityId());;
+        report.setFacilityId(checkIn.getFacilityId());
         repm=new ReportManager(checkIn,staff);
     }
 
@@ -42,7 +42,7 @@ public class ReportMenu extends BasePage implements PageView {
                 case 1:
                     show("Please update discharge status");
                     UpdateDischarge up = new UpdateDischarge();
-                    new UpdateDischarge().display();
+                    up.display();
                     report.setDischargeStatus(up.getDischargeStatus());
                     break;
                 case 2:
