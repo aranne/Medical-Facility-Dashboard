@@ -5,6 +5,7 @@ import edu.ncsu.csc.model.*;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
+import java.sql.Time;
 import java.util.Date;
 
 
@@ -25,7 +26,7 @@ public class ReportMenu extends BasePage implements PageView {
          menuStrs.add("Submit");
         this.staff=staff;
         report = new Report();
-        report.setTime(new Date(System.currentTimeMillis()));
+        report.setTime(new Time(System.currentTimeMillis()));
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
         report.setFacilityId(checkIn.getFacilityId());
@@ -34,7 +35,7 @@ public class ReportMenu extends BasePage implements PageView {
     }
 
     @Override
-    public  void display() {       
+    public void display() {
         running = true;
         while (running) {
             initPage();

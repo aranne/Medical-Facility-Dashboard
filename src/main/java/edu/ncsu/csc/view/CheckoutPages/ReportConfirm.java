@@ -7,6 +7,8 @@ import edu.ncsu.csc.model.ReferralStatus;
 import edu.ncsu.csc.model.Report;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
+import edu.ncsu.csc.view.StaffPages.StaffMenu;
+import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
 
 import java.util.List;
 
@@ -22,14 +24,22 @@ public class ReportConfirm extends BasePage implements PageView {
         rpm.submit(report);
     }
 
-    public  void display() {
-         showReport();
-         initPage();
-         if(getChoice()==1){
 
-         }else{
-             show("the report may not be confirmed");
-         }
+    @Override
+    public void display() {
+        running = true;
+        while (running) {
+            initPage();
+            switch (getChoice()) {
+                case 1:
+                    running = false;
+                    break;
+                case 2:
+                    show("the report may not be confirmed");
+                    running = false;
+                    break;
+            }
+        }
     }
     public void showReport() {
         String stat = report.getDischargeStatus();

@@ -16,7 +16,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
                      .prepareStatement("INSERT INTO reports " +
                              "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id) " +
 							"values (?, ?, ?, ?,?,?,?,?)");
-			preparedStatement.setDate(1, new java.sql.Date(p.getTime().getTime()));
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
 			preparedStatement.setString(3, p.getLastName());
 			preparedStatement.setString(4, p.getDischargeStatus());
