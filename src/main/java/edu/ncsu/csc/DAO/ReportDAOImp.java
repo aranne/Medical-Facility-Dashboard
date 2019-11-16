@@ -14,15 +14,16 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
              openConnection();
              preparedStatement = connection
                      .prepareStatement("INSERT INTO reports " +
-                             "(time, dob, last_name, discharge_status,treatment,facility_id,employee_id) " +
-							"values (?, ?, ?, ?,?,?,?)");
+                             "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id) " +
+							"values (?, ?, ?, ?,?,?,?,?)");
 			preparedStatement.setDate(1, new java.sql.Date(p.getTime().getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
 			preparedStatement.setString(3, p.getLastName());
 			preparedStatement.setString(4, p.getDischargeStatus());
 			preparedStatement.setString(5, p.getTreatment());
-			preparedStatement.setInt(6, p.getFacilityId());
-			preparedStatement.setInt(7, p.getEmployeeId());
+			preparedStatement.setString(6, p.getReason());
+			preparedStatement.setInt(7, p.getFacilityId());
+			preparedStatement.setInt(8, p.getEmployeeId());
 			preparedStatement.executeUpdate();
          } catch (SQLException e) {
              e.printStackTrace();

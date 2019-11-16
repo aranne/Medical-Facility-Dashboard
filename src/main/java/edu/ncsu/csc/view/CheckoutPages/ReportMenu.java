@@ -5,6 +5,8 @@ import edu.ncsu.csc.model.*;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
+import java.util.Date;
+
 
 public class ReportMenu extends BasePage implements PageView {
     private Report report;
@@ -22,7 +24,8 @@ public class ReportMenu extends BasePage implements PageView {
          menuStrs.add("Go back");
          menuStrs.add("Submit");
         this.staff=staff;
-        report =new Report();
+        report = new Report();
+        report.setTime(new Date(System.currentTimeMillis()));
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
         report.setFacilityId(checkIn.getFacilityId());;
@@ -38,14 +41,14 @@ public class ReportMenu extends BasePage implements PageView {
             switch (index) {
                 case 1:
                     show("Please update discharge status");
-//                    UpdateDischarge up=new UpdateDischarge();
-//                    report.setDischargeStatus(up.getDischargeStatus());
+                    UpdateDischarge up = new UpdateDischarge();
                     new UpdateDischarge().display();
+                    report.setDischargeStatus(up.getDischargeStatus());
                     break;
                 case 2:
                     if(report.getDischargeStatus().equals("Referred")){
-                        if(referralStatus==null)
-                            referralStatus=new ReferralStatus();
+                        if(referralStatus == null)
+                            referralStatus = new ReferralStatus();
                         new UpdateReferral(referralStatus,repm).display();;
                         report.setReferralStatus(referralStatus);
                 }else{
@@ -54,16 +57,16 @@ public class ReportMenu extends BasePage implements PageView {
 
                     break;
                 case 3:
-                    String tratment=getEmailFromInput("input treatment text description");
-                    while(null==tratment||tratment.length()<=0)
+                    String tratment = getStringFromInput("input treatment text description");
+                    while(null == tratment || tratment.length() <= 0)
                     {
                         show("treatment description must not be empty!!!");
-                        tratment=getEmailFromInput("input treatment text description");
+                        tratment = getStringFromInput("input treatment text description");
                     }
                     report.setTreatment(tratment);
                     break;
                 case 4:
-                    NagativeExperience nagexp=new NagativeExperience();
+                    NagativeExperience nagexp = new NagativeExperience();
                     new UpdateNegative(nagexp).display();
                     report.getNagexps().add(nagexp);
                     break;
