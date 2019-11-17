@@ -1,22 +1,50 @@
 package edu.ncsu.csc.model;
+import java.util.Date;
 
 public class NegativeExperience {
-    private String nagativeCode;
-    private String discription;
+    private String negativeCode;
+    private String description;
+    private Date time;
+    private Date dob;
+    private String lastName;
 
-    public String getNagativeCode() {
-        return nagativeCode;
+    public String getNegativeCode() {
+        return negativeCode;
     }
 
-    public void setNagativeCode(String nagativeCode) {
-        this.nagativeCode = nagativeCode;
+    public void setNegativeCode(String negativeCode) {
+        this.negativeCode = negativeCode;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
