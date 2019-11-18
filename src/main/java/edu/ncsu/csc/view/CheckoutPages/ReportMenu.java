@@ -6,6 +6,7 @@ import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -13,6 +14,8 @@ public class ReportMenu extends BasePage implements PageView {
     private Report report;
     private Staff staff;
     private ReferralStatus referralStatus;
+    private Reason reason;
+    private NegativeExperience nega;
     ReportManager repm;
     public ReportMenu(CheckIn checkIn,Staff staff) {
     	super();
@@ -26,7 +29,7 @@ public class ReportMenu extends BasePage implements PageView {
          menuStrs.add("Submit");
         this.staff=staff;
         report = new Report();
-        report.setTime(new Time(System.currentTimeMillis()));
+        report.setTime(new Date(System.currentTimeMillis()));
         report.setLastName(checkIn.getLastName());
         report.setDob(checkIn.getDob());
         report.setFacilityId(checkIn.getFacilityId());
@@ -51,7 +54,7 @@ public class ReportMenu extends BasePage implements PageView {
                     if(report.getDischargeStatus().equals("Referred")){
                         if(referralStatus == null)
                             referralStatus = new ReferralStatus();
-                        new UpdateReferral(referralStatus,repm).display();
+                        new UpdateReferral(referralStatus,repm,report).display();
                         report.setReferralStatus(referralStatus);
                     }else{
                         show("This field is valid only if Discharge Status is Referred");
@@ -78,7 +81,7 @@ public class ReportMenu extends BasePage implements PageView {
                     running = false;
                     break;
                 case 6:
-                    new ReportConfirm(report,repm).display();
+                    new ReportConfirm(report,repm, reason, nega).display();
                     running = false;
                     break;
 

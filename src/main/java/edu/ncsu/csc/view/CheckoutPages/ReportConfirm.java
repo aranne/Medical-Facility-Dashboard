@@ -1,5 +1,6 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
+import edu.ncsu.csc.DAO.NegativeExpeDAOImp;
 import edu.ncsu.csc.controller.CheckoutPages.ReportManager;
 import edu.ncsu.csc.model.NegativeExperience;
 import edu.ncsu.csc.model.Reason;
@@ -12,14 +13,26 @@ import java.util.List;
 
 public class ReportConfirm extends BasePage implements PageView {
     private Report report;
+    private Reason reason;
+    private NegativeExperience nega;
     private ReportManager rpm;
-    public ReportConfirm(Report report, ReportManager rpm) {
+    public ReportConfirm(Report report, ReportManager rpm, Reason reason, NegativeExperience nega) {
         choicePrompt = "input your choice:";
         menuStrs.add("Confirm");
         menuStrs.add("Go Back");
         this.report = report;
         this.rpm = rpm;
-        rpm.submit(report);
+        this.reason = reason;
+        this.nega = nega;
+        rpm.submitReport(report);
+        if(reason != null){
+            rpm.submitReason(reason);
+        }
+        if(nega != null){
+            rpm.submitNegativeExperience(nega);
+        }
+
+
     }
 
 
@@ -47,7 +60,6 @@ public class ReportConfirm extends BasePage implements PageView {
             show("null");
         }else if(report.getReferralStatus() != null){
             ReferralStatus rs = report.getReferralStatus();
-            String a =  "f";
             if (rs != null){
                 int fid = rs.getFacility().getFacilityId();
                 if (fid == 0) {

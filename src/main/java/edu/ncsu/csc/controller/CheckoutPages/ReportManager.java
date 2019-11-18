@@ -1,10 +1,6 @@
 package edu.ncsu.csc.controller.CheckoutPages;
 
-import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
-import edu.ncsu.csc.DAO.ReportDAOImp;
-import edu.ncsu.csc.DAO.ServiceDAOImp;
-import edu.ncsu.csc.DAO.StaffDAOImp;
-import edu.ncsu.csc.DAO.TemplateDAO;
+import edu.ncsu.csc.DAO.*;
 import edu.ncsu.csc.model.*;
 
 import java.util.ArrayList;
@@ -30,18 +26,19 @@ public class ReportManager {
         TemplateDAO<Service> tdao1 = new ServiceDAOImp();
         services = tdao1.getAllValues();
         StaffDAOImp staffdao=new StaffDAOImp();
-        staffs=staffdao.getWorkmates(checkouter);
+        staffs=staffdao.getReferralList(checkouter);
     }
     public List<String> getStaffMenu() {
         List<String> choices = new ArrayList<String>(0);
         for (int i = 0; i < staffs.size(); i++) {
-            choices.add(String.valueOf(staffs.get(i).getEmployeeId()));
+            choices.add(String.valueOf(staffs.get(i).getEmployeeId() )
+                    + " " + staffs.get(i).getLastName());
         }
         return choices;
     }
 
-    public Staff getStaffSelection(int index) {
-        return staffs.get(index);
+    public int getStaffSelection(int index) {
+        return staffs.get(index - 1).getEmployeeId();
     }
 
     public List<String> getFacilityMenu() {
@@ -52,8 +49,8 @@ public class ReportManager {
         return choices;
     }
 
-    public MedicalFacility getFacilitySelection(int index) {
-        return facilities.get(index);
+    public int getFacilitySelection(int index) {
+        return facilities.get(index-1).getFacilityId();
     }
 
 
@@ -69,8 +66,19 @@ public class ReportManager {
         return services.get(index);
     }
 
-    public boolean submit(Report report) {
-    	ReportDAOImp repdao=new ReportDAOImp();
+    public boolean submitReport(Report report) {
+    	ReportDAOImp repdao = new ReportDAOImp();
+
         return repdao.addOneValue(report);
+    }
+
+    public boolean submitReason(Reason reason) {
+        ReasonDAOImp reasondao = new ReasonDAOImp();
+        return reasondao.addOneValue(reason);
+    }
+
+    public boolean submitNegativeExperience(NegativeExperience nega) {
+        NegativeExpeDAOImp negadao = new NegativeExpeDAOImp();
+        return negadao.addOneValue(nega);
     }
 }

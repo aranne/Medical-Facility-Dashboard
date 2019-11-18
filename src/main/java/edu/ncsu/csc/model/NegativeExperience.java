@@ -10,6 +10,10 @@ public class NegativeExperience {
     private Date dob;
     private String lastName;
 
+    public NegativeExperience(){
+
+    }
+
     public NegativeExperience(int id, String negativeCode, String description, Date time, Date dob, String lastName) {
         this.id = id;
         this.negativeCode = negativeCode;

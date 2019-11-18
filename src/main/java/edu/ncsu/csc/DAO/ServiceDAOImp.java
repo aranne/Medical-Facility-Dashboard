@@ -2,6 +2,8 @@ package edu.ncsu.csc.DAO;
 
 import edu.ncsu.csc.model.Service;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDAOImp  extends AbstractDAO implements TemplateDAO<Service>{
@@ -12,7 +14,26 @@ public class ServiceDAOImp  extends AbstractDAO implements TemplateDAO<Service>{
 
     @Override
     public List<Service> getAllValues() {
-        return null;
+        List<Service> service = new ArrayList<>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from SERVICES");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                service.add(new Service(
+                        resultSet.getString("service_code"),
+                        resultSet.getString("name")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        if(service.size()==0)
+            service = null;
+        return service;
     }
 
     @Override

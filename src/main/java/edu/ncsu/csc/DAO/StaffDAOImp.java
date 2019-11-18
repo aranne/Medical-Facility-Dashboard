@@ -40,7 +40,7 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
         return staff;
     }
     public List<Staff> getWorkmates(Staff staff) {
-        List<Staff> mates=null;
+        List<Staff> mates = null;
         try {
             openConnection();
             preparedStatement = connection
@@ -71,6 +71,40 @@ public class StaffDAOImp extends AbstractDAO implements TemplateDAO<Staff> {
         }
         return mates;
     }
+
+    public List<Staff> getReferralList(Staff staff) {
+        List<Staff> mates = new ArrayList<Staff>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from STAFFS where primary_dept_code=? " +
+                            "UNION select * from STAFFS where employee_id in (select employee_id from staff_seco_works_dept where dept_code=? )");
+            preparedStatement.setString(1, staff.getPrimaryDeptCode());
+            preparedStatement.setString(2, staff.getPrimaryDeptCode());
+            resultSet = preparedStatement.executeQuery();
+//            if(resultSet.next())
+//            {
+//                int facilityId=resultSet.getInt("facility_id");
+//            }
+            while (resultSet.next()) {
+                mates.add(new Staff(
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getBoolean("is_medical"),
+                        resultSet.getDate("dob"),
+                        resultSet.getDate("hire_date"),
+                        resultSet.getString("primary_dept_code"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return mates;
+    }
+
     public List<BodyPart> getBodysCanTreatByStaff(Staff staff){
     	List<BodyPart> bodys=new ArrayList<BodyPart>();
     	try {
