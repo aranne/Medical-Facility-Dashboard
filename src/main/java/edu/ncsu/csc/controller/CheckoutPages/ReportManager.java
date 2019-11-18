@@ -23,10 +23,6 @@ public class ReportManager {
         reLoad();
     }
 
-    public void addReport(Report report){
-        TemplateDAO r_dao = new ReportDAOImp();
-        ((ReportDAOImp)r_dao).addOneValue(report);
-    }
 
     public void reLoad() {
         TemplateDAO<MedicalFacility> tdao = new MedicalFacilityDAOImp();

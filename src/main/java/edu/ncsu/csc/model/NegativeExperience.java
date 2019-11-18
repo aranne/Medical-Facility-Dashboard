@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class NegativeExperience {
     private int id;
-    private String nagativeCode;
-    private String discription;
+    private String negativeCode;
+    private String description;
     private Date time;
     private Date dob;
     private String lastName;
 
-    public NegativeExperience(int id, String nagativeCode, String discription, Date time, Date dob, String lastName) {
+    public NegativeExperience(int id, String negativeCode, String description, Date time, Date dob, String lastName) {
         this.id = id;
-        this.nagativeCode = nagativeCode;
-        this.discription = discription;
+        this.negativeCode = negativeCode;
+        this.description = description;
         this.time = time;
         this.dob = dob;
         this.lastName = lastName;
@@ -27,20 +27,20 @@ public class NegativeExperience {
         this.id = id;
     }
 
-    public String getNagativeCode() {
-        return nagativeCode;
+    public String getNegativeCode() {
+        return negativeCode;
     }
 
-    public void setNagativeCode(String nagativeCode) {
-        this.nagativeCode = nagativeCode;
+    public void setNegativeCode(String negativeCode) {
+        this.negativeCode = negativeCode;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getTime() {

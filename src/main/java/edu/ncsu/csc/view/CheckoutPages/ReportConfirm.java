@@ -7,8 +7,6 @@ import edu.ncsu.csc.model.ReferralStatus;
 import edu.ncsu.csc.model.Report;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
-import edu.ncsu.csc.view.StaffPages.StaffMenu;
-import edu.ncsu.csc.view.CheckoutPages.ReportMenu;
 
 import java.util.List;
 
@@ -70,8 +68,8 @@ public class ReportConfirm extends BasePage implements PageView {
         show("Treatment:\t" + report.getTreatment());
         List<NegativeExperience> rrs = report.getNagexps();
         for (NegativeExperience rr : rrs) {
-            show(rr.getNagativeCode());
-            show(rr.getDiscription());
+            show(rr.getNegativeCode());
+            show(rr.getDescription());
         }
     }
 }
