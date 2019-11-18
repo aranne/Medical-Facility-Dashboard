@@ -1,45 +1,48 @@
 package edu.ncsu.csc.DAO;
 
+import edu.ncsu.csc.model.Reason;
+
 import java.util.List;
 
-public class ReasonDAOImp extends AbstractDAO implements TemplateDAO {
+public class ReasonDAOImp extends AbstractDAO implements TemplateDAO<Reason> {
+
     @Override
-    public boolean addOneValue(Object p) {
+    public boolean addOneValue(Reason p) {
         return false;
     }
 
     @Override
-    public List getAllValues() {
+    public List<Reason> getAllValues() {
         return null;
     }
 
     @Override
-    public List getBatchByQuery(String queryStr) {
+    public List<Reason> getBatchByQuery(String queryStr) {
         return null;
     }
 
     @Override
-    public Object getOneByQuery(String queryStr) {
+    public Reason getOneByQuery(String queryStr) {
         return null;
     }
 
     @Override
-    public Object getOneById(int id) {
+    public Reason getOneById(int id) {
         return null;
     }
 
     @Override
-    public Object getOneById(String id) {
+    public Reason getOneById(String id) {
         return null;
     }
 
     @Override
-    public boolean updateValue(Object p) {
+    public boolean updateValue(Reason p) {
         return false;
     }
 
     @Override
-    public boolean deleteRecord(Object p) {
+    public boolean deleteRecord(Reason p) {
         return false;
     }
 }

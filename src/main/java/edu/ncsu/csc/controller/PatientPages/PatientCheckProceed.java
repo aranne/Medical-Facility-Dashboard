@@ -2,7 +2,7 @@ package edu.ncsu.csc.controller.PatientPages;
 
 import edu.ncsu.csc.DAO.CheckInDAOImp;
 import edu.ncsu.csc.DAO.ReportDAOImp;
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAOImp;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.*;
 
@@ -17,7 +17,7 @@ public class PatientCheckProceed {
         reload();
     }
     public  void reload(){
-        SymptomDAOImpl patientPagesDao = new SymptomDAOImpl();
+        SymptomDAOImp patientPagesDao = new SymptomDAOImp();
         symptoms = patientPagesDao.getAllValues();
     }
     public CheckIn getCheckin(Patient p){

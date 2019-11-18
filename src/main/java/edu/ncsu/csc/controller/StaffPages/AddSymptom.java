@@ -1,7 +1,7 @@
 package edu.ncsu.csc.controller.StaffPages;
 
 import edu.ncsu.csc.DAO.BodyPartDAO;
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAOImp;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.controller.PatientPages.CheckinSymptoms;
 import edu.ncsu.csc.model.BodyPart;
@@ -45,10 +45,10 @@ public class AddSymptom {
         {
             //symptom can associated all bodypart;
         }else{
-            TemplateDAO m_dao=new SymptomDAOImpl();
+            TemplateDAO m_dao=new SymptomDAOImp();
             Symptom s=new Symptom(name,code);
             List<BodyPart> bodies=getSlected(indexs);
-            ((SymptomDAOImpl)m_dao).addSymptomWithBody(s,bodies);
+            ((SymptomDAOImp)m_dao).addSymptomWithBody(s,bodies);
         }
 
     }

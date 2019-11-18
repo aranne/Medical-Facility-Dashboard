@@ -2,7 +2,7 @@ package edu.ncsu.csc.model;
 
 import java.util.Date;
 
-public class CheckIn {
+public class CheckIn implements Comparable<CheckIn> {
     private Integer id;
     private String lastName;
     private Date dob;
@@ -71,6 +71,10 @@ public class CheckIn {
         this.facilityId = facilityId;
     }
 
-
-
+    @Override
+    public int compareTo(CheckIn checkIn) {
+        long thisDuration = this.endTime.getTime() - this.startTime.getTime();
+        long thatDuration = checkIn.endTime.getTime() - checkIn.startTime.getTime();
+        return (int) thisDuration - (int) thatDuration;
+    }
 }

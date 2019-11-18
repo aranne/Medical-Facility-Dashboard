@@ -136,6 +136,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
     return rules;
   }
 
+  // TODO for sample query six
   @Override
   public List<CheckIn> getBatchByQuery(String queryStr) {
     return null;

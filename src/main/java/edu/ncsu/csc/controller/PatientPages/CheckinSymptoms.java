@@ -2,7 +2,7 @@ package edu.ncsu.csc.controller.PatientPages;
 
 import edu.ncsu.csc.DAO.BodyPartDAO;
 import edu.ncsu.csc.DAO.CheckInDAOImp;
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAOImp;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.*;
 
@@ -18,7 +18,7 @@ public class CheckinSymptoms {
   }
 
   public void reloadDatas() {
-    TemplateDAO m_dao = new SymptomDAOImpl();
+    TemplateDAO m_dao = new SymptomDAOImp();
     symptoms = m_dao.getAllValues();
     TemplateDAO m_dao1 = new BodyPartDAO();
     bodyParts = m_dao1.getAllValues();
@@ -71,10 +71,10 @@ public class CheckinSymptoms {
     if (indexs.size() == 0) {
       //symptom can associated all bodypart;
     } else {
-      TemplateDAO m_dao = new SymptomDAOImpl();
+      TemplateDAO m_dao = new SymptomDAOImp();
       Symptom s = new Symptom(name, code);
       List<BodyPart> bodies = getSlected(indexs);
-      ((SymptomDAOImpl) m_dao).addSymptomWithBody(s, bodies);
+      ((SymptomDAOImp) m_dao).addSymptomWithBody(s, bodies);
     }
 
   }

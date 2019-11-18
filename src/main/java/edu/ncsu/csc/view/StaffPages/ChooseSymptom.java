@@ -1,6 +1,6 @@
 package edu.ncsu.csc.view.StaffPages;
 
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAOImp;
 import edu.ncsu.csc.model.Symptom;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
@@ -13,7 +13,7 @@ public class ChooseSymptom extends BasePage implements PageView {
 
   public ChooseSymptom(int page) {
     this.page = page;
-    SymptomDAOImpl symptomDAO = new SymptomDAOImpl();
+    SymptomDAOImp symptomDAO = new SymptomDAOImp();
     this.symptoms = symptomDAO.getAllValues();
     choicePrompt = "Enter Choice";
     for (int i = 0; i < symptoms.size(); i++) {

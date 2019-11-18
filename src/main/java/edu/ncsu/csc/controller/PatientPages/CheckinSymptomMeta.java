@@ -1,7 +1,7 @@
 package edu.ncsu.csc.controller.PatientPages;
 
 import edu.ncsu.csc.DAO.SeverityDAOImp;
-import edu.ncsu.csc.DAO.SymptomDAOImpl;
+import edu.ncsu.csc.DAO.SymptomDAOImp;
 import edu.ncsu.csc.model.BodyPart;
 import edu.ncsu.csc.model.Severity;
 import edu.ncsu.csc.model.Symptom;
@@ -20,7 +20,7 @@ public class CheckinSymptomMeta {
     public void reLoad(){
         SeverityDAOImp severdao=new SeverityDAOImp();
         severities=severdao.getAllValues();
-        SymptomDAOImpl symps=new SymptomDAOImpl();
+        SymptomDAOImp symps=new SymptomDAOImp();
         bodyParts =symps.getBodysbySymptom(symptom);
     }
     public List<String> getBodyMenu(){
