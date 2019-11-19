@@ -175,8 +175,7 @@ public class SampleQuery {
         List<NegativeExperience> negas;
         for (PatientSymMeta sm : symMetas) {
             // Get all reports for a certain patient.
-            //TODO
-            // List<Report> reports = reportDao.get;
+            List<Report> reports = reportDao.getReportByNameAndDob(sm.getLastName(), sm.getDob());
             for (Report r : reports) {
                 negas = negaDao.getAllByNameAndDob(r.getLastName(), r.getDob(), r.getTime());
                 if (negas.size() != 0) {

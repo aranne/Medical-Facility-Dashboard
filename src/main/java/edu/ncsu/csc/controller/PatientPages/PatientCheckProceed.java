@@ -29,7 +29,7 @@ public class PatientCheckProceed {
         ReportDAOImp chdao = new ReportDAOImp();
         String lastName = p.getLastName();
         Date dob = p.getDob();
-        Report r = chdao.getReportByNameAndDob(lastName, dob);
+        Report r = chdao.getOneByNameAndDob(lastName, dob);
         return r;
 //        ("last_name = lastName and dob = dob");
 //        return chdao.getOneByQuery("last_name = lastName and dob = dob");

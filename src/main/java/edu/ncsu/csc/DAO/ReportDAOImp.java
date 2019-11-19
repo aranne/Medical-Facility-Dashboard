@@ -194,7 +194,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return report;
     }
 
-    public Report getReportByNameAndDob(String lastName, Date dob) {
+    public Report getOneByNameAndDob(String lastName, Date dob) {
         Report report = null;
         try {
             openConnection();
@@ -224,6 +224,38 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
             closeConnection();
         }
         return report;
+    }
+
+    public List<Report> getReportByNameAndDob(String lastName, Date dob) {
+        List<Report> reports = null;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from REPORTS where last_name = ? and dob = ?");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                reports.add(new Report(
+                        resultSet.getInt("id"),
+                        resultSet.getDate("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("discharge_status"),
+                        resultSet.getString("treatment"),
+                        resultSet.getInt("facility_id"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("reason"),
+                        resultSet.getInt("referer_id"),
+                        resultSet.getInt("refer_facility_id")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return reports;
     }
 
     @Override
