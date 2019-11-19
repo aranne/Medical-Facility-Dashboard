@@ -1,8 +1,6 @@
 package edu.ncsu.csc.DAO;
 
-import edu.ncsu.csc.model.Severity;
-import edu.ncsu.csc.model.Staff;
-import edu.ncsu.csc.model.Symptom;
+import edu.ncsu.csc.model.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -131,5 +129,52 @@ public class SeverityDAOImp extends AbstractDAO implements TemplateDAO<Severity>
   @Override
   public boolean deleteRecord(Severity p) {
     return false;
+  }
+
+  public ArrayList<PatientSymptom> getAllSymPriority() {
+    ArrayList<PatientSymptom> symPriorities = new ArrayList<PatientSymptom>();
+
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("select * from severities");
+      resultSet = preparedStatement.executeQuery();
+      System.out.println(resultSet.toString());
+      while (resultSet.next()) {
+        symPriorities.add(new PatientSymptom(resultSet.getString(3), resultSet.getString(4)));
+      }
+
+    } catch (SQLException e) {
+      System.out.println("SQL Expection");
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return symPriorities;
+  }
+
+  public ArrayList<PatientSymptom> getPatientSymptoms(CheckIn checkIn) {
+    ArrayList<PatientSymptom> symPriorities = new ArrayList<PatientSymptom>();
+
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("select * from PATIENT_SYM_META " +
+              "where DOB = ? and LAST_NAME = ?");
+      preparedStatement.setDate(1, (Date) checkIn.getDob());
+      preparedStatement.setString(2, checkIn.getLastName());
+      resultSet = preparedStatement.executeQuery();
+      System.out.println(resultSet.toString());
+      while (resultSet.next()) {
+        symPriorities.add(new PatientSymptom(resultSet.getString(2), resultSet.getString(3)));
+      }
+
+    } catch (SQLException e) {
+      System.out.println("SQL Expection");
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return symPriorities;
   }
 }
