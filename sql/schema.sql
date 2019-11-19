@@ -319,29 +319,27 @@ create table staff_directs_dept
 
 /
 -- 20.
-create table vitals
+create table VITALS
 (
-    id number not null,
-    last_name varchar2(255) not null,
-    dob date not null,
-    temperature float not null,
-    blood_pressure_systolic float not null,
-    blood_pressure_diastolic float not null,
-    constraint vitals_pk
-        primary key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
-    constraint V_NAME_DOB_fk
-        foreign key (last_name, dob) references PATIENTS
+    ID NUMBER not null,
+    LAST_NAME VARCHAR2(255) not null,
+    DOB DATE not null,
+    TEMPERATURE FLOAT not null,
+    BLOOD_PRESSURE_SYSTOLIC FLOAT not null,
+    BLOOD_PRESSURE_DIASTOLIC FLOAT not null,
+    CHECKIN_TIME DATE not null,
+    constraint VITALS_PK
+        unique (DOB, LAST_NAME, CHECKIN_TIME),
+    constraint V_NAME_DOB_FK
+        foreign key (LAST_NAME, DOB) references PATIENTS
             on delete cascade
 )
 /
-create sequence vital_ID_SEQ
-    nocache
-/
-create trigger vital_id_TRIGGER
+
+create trigger VITAL_ID_TRIGGER
     before insert
-    on vitals
-    for each row
-    when (NEW.id is null)
+    on VITALS
+    for each row when (NEW.id is null)
 begin
     select vital_ID_SEQ.nextval into :new.id from dual;
 
@@ -350,24 +348,26 @@ end vital_id_TRIGGER;
 
 
 -- 21.
-create table staff_records_vital
+create table STAFF_RECORDS_VITAL
 (
-    employee_id number not null
-        constraint SRV_EMPLOYEE_ID_fk
+    EMPLOYEE_ID NUMBER not null
+        constraint SRV_EMPLOYEE_ID_FK
             references STAFFS
                 on delete cascade,
-    last_name varchar2(255) not null,
-    dob date not null,
-    temperature float not null,
-    blood_pressure_systolic float not null,
-    blood_pressure_diastolic float not null,
-    constraint staff_records_vital_pk
-        primary key (employee_id, last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic),
-    constraint SRV_VITALS_fk
-        foreign key (last_name, dob, temperature, blood_pressure_systolic, blood_pressure_diastolic) references VITALS
-            on delete cascade
+    LAST_NAME VARCHAR2(255) not null,
+    DOB DATE not null,
+    TEMPERATURE FLOAT not null,
+    BLOOD_PRESSURE_SYSTOLIC FLOAT not null,
+    BLOOD_PRESSURE_DIASTOLIC FLOAT not null,
+    CHECKIN_TIME DATE not null,
+    constraint STAFF_RECORDS_VITAL_PK
+        primary key (EMPLOYEE_ID, LAST_NAME, DOB, CHECKIN_TIME),
+    constraint SRV_CHECKIN_TIME_FK
+        foreign key (DOB, LAST_NAME, CHECKIN_TIME) references VITALS (DOB, LAST_NAME, CHECKIN_TIME)
 )
 /
+
+
 
 -- 22.
 create table reports

@@ -34,7 +34,7 @@ public class StaffProcessPatient {
     public boolean enterVital(Vital vital,CheckIn checkin,Staff staff){
         boolean rest=false;
         VitalDAOImp vidao=new VitalDAOImp();
-        rest= vidao.addVitalStaff(vital,staff);
+        rest= vidao.addVitalStaff(vital,staff, checkin);
         CheckInDAOImp checkdao=new CheckInDAOImp();
         checkin.setEndTime(new Date(System.currentTimeMillis()));
         rest= rest && checkdao.updateValue(checkin);
