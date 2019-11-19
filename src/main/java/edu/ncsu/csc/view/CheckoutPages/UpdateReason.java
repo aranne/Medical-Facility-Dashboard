@@ -14,7 +14,6 @@ public class UpdateReason extends BasePage implements PageView {
     ReportManager rpm;
     Report report;
     public UpdateReason(ReportManager rpm, Report report) {
-        this.reason = new Reason();
         this.rpm = rpm;
         this.report = report;
         choicePrompt = "choose a reason";
@@ -30,6 +29,7 @@ public class UpdateReason extends BasePage implements PageView {
     @Override
     public void display() {
         List<String> services = rpm.getServiceMenu();
+        reason = new Reason();
         int index = ComboBoxPage.getInstance().select(services,"choose a service");
         reason.setServiceCode(rpm.getServiceSelection(index - 1).getServiceCode());
         initPage();

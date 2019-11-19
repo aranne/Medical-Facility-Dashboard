@@ -7,15 +7,17 @@ import edu.ncsu.csc.view.PageView;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class ReportMenu extends BasePage implements PageView {
     private Report report;
     private Staff staff;
     private ReferralStatus referralStatus;
-    Reason reason;
-    NegativeExperience nega;
+    List<Reason> reasons;
+    List<NegativeExperience> negas;
     ReportManager repm;
     public ReportMenu(CheckIn checkIn,Staff staff) {
     	super();
@@ -34,7 +36,9 @@ public class ReportMenu extends BasePage implements PageView {
         report.setDob(checkIn.getDob());
         report.setFacilityId(checkIn.getFacilityId());
         report.setEmployeeId(staff.getEmployeeId());
+
         repm = new ReportManager(checkIn,staff);
+        negas = new ArrayList<>();
     }
 
     @Override
@@ -56,12 +60,11 @@ public class ReportMenu extends BasePage implements PageView {
                             referralStatus = new ReferralStatus();
                         UpdateReferral updateReferral = new UpdateReferral(referralStatus, repm,report);
                         updateReferral.display();
-                        this.reason = updateReferral.getReason();
+                        reasons = updateReferral.getReasons();
                         report.setReferralStatus(referralStatus);
                     }else{
                         show("This field is valid only if Discharge Status is Referred");
                     }
-
                     break;
                 case 3:
                     String treatment = getStringFromInput("input treatment text description");
@@ -77,15 +80,23 @@ public class ReportMenu extends BasePage implements PageView {
                 case 4:
                     UpdateNegative updateNegative = new UpdateNegative(report);
                     updateNegative.display();
-                    this.nega = updateNegative.getNagexp();
-                    report.getNagexps().add(updateNegative.getNagexp());
+                    negas.add(updateNegative.getNagexp());
+                    report.setNagexps(negas);
                     break;
                 case 5:
                     running = false;
                     break;
                 case 6:
-                    new ReportConfirm(report, repm, reason, nega).display();
-                    new ReportConfirm(report, repm, reason, nega).showReport();
+                    if(report.getDischargeStatus() == null){
+                        show("Please input discharge status");
+                        break;
+                    }
+                    if(report.getTreatment() == null){
+                        show("please input Treatment description");
+                        break;
+                    }
+                    ReportConfirm reportConfirm = new ReportConfirm(report, repm, reasons, negas);
+                    reportConfirm.display();
                     running = false;
                     break;
 

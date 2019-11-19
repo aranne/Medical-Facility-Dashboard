@@ -1,6 +1,9 @@
 package edu.ncsu.csc.view.CheckoutPages;
 
+import edu.ncsu.csc.DAO.MedicalFacilityDAO;
+import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
 import edu.ncsu.csc.DAO.NegativeExpeDAOImp;
+import edu.ncsu.csc.DAO.StaffDAOImp;
 import edu.ncsu.csc.controller.CheckoutPages.ReportManager;
 import edu.ncsu.csc.model.NegativeExperience;
 import edu.ncsu.csc.model.Reason;
@@ -13,40 +16,38 @@ import java.util.List;
 
 public class ReportConfirm extends BasePage implements PageView {
     private Report report;
-    private Reason reason;
-    private NegativeExperience nega;
+    private List<Reason> reasons;
+    private List<NegativeExperience> negas;
     private ReportManager rpm;
-    public ReportConfirm(Report report, ReportManager rpm, Reason reason, NegativeExperience nega) {
+    public ReportConfirm(Report report, ReportManager rpm, List<Reason> reasons, List<NegativeExperience> negas) {
         choicePrompt = "input your choice:";
         menuStrs.add("Confirm");
         menuStrs.add("Go Back");
         this.report = report;
         this.rpm = rpm;
-        this.reason = reason;
-        this.nega = nega;
-        if(report.getDischargeStatus() == null){
-            show("Please input discharge status");
-        }
-        if(report.getTreatment() == null){
-            show("please input Treatment description");
-        }
+        this.reasons = reasons;
+        this.negas = negas;
+    }
 
-
-        if(reason != null){
-            rpm.submitReason(reason);
-            rpm.submitReport(report);
+    public void submit(Report report, ReportManager rpm, List<Reason> reasons, List<NegativeExperience> negas) {
+        if(negas.size() == 0){
+            if (report.getReferFacilityId() == 0 && report.getReferrerId() == 0) {
+                rpm.addOneValueWithoutRefer(report);
+            } else{
+                rpm.submitReport(report);
+                rpm.submitReason(reasons);
+            }
         }else{
-            rpm.submitReport(report);
+            if (report.getReferFacilityId() == 0 && report.getReferrerId() == 0) {
+                rpm.addOneValueWithoutRefer(report);
+                rpm.submitNegativeExperience(negas);
+            } else {
+                rpm.submitReport(report);
+                rpm.submitNegativeExperience(negas);
+                rpm.submitReason(reasons);
+            }
+
         }
-        if(nega != null){
-            rpm.submitNegativeExperience(nega);
-            rpm.submitReport(report);
-        }else{
-            rpm.submitReport(report);
-        }
-
-
-
     }
 
 
@@ -57,6 +58,8 @@ public class ReportConfirm extends BasePage implements PageView {
             initPage();
             switch (getChoice()) {
                 case 1:
+                    submit(report, rpm, reasons, negas);
+                    showReport();
                     running = false;
                     break;
                 case 2:
@@ -68,34 +71,35 @@ public class ReportConfirm extends BasePage implements PageView {
     }
     public void showReport() {
         String stat = report.getDischargeStatus();
-        show("Discharge Status:\t" + stat);
-        show("Referral Status:\t");
+        show("================ Report ================");
+        show("Discharge Status:\t" + stat );
+        System.out.println();
+        System.out.println("Referral Status: ");
         if(report.getReferralStatus() == null){
-            show("null");
+            show("No referral status here");
         }else if(report.getReferralStatus() != null){
             ReferralStatus rs = report.getReferralStatus();
-            if (rs != null){
-                int fid = rs.getFacility().getFacilityId();
-                if (fid == 0) {
-                    show("Facility:unknown");
-                } else {
-                    show("Facility:" + fid);
-                }
-                List<Reason> rrs = rs.getReasons();
-                for (Reason rr : rrs) {
-                    show(rr.getReasonCode());
-                    show(rr.getDescription());
-                }
-            }else{
-                show("null");
+            int fid = report.getFacilityId();
+            int employeeId = report.getEmployeeId();
+            if (fid == 0) {
+                show("Facility: unknown");
+            } else {
+                MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+                StaffDAOImp staffDao = new StaffDAOImp();
+                show("Facility: " + facilityDao.getOneById(fid).getName());
+                show("Referrer staff:" + staffDao.getOneById(employeeId));
             }
-
+            for (Reason reason : reasons) {
+                show("Reason Code: " + reason.getReasonCode());
+                show("Reason Description: " + reason.getDescription());
+            }
         }
+        System.out.println();
         show("Treatment:\t" + report.getTreatment());
-        List<NegativeExperience> rrs = report.getNagexps();
-        for (NegativeExperience rr : rrs) {
-            show(rr.getNegativeCode());
-            show(rr.getDescription());
+        show("Negative experiences: ");
+        for (NegativeExperience nega : negas) {
+            show("Code: " + nega.getNegativeCode());
+            show("Negative Experience: " + nega.getDescription());
         }
     }
 }

@@ -25,14 +25,16 @@ public class ReportManager {
         facilities = tdao.getAllValues();
         TemplateDAO<Service> tdao1 = new ServiceDAOImp();
         services = tdao1.getAllValues();
-        StaffDAOImp staffdao=new StaffDAOImp();
-        staffs=staffdao.getReferralList(checkouter);
     }
-    public List<String> getStaffMenu() {
+    public List<String> getStaffMenu(int facilityId) {
         List<String> choices = new ArrayList<String>(0);
+        StaffDAOImp staffDao=new StaffDAOImp();
+        staffs = staffDao.getAllValues();
         for (int i = 0; i < staffs.size(); i++) {
-            choices.add(String.valueOf(staffs.get(i).getEmployeeId() )
-                    + " " + staffs.get(i).getLastName());
+            if (staffDao.staffInFacility(facilityId, staffs.get(i))) {
+                choices.add((staffs.get(i).getEmployeeId() )
+                        + " " + staffs.get(i).getLastName());
+            }
         }
         return choices;
     }
@@ -68,17 +70,27 @@ public class ReportManager {
 
     public boolean submitReport(Report report) {
     	ReportDAOImp repdao = new ReportDAOImp();
-
         return repdao.addOneValue(report);
     }
 
-    public boolean submitReason(Reason reason) {
-        ReasonDAOImp reasondao = new ReasonDAOImp();
-        return reasondao.addOneValue(reason);
+    public boolean addOneValueWithoutRefer(Report report) {
+        ReportDAOImp repdao = new ReportDAOImp();
+        return repdao.addOneValueWithoutRefer(report);
     }
 
-    public boolean submitNegativeExperience(NegativeExperience nega) {
+    public boolean submitReason(List<Reason> reasons) {
+        ReasonDAOImp reasondao = new ReasonDAOImp();
+        for (Reason reason : reasons) {
+            reasondao.addOneValue(reason);
+        }
+        return true;
+    }
+
+    public boolean submitNegativeExperience(List<NegativeExperience> negas) {
         NegativeExpeDAOImp negadao = new NegativeExpeDAOImp();
-        return negadao.addOneValue(nega);
+        for (NegativeExperience nega : negas) {
+            negadao.addOneValue(nega);
+        }
+        return true;
     }
 }
