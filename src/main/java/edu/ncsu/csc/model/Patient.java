@@ -157,4 +157,8 @@ public class Patient {
     public List<MedicalFacility> getFacilities() {
         return facilities;
     }
+
+    public String toString() {
+        return firstName + lastName;
+    }
 }

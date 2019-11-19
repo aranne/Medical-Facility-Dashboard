@@ -17,7 +17,7 @@ public class ProcessPatient extends BasePage implements PageView {
   public ProcessPatient(CheckIn checkIn, Staff staff) {
     this.checkIn = checkIn;
     this.m_staff = staff;
-    pageTitle = "===================ProcessPatient=========================";
+    pageTitle = "=================== Process Patient =========================";
     choicePrompt = "select a operation:";
     menuStrs.add("Enter Vitals");
     menuStrs.add("Treat patient");

@@ -469,12 +469,12 @@ end nega_exp_id_TRIGGER;
 create table reasons
 (
     id number not null,
-    reason_code varchar2(255) not null
+    reason_code varchar2(255) not null,
+    description varchar2(255) not null,
+    service_code varchar2(255) not null
         constraint R_SERVICE_CODE_fk
             references SERVICES
                 on delete cascade,
-    description varchar2(255) not null,
-    service_code varchar2(255) not null,
     time date not null,
     dob date not null,
     last_name varchar2(255) not null,

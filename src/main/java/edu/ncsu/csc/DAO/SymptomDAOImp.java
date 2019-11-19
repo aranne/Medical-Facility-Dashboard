@@ -25,7 +25,7 @@ public class SymptomDAOImp extends AbstractDAO implements TemplateDAO<Symptom> {
 //		                  resultSet.getString(1),
 //		                  resultSet.getString(2));
 //		      }
-//		      
+//
 //		    } catch (SQLException e) {
 //		      e.printStackTrace();
 //		    } finally {
@@ -131,7 +131,7 @@ public class SymptomDAOImp extends AbstractDAO implements TemplateDAO<Symptom> {
   public List<Symptom> getBatchByQuery(String queryStr) {
     return null;
   }
-  
+
   @Override
   public Symptom getOneByQuery(String queryStr) {
 	    Symptom symptom = null;

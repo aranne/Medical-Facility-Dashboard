@@ -12,6 +12,7 @@ public class UpdateReferral extends BasePage implements PageView {
     private ReferralStatus referralStatus;
     private Report report;
     private ReportManager repm;
+    private Reason reason;
     public UpdateReferral(ReferralStatus referralStatus,ReportManager repm, Report report) {
         this.referralStatus = referralStatus;
         this.repm = repm;
@@ -21,6 +22,11 @@ public class UpdateReferral extends BasePage implements PageView {
         menuStrs.add("add a reason");
         menuStrs.add("done");
     }
+
+    public Reason getReason() {
+        return reason;
+    }
+
     @Override
     public void display() {
        running = true;
@@ -36,10 +42,9 @@ public class UpdateReferral extends BasePage implements PageView {
                report.setReferrerId(repm.getStaffSelection(index));
            }else if(cho==3){
                Reason r = new Reason();
-               UpdateReason upr = new UpdateReason(r,repm);
-//
+               UpdateReason upr = new UpdateReason(repm, report);
+               this.reason = upr.getReason();
                upr.display();
-               referralStatus.getReasons().add(r);
 
            }else{
                running=false;

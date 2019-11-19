@@ -13,7 +13,7 @@ public class TreatedPatient extends BasePage implements PageView {
     public TreatedPatient(CheckIn checkIn, Staff staff) {
         this.checkIn = checkIn;
         this.staff=staff;
-        pageTitle="=======================TreatedPatient=============================";
+        pageTitle="======================= Treated Patient =============================";
         choicePrompt="input your choice:";
         menuStrs.add("Check out");
         menuStrs.add("Go Back");

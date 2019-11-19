@@ -16,7 +16,7 @@ public class AddAssessmentRule extends BasePage implements PageView {
     this.symptom = symptom;
     SeverityDAOImp severityDAOImp = new SeverityDAOImp();
     severities = severityDAOImp.getAllBySymCode(symptom.getSymCode());
-    pageTitle = "=================== AddAssessmentRule =============================";
+    pageTitle = "=================== Add Assessment Rule =============================";
     choicePrompt = "input your choice:";
     for (int i = 0; i < severities.size(); i++) {
       menuStrs.add(severities.get(i).toString());

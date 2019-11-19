@@ -15,10 +15,9 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
              openConnection();
              preparedStatement = connection
                      .prepareStatement("INSERT INTO reports " +
-                             "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id) " +
-							"values (?, ?, ?, ?,?,?,?,?)");
+                             "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id,REFERRER_ID, REFER_FACILITY_ID) " +
+							"values (?, ?, ?, ?,?,?,?,?,?,?)");
 			preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
-//			preparedStatement.setDate(1, new java.sql.Date(p.getTime().getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
 			preparedStatement.setString(3, p.getLastName());
 			preparedStatement.setString(4, p.getDischargeStatus());
@@ -26,6 +25,8 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
 			preparedStatement.setString(6, p.getReason());
 			preparedStatement.setInt(7, p.getFacilityId());
 			preparedStatement.setInt(8, p.getEmployeeId());
+			preparedStatement.setInt(9, p.getReferrerId());
+			preparedStatement.setInt(10, p.getReferFacilityId());
 			preparedStatement.executeUpdate();
          } catch (SQLException e) {
              e.printStackTrace();
@@ -40,7 +41,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     public List<Report> getAllValues() {
         return null;
     }
-    
+
     @Override
     public List<Report> getBatchByQuery(String queryStr) {
         List<Report> reports = new ArrayList<>();
