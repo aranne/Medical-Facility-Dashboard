@@ -147,17 +147,17 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 report = new Report(
-                        resultSet.getInt("id"),
-                        resultSet.getDate("time"),
-                        resultSet.getDate("dob"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("dischargeStatus"),
-                        resultSet.getString("treatment"),
-                        resultSet.getInt("facilityId"),
-                        resultSet.getInt("employeeId"),
-                        resultSet.getString("reason"),
-                        resultSet.getInt("refererId"),
-                        resultSet.getInt("referFacilityId")
+                    resultSet.getInt(1),
+                    resultSet.getDate(2),
+                    resultSet.getDate(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getInt(8),
+                    resultSet.getInt(9),
+                    resultSet.getString(7),
+                    resultSet.getInt(10),
+                    resultSet.getInt(11)
                 );
             }
         } catch (SQLException e) {
@@ -179,17 +179,17 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 report = new Report(
-                        resultSet.getInt("id"),
-                        resultSet.getDate("time"),
-                        resultSet.getDate("dob"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("discharge_status"),
-                        resultSet.getString("treatment"),
-                        resultSet.getInt("facility_id"),
-                        resultSet.getInt("employee_id"),
-                        resultSet.getString("reason"),
-                        resultSet.getInt("referer_id"),
-                        resultSet.getInt("refer_facility_id")
+                        resultSet.getInt(1),
+                        resultSet.getTimestamp(2),
+                        resultSet.getDate(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getInt(8),
+                        resultSet.getInt(9),
+                        resultSet.getString(7),
+                        resultSet.getInt(10),
+                        resultSet.getInt(11)
                 );
             }
         } catch (SQLException e) {
@@ -209,15 +209,18 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return false;
     }
 
-    public Report updateReason(Date time, Date dob, String lastname) {
-        Report report = null;
+    public Report updateReason(Report report, String reason) {
+        Report p = report;
         try {
             openConnection();
             preparedStatement = connection
-                    .prepareStatement("UPDATE reports " +
-                            " SET REASON = ? " +
-                            " WHERE TIME = ? AND DOB = ? AND LAST_NAME = ?");
-            preparedStatement.setString(1, report.getReason());
+                    .prepareStatement("update reports " +
+                            "set REASON=? " +
+                            "where TIME=? and DOB=? and LAST_NAME=? ");
+            preparedStatement.setString(1, reason);
+            preparedStatement.setTimestamp(2, new java.sql.Timestamp(report.getTime().getTime()));
+            preparedStatement.setDate(3, (java.sql.Date) report.getDob());
+            preparedStatement.setString(4, report.getLastName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
