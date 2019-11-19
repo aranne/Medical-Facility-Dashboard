@@ -135,11 +135,31 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
     }
     return rules;
   }
-
-  // TODO for sample query six
+  
   @Override
   public List<CheckIn> getBatchByQuery(String queryStr) {
-    return null;
+    List<CheckIn> checkIns = new ArrayList<>();
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from check_ins where " + queryStr);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        checkIns.add(new CheckIn(
+                resultSet.getInt("id"),
+                resultSet.getString("last_name"),
+                resultSet.getDate("dob"),
+                resultSet.getDate("start_time"),
+                resultSet.getDate("end_time"),
+                resultSet.getInt("facility_id")
+        ));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return checkIns;
   }
 
   @Override

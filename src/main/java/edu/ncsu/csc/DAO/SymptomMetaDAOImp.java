@@ -2,9 +2,15 @@ package edu.ncsu.csc.DAO;
 
 import edu.ncsu.csc.model.PatientSymMeta;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SymptomMetaDAOImp extends AbstractDAO implements TemplateDAO<PatientSymMeta> {
+
+    public SymptomMetaDAOImp() {
+    }
 
     @Override
     public boolean addOneValue(PatientSymMeta p) {
@@ -16,10 +22,32 @@ public class SymptomMetaDAOImp extends AbstractDAO implements TemplateDAO<Patien
         return null;
     }
 
-    // TODO for sample query four
     @Override
     public List<PatientSymMeta> getBatchByQuery(String queryStr) {
-        return null;
+        List<PatientSymMeta> symMetas = new ArrayList<>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from patient_sym_meta where " + queryStr);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                symMetas.add(new PatientSymMeta(
+                        resultSet.getString("body_code"),
+                        resultSet.getString("sym_code"),
+                        resultSet.getString("scale"),
+                        resultSet.getString("last_name"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("duration"),
+                        resultSet.getString("cause_incident"),
+                        resultSet.getBoolean("first_occurrence")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return symMetas;
     }
 
     @Override

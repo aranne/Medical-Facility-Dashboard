@@ -11,28 +11,28 @@ import java.util.List;
 
 public class SymptomDAOImp extends AbstractDAO implements TemplateDAO<Symptom> {
 
-	public Symptom getSymptomByCheckin(CheckIn checkin) {
-		Symptom symptom=null;
-		    try {
-		      openConnection();
-		      preparedStatement = connection
-		              .prepareStatement("SELECT * FROM SYMPTOMS WHERE sym_code IN (SELECT BODY_CODE FROM patient_has_sym_serverity WHERE last_name=? AND dob=?)");
-		      preparedStatement.setString(1, checkin.getLastName());
-		      preparedStatement.setDate(2, new java.sql.Date(checkin.getDob().getTime()));
-		      resultSet = preparedStatement.executeQuery();
-		      if(resultSet.next()) {
-		    	  symptom= new Symptom(
-		                  resultSet.getString(1),
-		                  resultSet.getString(2));
-		      }
-		      
-		    } catch (SQLException e) {
-		      e.printStackTrace();
-		    } finally {
-		      closeConnection();
-		    }
-		    return symptom;
-	}
+//	public Symptom getSymptomByCheckin(CheckIn checkin) {
+//		Symptom symptom=null;
+//		    try {
+//		      openConnection();
+//		      preparedStatement = connection
+//		              .prepareStatement("SELECT * FROM SYMPTOMS WHERE sym_code IN (SELECT BODY_CODE FROM patient_has_sym_serverity WHERE last_name=? AND dob=?)");
+//		      preparedStatement.setString(1, checkin.getLastName());
+//		      preparedStatement.setDate(2, new java.sql.Date(checkin.getDob().getTime()));
+//		      resultSet = preparedStatement.executeQuery();
+//		      if(resultSet.next()) {
+//		    	  symptom= new Symptom(
+//		                  resultSet.getString(1),
+//		                  resultSet.getString(2));
+//		      }
+//		      
+//		    } catch (SQLException e) {
+//		      e.printStackTrace();
+//		    } finally {
+//		      closeConnection();
+//		    }
+//		    return symptom;
+//	}
 	 public List<BodyPart> getBodysbySymptom(Symptom symptom){
 	    	List<BodyPart> bodys=new ArrayList<BodyPart>();
 	    	try {
@@ -131,11 +131,27 @@ public class SymptomDAOImp extends AbstractDAO implements TemplateDAO<Symptom> {
   public List<Symptom> getBatchByQuery(String queryStr) {
     return null;
   }
-
-  // TODO for sample query
+  
   @Override
   public Symptom getOneByQuery(String queryStr) {
-    return null;
+	    Symptom symptom = null;
+	    try {
+	        openConnection();
+	        preparedStatement = connection
+                    .prepareStatement("select * from Symptoms where " + queryStr);
+	        resultSet = preparedStatement.executeQuery();
+	        if (resultSet.next()) {
+	            symptom = new Symptom(
+                        resultSet.getString(1),
+                        resultSet.getString(2)
+                );
+            }
+        } catch (SQLException e) {
+	        e.printStackTrace();
+        } finally {
+	        closeConnection();
+        }
+    return symptom;
   }
 
   @Override
