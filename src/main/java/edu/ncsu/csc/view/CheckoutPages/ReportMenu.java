@@ -14,8 +14,8 @@ public class ReportMenu extends BasePage implements PageView {
     private Report report;
     private Staff staff;
     private ReferralStatus referralStatus;
-    private Reason reason;
-    private NegativeExperience nega;
+    Reason reason;
+    NegativeExperience nega;
     ReportManager repm;
     public ReportMenu(CheckIn checkIn,Staff staff) {
     	super();
@@ -54,7 +54,9 @@ public class ReportMenu extends BasePage implements PageView {
                     if(report.getDischargeStatus().equals("Referred")){
                         if(referralStatus == null)
                             referralStatus = new ReferralStatus();
-                        new UpdateReferral(referralStatus,repm,report).display();
+                        UpdateReferral updateReferral = new UpdateReferral(referralStatus, repm,report);
+                        updateReferral.display();
+                        this.reason = updateReferral.getReason();
                         report.setReferralStatus(referralStatus);
                     }else{
                         show("This field is valid only if Discharge Status is Referred");
@@ -73,15 +75,17 @@ public class ReportMenu extends BasePage implements PageView {
 
                     break;
                 case 4:
-                    NegativeExperience nagexp = new NegativeExperience();
-                    new UpdateNegative(nagexp).display();
-                    report.getNagexps().add(nagexp);
+                    UpdateNegative updateNegative = new UpdateNegative(report);
+                    updateNegative.display();
+                    this.nega = updateNegative.getNagexp();
+                    report.getNagexps().add(updateNegative.getNagexp());
                     break;
                 case 5:
                     running = false;
                     break;
                 case 6:
-                    new ReportConfirm(report,repm, reason, nega).display();
+                    new ReportConfirm(report, repm, reason, nega).display();
+                    new ReportConfirm(report, repm, reason, nega).showReport();
                     running = false;
                     break;
 

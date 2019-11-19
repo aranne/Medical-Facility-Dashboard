@@ -24,13 +24,27 @@ public class ReportConfirm extends BasePage implements PageView {
         this.rpm = rpm;
         this.reason = reason;
         this.nega = nega;
-        rpm.submitReport(report);
+        if(report.getDischargeStatus() == null){
+            show("Please input discharge status");
+        }
+        if(report.getTreatment() == null){
+            show("please input Treatment description");
+        }
+
+
         if(reason != null){
             rpm.submitReason(reason);
+            rpm.submitReport(report);
+        }else{
+            rpm.submitReport(report);
         }
         if(nega != null){
             rpm.submitNegativeExperience(nega);
+            rpm.submitReport(report);
+        }else{
+            rpm.submitReport(report);
         }
+
 
 
     }
