@@ -2,7 +2,6 @@ package edu.ncsu.csc.model;
 
 public class SymptomMeta {
     private String duration;
-
     private Boolean isFirstTime;
     private String incident;
     private Severity severity;

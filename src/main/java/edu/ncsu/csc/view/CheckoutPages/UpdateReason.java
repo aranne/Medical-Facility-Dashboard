@@ -9,7 +9,7 @@ import edu.ncsu.csc.view.PageView;
 import java.util.List;
 
 public class UpdateReason extends BasePage implements PageView {
-     private Reason reason;
+    private Reason reason;
     ReportManager rpm;
     public UpdateReason(Reason reason, ReportManager rpm) {
         this.reason = reason;
@@ -23,11 +23,12 @@ public class UpdateReason extends BasePage implements PageView {
     @Override
     public void display() {
         List<String> services = rpm.getServiceMenu();
-        int index= ComboBoxPage.getInstance().select(services,"choose a service");
+        int index = ComboBoxPage.getInstance().select(services,"choose a service");
         reason.setServiceCode(rpm.getServiceSelection(index).getServiceCode());
         show(menuStrs);
         initPage();
         reason.setReasonCode(String.valueOf(index));
         reason.setDescription(getStringFromInput("input some description:"));
+        rpm.submitReason(reason);
     }
 }

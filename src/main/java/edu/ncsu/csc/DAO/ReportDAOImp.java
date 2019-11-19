@@ -5,6 +5,7 @@ import edu.ncsu.csc.model.Report;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     @Override
@@ -17,6 +18,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
                              "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id) " +
 							"values (?, ?, ?, ?,?,?,?,?)");
 			preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
+//			preparedStatement.setDate(1, new java.sql.Date(p.getTime().getTime()));
 			preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
 			preparedStatement.setString(3, p.getLastName());
 			preparedStatement.setString(4, p.getDischargeStatus());
@@ -38,11 +40,36 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     public List<Report> getAllValues() {
         return null;
     }
-
-    //TODO for query Samples.
+    
     @Override
     public List<Report> getBatchByQuery(String queryStr) {
-        return null;
+        List<Report> reports = new ArrayList<>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from reports where " + queryStr);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                reports.add(new Report(
+                        resultSet.getInt("id"),
+                        resultSet.getDate("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("dischargeStatus"),
+                        resultSet.getString("treatment"),
+                        resultSet.getInt("facilityId"),
+                        resultSet.getInt("employeeId"),
+                        resultSet.getString("reason"),
+                        resultSet.getInt("refererId"),
+                        resultSet.getInt("referFacilityId")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return reports;
     }
 
     @Override
@@ -71,11 +98,13 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
                         resultSet.getDate("time"),
                         resultSet.getDate("dob"),
                         resultSet.getString("last_name"),
-                        resultSet.getString("discharge_status"),
+                        resultSet.getString("dischargeStatus"),
                         resultSet.getString("treatment"),
-                        resultSet.getInt("facility_id"),
-                        resultSet.getInt("employee_id"),
-                        resultSet.getString("reason")
+                        resultSet.getInt("facilityId"),
+                        resultSet.getInt("employeeId"),
+                        resultSet.getString("reason"),
+                        resultSet.getInt("refererId"),
+                        resultSet.getInt("referFacilityId")
                 );
             }
         } catch (SQLException e) {

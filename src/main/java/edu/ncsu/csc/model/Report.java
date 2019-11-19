@@ -37,7 +37,8 @@ public class Report {
     public Report() {
     }
 
-    public Report(int id, Date time, Date dob, String lastName, String dischargeStatus, String treatment, int facilityId, int employeeId, String reason) {
+
+    public Report(int id, Date time, Date dob, String lastName, String dischargeStatus, String treatment, int facilityId, int employeeId, String reason, int referrerId, int referFacilityId) {
         this.id = id;
         this.time = time;
         this.dob = dob;
@@ -47,6 +48,8 @@ public class Report {
         this.facilityId = facilityId;
         this.employeeId = employeeId;
         this.reason = reason;
+        this.referrerId = referrerId;
+        this.referFacilityId = referFacilityId;
     }
 
     public int getId() {
