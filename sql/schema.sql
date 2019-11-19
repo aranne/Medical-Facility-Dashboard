@@ -385,11 +385,11 @@ create table reports
                 on delete cascade,
     employee_id number
         constraint R_EMPLOYEE_ID_fk
-            references STAFFS S1
+            references STAFFS
                 on delete cascade,
     referrer_id number
         constraint R_Refer
-            references STAFFS S2
+            references STAFFS
                 on delete cascade,
     refer_facility_id number
         constraint R_Refer1

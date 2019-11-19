@@ -2,6 +2,7 @@ package edu.ncsu.csc.view.StartPages;
 
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
+import edu.ncsu.csc.view.SampleQuery.SampleQueryPage;
 
 
 public class Home extends BasePage implements PageView {
@@ -30,7 +31,8 @@ public class Home extends BasePage implements PageView {
                     p.display();
                     break;
                 case 3:
-                    running = false;
+                    p = new SampleQueryPage();
+                    p.display();
                 	break;
                 case 4:
                     running = false;

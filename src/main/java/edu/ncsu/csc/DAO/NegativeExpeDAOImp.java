@@ -3,6 +3,7 @@ package edu.ncsu.csc.DAO;
 import edu.ncsu.csc.model.NegativeExperience;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +33,30 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO<Negat
 
     }
 
-    // TODO for sample query five
     @Override
     public List<NegativeExperience> getAllValues() {
-        return null;
+        List<NegativeExperience> negas = new ArrayList<>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from negative_experiences");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                negas.add(new NegativeExperience(
+                        resultSet.getInt("id"),
+                        resultSet.getString("negative_code"),
+                        resultSet.getString("description"),
+                        resultSet.getTimestamp("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return negas;
     }
 
     @Override
@@ -67,9 +88,32 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO<Negat
     public boolean deleteRecord(NegativeExperience p) {
         return false;
     }
-
-    //TODO for sample queries
+    
     public List<NegativeExperience> getAllByNameAndDob(String lastName, Date dob, Date time) {
-        return null;
+        List<NegativeExperience> negas = new ArrayList<>();
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from negative_experiences where last_name = ? and dob = ? and time = ?");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+            preparedStatement.setDate(3,new java.sql.Date(time.getTime()));
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                negas.add(new NegativeExperience(
+                        resultSet.getInt("id"),
+                        resultSet.getString("negative_code"),
+                        resultSet.getString("description"),
+                        resultSet.getTimestamp("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return negas;
     }
 }

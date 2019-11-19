@@ -2,7 +2,7 @@ package edu.ncsu.csc.model;
 
 public class Severity {
     private int id;
-//    value: 0 is normal, 1 is high, 2 is Quarantine
+//    value: 0 is no priority, 1 is normal, 2 is high, 3 is Quarantine
     private int priority;
     private String name;
     private String scale;
@@ -58,4 +58,10 @@ public class Severity {
         this.scale = scale;
     }
 
+    public int getPriority2(PatientSymptom patientSymptom) {
+        if (this.getName().equals(patientSymptom.symCode) && this.getScale().equals(patientSymptom.getScale())) {
+            return this.getPriority();
+        }
+        return 1;
+    }
 }
