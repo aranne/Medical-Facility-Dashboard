@@ -13,7 +13,9 @@ import java.util.List;
 public class PatientCheckProceed {
     MedicalFacility facility ;
     List<Symptom> symptoms;
-    public PatientCheckProceed(MedicalFacility facility) {
+    Patient p;
+    public PatientCheckProceed(MedicalFacility facility, Patient p) {
+        this.p = p;
         this.facility =facility ;
         reload();
     }
@@ -25,7 +27,7 @@ public class PatientCheckProceed {
         TemplateDAO<CheckIn> chdao = new CheckInDAOImp();
         return chdao.getOneByQuery("last_name= ? and dob =?");
     }
-    public Report getReport(Patient p){
+    public Report getReport(){
         ReportDAOImp chdao = new ReportDAOImp();
         String lastName = p.getLastName();
         Date dob = p.getDob();

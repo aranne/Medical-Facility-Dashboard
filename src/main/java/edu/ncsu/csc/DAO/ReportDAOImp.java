@@ -267,15 +267,18 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return false;
     }
 
-    public Report updateReason(Date time, Date dob, String lastname) {
-        Report report = null;
+    public Report updateReason(Report report, String reason) {
+        Report p = report;
         try {
             openConnection();
             preparedStatement = connection
-                    .prepareStatement("UPDATE reports " +
-                            " SET REASON = ? " +
-                            " WHERE TIME = ? AND DOB = ? AND LAST_NAME = ?");
-            preparedStatement.setString(1, report.getReason());
+                    .prepareStatement("update reports " +
+                            "set REASON=? " +
+                            "where TIME=? and DOB=? and LAST_NAME=? ");
+            preparedStatement.setString(1, reason);
+            preparedStatement.setTimestamp(2, new java.sql.Timestamp(report.getTime().getTime()));
+            preparedStatement.setDate(3, (java.sql.Date) report.getDob());
+            preparedStatement.setString(4, report.getLastName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
