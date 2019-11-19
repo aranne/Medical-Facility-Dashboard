@@ -19,7 +19,7 @@ public class ReportMenu extends BasePage implements PageView {
     ReportManager repm;
     public ReportMenu(CheckIn checkIn,Staff staff) {
     	super();
-    	 pageTitle="=================ReportMenu==============================";
+    	 pageTitle="================= Report Menu ==============================";
     	 choicePrompt="input your choice:";
     	 menuStrs.add("Discharge Status");
          menuStrs.add("Referral Status");

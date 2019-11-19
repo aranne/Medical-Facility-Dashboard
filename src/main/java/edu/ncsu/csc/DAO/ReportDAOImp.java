@@ -40,7 +40,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     public List<Report> getAllValues() {
         return null;
     }
-    
+
     @Override
     public List<Report> getBatchByQuery(String queryStr) {
         List<Report> reports = new ArrayList<>();

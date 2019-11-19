@@ -14,7 +14,7 @@ public class AddSymptoms extends BasePage implements PageView {
         menuStrs.add("Record");
         menuStrs.add("Go Back");
         choicePrompt="input your choice:";
-        pageTitle="====================== AddSymptoms ==========================";
+        pageTitle="====================== Add Symptoms ==========================";
     }
 
     @Override
@@ -24,7 +24,6 @@ public class AddSymptoms extends BasePage implements PageView {
             initPage();
             switch (getChoice()) {
                 case 1:
-                    //TODO
                     String name=getStringFromInput("input the symptom's name:");
                     String cdoe=getStringFromInput("input the symptom's code:");
                     AddSymptom symm=new  AddSymptom();

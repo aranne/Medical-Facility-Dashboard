@@ -20,7 +20,7 @@ public class StaffMenu extends BasePage implements PageView {
   public StaffMenu(Staff m_staff, MedicalFacility facility) {
     this.m_facility = facility;
     this.m_staff = m_staff;
-    pageTitle = "======================STAFF MENU===============";
+    pageTitle = "====================== STAFF MENU ======================";
     choicePrompt = "select a job:";
     menuStrs.add("Checked-in patient list");
     menuStrs.add("Treated patient list");

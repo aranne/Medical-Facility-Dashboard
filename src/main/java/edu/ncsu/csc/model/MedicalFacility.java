@@ -83,4 +83,8 @@ public class MedicalFacility {
     public List<ServiceDept> getAllServiceDept() {
         return depts;
     }
+
+    public String toString() {
+        return name;
+    }
 }

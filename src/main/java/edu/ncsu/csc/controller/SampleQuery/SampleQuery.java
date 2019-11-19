@@ -1,4 +1,4 @@
-package edu.ncsu.csc.controller;
+package edu.ncsu.csc.controller.SampleQuery;
 
 /*
 1. Find all patients that were discharged but had negative experiences at any facility,
@@ -21,13 +21,13 @@ public class SampleQuery {
     /** Find all patients that were discharged but had negative experiences
      * at any facility, list their names, facility, check-in date, discharge date and negative experiences.
      */
-    public Set queryOne() {
+    public Set<Patient> queryOne() {
         Set<Patient> patients = new HashSet<>();
         List<Report> reports;
         List<NegativeExperience> negas;
         ReportDAOImp reportDao = new ReportDAOImp();
         // Get all reports.
-        reports = reportDao.getBatchByQuery("discharge_status = Treated Successfully");
+        reports = reportDao.getBatchByQuery("discharge_status = 'Treated Successfully'");
         if (reports.size() != 0) {
             NegativeExpeDAOImp negaDao = new NegativeExpeDAOImp();
             PatientDAOImp patientDao = new PatientDAOImp();
@@ -44,7 +44,7 @@ public class SampleQuery {
     }
 
     /** Find facilities that did not have a negative experience for a specific period (to be given). */
-    public List queryTwo(Date start, Date end) {
+    public List<MedicalFacility> queryTwo(Date start, Date end) {
         List<MedicalFacility> facilities;
         Set<MedicalFacility> negFacilities = new HashSet<>();
         List<MedicalFacility> posFacilities = new ArrayList<>();
@@ -52,7 +52,7 @@ public class SampleQuery {
         List<NegativeExperience> negas;
         ReportDAOImp reportDao = new ReportDAOImp();
         // Get all reports.
-        reports = reportDao.getBatchByQuery("discharge_status = Treated Successfully");
+        reports = reportDao.getBatchByQuery("discharge_status = 'Treated Successfully'");
         for (Report r : reports) {
             if (r.getTime().compareTo(start) < 0 || r.getTime().compareTo(end) > 0) {
                 reports.remove(r);  // Filter reports.
@@ -79,7 +79,7 @@ public class SampleQuery {
     }
 
     /** For each facility, find the facility that is sends the most referrals to. */
-    public Map queryThree() {
+    public Map<MedicalFacility, MedicalFacility> queryThree() {
         Map<MedicalFacility, MedicalFacility> map = new HashMap<>();
         Map<Integer, Integer> count;
         List<MedicalFacility> facilities;
@@ -92,7 +92,7 @@ public class SampleQuery {
             MedicalFacility mostReferFacility = null;
             int id = f.getFacilityId();
             // Get all reports.
-            reports = reportDao.getBatchByQuery("discharge_status = Referred and facility_id = " + id);
+            reports = reportDao.getBatchByQuery("discharge_status = 'Referred' and facility_id = " + "'" + id + "'");
             if (reports.size() != 0) {
                 // Count how many times this facility refers to another facility.
                 count = new HashMap<>();
@@ -115,7 +115,7 @@ public class SampleQuery {
     }
 
     /** Find facilities that had no negative experience for patients with cardiac symptoms. */
-    public List queryFour() {
+    public List<MedicalFacility> queryFour() {
         List<MedicalFacility> facilities;
         MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
         // Get all facilities.
@@ -123,11 +123,11 @@ public class SampleQuery {
         Set<Integer> negaIds = new HashSet<>();
 
         SymptomDAOImp symptomDao = new SymptomDAOImp();
-        Symptom symptom = symptomDao.getOneByQuery("name = cardiac");
+        Symptom symptom = symptomDao.getOneByQuery("name = 'Cardiac'");
         String symCode = symptom.getSymCode();
         SymptomMetaDAOImp symMetaDao = new SymptomMetaDAOImp();
         // Get all symMetas.
-        List<PatientSymMeta> symMetas = symMetaDao.getBatchByQuery("sym_code = " + symCode);
+        List<PatientSymMeta> symMetas = symMetaDao.getBatchByQuery("sym_code = " + "'" + symCode + "'");
         ReportDAOImp reportDao = new ReportDAOImp();
         NegativeExpeDAOImp negaDao = new NegativeExpeDAOImp();
         List<NegativeExperience> negas;
@@ -174,13 +174,13 @@ public class SampleQuery {
         int maxFacilityId = 0;
         int max = 0;
         for (MedicalFacility f : facilities) {
-            if (max < count.get(f.getFacilityId())) {
-                max = count.get(f.getFacilityId());
+            if (max < count.getOrDefault(f.getFacilityId(), 0)) {
+                max = count.getOrDefault(f.getFacilityId(), 0);
                 maxFacilityId = f.getFacilityId();
             }
         }
         if (maxFacilityId == 0) {
-            System.out.println("There doesn't exist any experience for any facility.");
+            System.out.println("There doesn't exist any negative experience for any facility.");
         }
         return facilityDao.getOneById(maxFacilityId);
     }
@@ -189,7 +189,7 @@ public class SampleQuery {
      (i.e. time from begin check-in to when treatment phase begins
      (list the name of patient, date, facility, duration and list of symptoms).
      */
-    public Map querySix() {
+    public Map<MedicalFacility, List<Patient>> querySix() {
         Map<MedicalFacility, List<Patient>> map = new HashMap<>();
         PriorityQueue<CheckIn> pq;
         List<MedicalFacility> facilities;
@@ -199,12 +199,14 @@ public class SampleQuery {
         List<CheckIn> checkIns;
         PatientDAOImp patientDao = new PatientDAOImp();
         for (MedicalFacility f : facilities) {
-            checkIns = checkInDao.getBatchByQuery("facility_id = " + f.getFacilityId());
+            checkIns = checkInDao.getBatchByQuery("facility_id = " + "'" + f.getFacilityId() + "'");
             pq = new PriorityQueue<>();
             for (CheckIn c : checkIns) {
-                pq.offer(c);
-                if (pq.size() > 5) {
-                    pq.poll();
+                if (c.getEndTime() != null) {
+                    pq.offer(c);
+                    if (pq.size() > 5) {
+                        pq.poll();
+                    }
                 }
             }
             List<Patient> patients = new ArrayList<>();

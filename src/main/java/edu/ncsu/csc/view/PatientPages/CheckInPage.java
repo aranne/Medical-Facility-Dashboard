@@ -20,7 +20,7 @@ public class CheckInPage extends BasePage implements PageView {
     this.patient = patient;
     this.medicalFacility = medicalFacility;
     choicePrompt = "Enter Choice";
-    pageTitle = "==================== CHECKIN ====================";
+    pageTitle = "==================== CHECK IN ====================";
     checkinSymptoms = new CheckinSymptoms();
     List<String> symptoms = checkinSymptoms.getSymptomsMenu();
     for (int i = 0; i < symptoms.size(); i++) {
