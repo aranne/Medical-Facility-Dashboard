@@ -27,7 +27,7 @@ public class StaffProcessPatient {
     }
     public CheckIn getCheckInSelection(int index){
         if(index<0 || index>=checkIns.size())
-            throw new NullPointerException("invalidate checkin idnex");
+            throw new NullPointerException("invalidate checkin index");
         return checkIns.get(index);
     }
     //输入Vital并更新staff_records_vital和CheckIns里的数据
@@ -40,7 +40,7 @@ public class StaffProcessPatient {
         rest= rest && checkdao.updateValue(checkin);
         return rest;
     }
-    public  boolean checkPrivilege(CheckIn checkin, Staff staff){
+    public boolean checkPrivilege(CheckIn checkin, Staff staff){
         System.out.println("check if you could\r\n" +
                 "treat body part\r\n" +
                 "associated to patient\r\n" +
@@ -64,5 +64,9 @@ public class StaffProcessPatient {
         Patient p = patientDao.patientExist(checkIn.getLastName(), checkIn.getDob());
         rest = patientDao.updateTreatment(p);
         return rest;
+    }
+    public int checkPriority(CheckIn checkIn) {
+
+        return 0;
     }
 }

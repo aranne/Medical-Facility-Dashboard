@@ -70,9 +70,9 @@ public class ReportMenu extends BasePage implements PageView {
 
                     break;
                 case 4:
-                    NegativeExperience nagexp = new NegativeExperience();
-                    new UpdateNegative(nagexp).display();
-                    report.getNagexps().add(nagexp);
+//                    NegativeExperience nagexp = new NegativeExperience();
+//                    new UpdateNegative(nagexp).display();
+//                    report.getNagexps().add(nagexp);
                     break;
                 case 5:
                     running = false;
