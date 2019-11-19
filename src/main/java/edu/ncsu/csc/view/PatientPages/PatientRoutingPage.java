@@ -1,12 +1,17 @@
 package edu.ncsu.csc.view.PatientPages;
 
+import edu.ncsu.csc.DAO.MedicalFacilityDAOImp;
+import edu.ncsu.csc.DAO.NegativeExpeDAOImp;
+import edu.ncsu.csc.DAO.ReasonDAOImp;
+import edu.ncsu.csc.DAO.StaffDAOImp;
 import edu.ncsu.csc.controller.PatientPages.PatientCheckProceed;
-import edu.ncsu.csc.model.CheckIn;
-import edu.ncsu.csc.model.MedicalFacility;
+import edu.ncsu.csc.model.*;
 import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.CheckoutPages.Acknowledgement;
 import edu.ncsu.csc.view.PageView;
+
+import java.util.List;
 
 public class PatientRoutingPage extends BasePage implements PageView {
   Patient pd;
@@ -28,12 +33,17 @@ public class PatientRoutingPage extends BasePage implements PageView {
       initPage();
       switch (getChoice()) {
         case 1:
-          CheckIn checkIn=new CheckIn();
+          CheckIn checkIn = new CheckIn();
           new CheckInPage(checkIn, this.pd, f).display();
           break;
         case 2:
-          PatientCheckProceed  pcp=new PatientCheckProceed(f);
-          new Acknowledgement(pcp.getReport(pd)).display();
+          PatientCheckProceed pcp = new PatientCheckProceed(f);
+          Report r = pcp.getReport(pd);
+          if (pcp.getReport(pd) == null){
+            show("Here is not your report yet");
+          }else{
+            new Acknowledgement(pcp.getReport(pd)).display();
+          }
           break;
         case 3:
           running = false;

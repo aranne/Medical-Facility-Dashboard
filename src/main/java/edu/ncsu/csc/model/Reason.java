@@ -1,5 +1,6 @@
 package edu.ncsu.csc.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Reason {
@@ -23,6 +24,7 @@ public class Reason {
         this.dob = dob;
         this.lastName = lastName;
     }
+
 
     public int getId() {
         return id;

@@ -101,7 +101,33 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
 
     @Override
     public Report getOneByQuery(String queryStr) {
-        return null;
+        Report reports = null;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from REPORTS where " + queryStr);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                reports = new Report(
+                        resultSet.getInt(1),
+                        resultSet.getDate(2),
+                        resultSet.getDate(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getInt(7),
+                        resultSet.getInt(8),
+                        resultSet.getString(9),
+                        resultSet.getInt(10),
+                        resultSet.getInt(11)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return reports;
     }
 
     @Override
@@ -142,6 +168,38 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return report;
     }
 
+    public Report getReportByNameAndDob(String lastName, Date dob) {
+        Report report = null;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("select * from REPORTS where last_name = ? and dob = ?");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                report = new Report(
+                        resultSet.getInt("id"),
+                        resultSet.getDate("time"),
+                        resultSet.getDate("dob"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("discharge_status"),
+                        resultSet.getString("treatment"),
+                        resultSet.getInt("facility_id"),
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("reason"),
+                        resultSet.getInt("referer_id"),
+                        resultSet.getInt("refer_facility_id")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return report;
+    }
+
     @Override
     public Report getOneById(String id) {
         return null;
@@ -151,16 +209,15 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
         return false;
     }
 
-    public Report updateDischarge(int id) {
+    public Report updateReason(Date time, Date dob, String lastname) {
         Report report = null;
         try {
             openConnection();
             preparedStatement = connection
                     .prepareStatement("UPDATE reports " +
-                            " SET discharge_status = ? " +
-                            " WHERE id = ?");
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, report.getDischargeStatus());
+                            " SET REASON = ? " +
+                            " WHERE TIME = ? AND DOB = ? AND LAST_NAME = ?");
+            preparedStatement.setString(1, report.getReason());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

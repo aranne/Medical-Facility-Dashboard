@@ -97,7 +97,7 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO<Negat
                     .prepareStatement("select * from negative_experiences where last_name = ? and dob = ? and time = ?");
             preparedStatement.setString(1, lastName);
             preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
-            preparedStatement.setDate(3,new java.sql.Date(time.getTime()));
+            preparedStatement.setDate(3, new java.sql.Date(time.getTime()));
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 negas.add(new NegativeExperience(
