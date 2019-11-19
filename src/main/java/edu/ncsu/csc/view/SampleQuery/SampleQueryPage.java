@@ -70,7 +70,7 @@ public class SampleQueryPage extends BasePage implements PageView {
                         System.out.println("Five patients for " + f + " are: ");
                         int j = 1;
                         for (Patient p : map2.get(f)) {
-                            System.out.print(j + ": " + p);
+                            System.out.print(j + ": " + p + " ");
                             j += 1;
                         }
                         System.out.println();
