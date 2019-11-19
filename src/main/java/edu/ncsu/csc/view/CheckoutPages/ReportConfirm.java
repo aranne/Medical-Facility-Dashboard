@@ -72,9 +72,8 @@ public class ReportConfirm extends BasePage implements PageView {
     public void showReport() {
         String stat = report.getDischargeStatus();
         show("================ Report ================");
-        show("Discharge Status:\t" + stat );
-        System.out.println();
-        System.out.println("Referral Status: ");
+        show("1. Discharge Status:\t" + stat );
+        System.out.println("2. Referral Status: ");
         if(report.getReferralStatus() == null){
             show("No referral status here");
         }else if(report.getReferralStatus() != null){
@@ -82,21 +81,20 @@ public class ReportConfirm extends BasePage implements PageView {
             int fid = report.getFacilityId();
             int employeeId = report.getEmployeeId();
             if (fid == 0) {
-                show("Facility: unknown");
+                show("3. Facility: unknown");
             } else {
                 MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
                 StaffDAOImp staffDao = new StaffDAOImp();
-                show("Facility: " + facilityDao.getOneById(fid).getName());
-                show("Referrer staff:" + staffDao.getOneById(employeeId));
+                show("3. Facility: " + facilityDao.getOneById(fid).getName());
+                show("4. Referrer staff:" + staffDao.getOneById(employeeId));
             }
             for (Reason reason : reasons) {
                 show("Reason Code: " + reason.getReasonCode());
                 show("Reason Description: " + reason.getDescription());
             }
         }
-        System.out.println();
-        show("Treatment:\t" + report.getTreatment());
-        show("Negative experiences: ");
+        show("5. Treatment:\t" + report.getTreatment());
+        show("6. Negative experiences: ");
         for (NegativeExperience nega : negas) {
             show("Code: " + nega.getNegativeCode());
             show("Negative Experience: " + nega.getDescription());

@@ -178,6 +178,33 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
     return null;
   }
 
+  public CheckIn getOneByNameAndDob(String name, java.util.Date dob) {
+    CheckIn checkIn = null;
+    try {
+      openConnection();
+      preparedStatement = connection
+              .prepareStatement("select * from check_ins where last_name = ? and dob = ?");
+      preparedStatement.setString(1, name);
+      preparedStatement.setDate(2, new Date(dob.getTime()));
+      resultSet = preparedStatement.executeQuery();
+      if (resultSet.next()) {
+        checkIn = new CheckIn(
+                resultSet.getInt("id"),
+                resultSet.getString("last_name"),
+                resultSet.getDate("dob"),
+                resultSet.getTimestamp("start_time"),
+                resultSet.getTimestamp("end_time"),
+                resultSet.getInt("facility_id")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return checkIn;
+  }
+
   @Override
   public boolean updateValue(CheckIn p) {
     boolean rest = false;

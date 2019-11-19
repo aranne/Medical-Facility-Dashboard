@@ -18,14 +18,52 @@ import edu.ncsu.csc.model.*;
 import java.util.*;
 
 public class SampleQuery {
+    public class ReturnOne {
+        private Patient patient;
+        private String facilityName;
+        private Date checkDate;
+        private Date dischargeDate;
+        private List<NegativeExperience> negas;
+
+        public ReturnOne(Patient patient, String facilityName, Date checkDate, Date dischargeDate, List<NegativeExperience> negas) {
+            this.patient = patient;
+            this.facilityName = facilityName;
+            this.checkDate = checkDate;
+            this.dischargeDate = dischargeDate;
+            this.negas = negas;
+        }
+
+        public Patient getPatient() {
+            return patient;
+        }
+
+        public String getFacilityName() {
+            return facilityName;
+        }
+
+        public Date getCheckDate() {
+            return checkDate;
+        }
+
+        public Date getDischargeDate() {
+            return dischargeDate;
+        }
+
+        public List<NegativeExperience> getNegas() {
+            return negas;
+        }
+    }
+
     /** Find all patients that were discharged but had negative experiences
      * at any facility, list their names, facility, check-in date, discharge date and negative experiences.
      */
-    public Set<Patient> queryOne() {
-        Set<Patient> patients = new HashSet<>();
+    public List<ReturnOne> queryOne() {
+        List<ReturnOne> returnOnes = new ArrayList<>();
         List<Report> reports;
         List<NegativeExperience> negas;
         ReportDAOImp reportDao = new ReportDAOImp();
+        MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+        CheckInDAOImp checkInDao = new CheckInDAOImp();
         // Get all reports.
         reports = reportDao.getBatchByQuery("discharge_status = 'Treated Successfully'");
         if (reports.size() != 0) {
@@ -36,11 +74,13 @@ public class SampleQuery {
                 negas = negaDao.getAllByNameAndDob(r.getLastName(), r.getDob(), r.getTime());
                 if (negas.size() != 0) {
                     Patient p = patientDao.patientExist(r.getLastName(), r.getDob());
-                    patients.add(p);
+                    MedicalFacility f = facilityDao.getOneById(r.getFacilityId());
+                    CheckIn c = checkInDao.getOneByNameAndDob(r.getLastName(), r.getDob());
+                    returnOnes.add(new ReturnOne(p, f.getName(), c.getStartTime(), r.getTime(), negas));
                 }
             }
         }
-        return patients;
+        return returnOnes;
     }
 
     /** Find facilities that did not have a negative experience for a specific period (to be given). */
@@ -52,7 +92,7 @@ public class SampleQuery {
         List<NegativeExperience> negas;
         ReportDAOImp reportDao = new ReportDAOImp();
         // Get all reports.
-        reports = reportDao.getBatchByQuery("discharge_status = 'Treated Successfully'");
+        reports = reportDao.getAllValues();
         for (Report r : reports) {
             if (r.getTime().compareTo(start) < 0 || r.getTime().compareTo(end) > 0) {
                 reports.remove(r);  // Filter reports.
@@ -100,10 +140,12 @@ public class SampleQuery {
                 int mostReferId = 0;
                 for (Report r : reports) {
                     int referId = r.getReferFacilityId();
-                    count.put(referId, count.getOrDefault(referId, 0) + 1);
-                    if (max < count.get(referId)) {
-                        mostReferId = referId;
-                        max = count.get(referId);
+                    if (referId != 0) {
+                        count.put(referId, count.getOrDefault(referId, 0) + 1);
+                        if (max < count.get(referId)) {
+                            mostReferId = referId;
+                            max = count.get(referId);
+                        }
                     }
                 }
                 mostReferFacility = facilityDao.getOneById(mostReferId);
@@ -133,8 +175,8 @@ public class SampleQuery {
         List<NegativeExperience> negas;
         for (PatientSymMeta sm : symMetas) {
             // Get all reports for a certain patient.
-            List<Report> reports = reportDao.getBatchByQuery("discharge_status = Treated Successfully " +
-                    "and last_name = " + sm.getLastName() + "and dob = " + sm.getDob());
+            //TODO
+            // List<Report> reports = reportDao.get;
             for (Report r : reports) {
                 negas = negaDao.getAllByNameAndDob(r.getLastName(), r.getDob(), r.getTime());
                 if (negas.size() != 0) {

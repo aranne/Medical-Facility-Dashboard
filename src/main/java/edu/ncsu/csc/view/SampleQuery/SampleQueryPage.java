@@ -2,6 +2,7 @@ package edu.ncsu.csc.view.SampleQuery;
 
 import edu.ncsu.csc.controller.SampleQuery.SampleQuery;
 import edu.ncsu.csc.model.MedicalFacility;
+import edu.ncsu.csc.model.NegativeExperience;
 import edu.ncsu.csc.model.Patient;
 import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.PageView;
@@ -29,12 +30,23 @@ public class SampleQueryPage extends BasePage implements PageView {
             initPage();
             switch (getChoice()) {
                 case 1:
-                    System.out.println(sampleQuery.queryOne());
+                    int i = 1;
+                    List<SampleQuery.ReturnOne> returnOnes = sampleQuery.queryOne();
+                    for (SampleQuery.ReturnOne r : returnOnes) {
+                        System.out.println(i + ". "  + r.getPatient().toString() + " in " + r.getFacilityName() + " checks at " + r.getCheckDate() + " discharges at " + r.getDischargeDate());
+                        for (NegativeExperience n : r.getNegas()) {
+                            System.out.println(n);
+                        }
+                        i += 1;
+                    }
                     break;
                 case 2:
                     Date start = getDateFromInput("Please input start date in format mm/dd/yyyy");
                     Date end = getDateFromInput("Please input end date in format mm/dd/yyyy");
-                    System.out.println(sampleQuery.queryTwo(start, end));
+                    List<MedicalFacility> facilities = sampleQuery.queryTwo(start, end);
+                    for (MedicalFacility f : facilities) {
+                        System.out.println(f);
+                    }
                     break;
                 case 3:
                     Map<MedicalFacility, MedicalFacility> map = sampleQuery.queryThree();

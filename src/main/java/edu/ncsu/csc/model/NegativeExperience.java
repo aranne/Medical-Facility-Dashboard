@@ -70,4 +70,8 @@ public class NegativeExperience {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String toString() {
+        return negativeCode + ": " + description;
+    }
 }

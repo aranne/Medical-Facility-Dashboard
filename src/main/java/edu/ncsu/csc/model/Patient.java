@@ -3,6 +3,7 @@ package edu.ncsu.csc.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Patient {
     private int id;
@@ -159,7 +160,21 @@ public class Patient {
     }
 
     public String toString() {
-        return firstName + lastName;
+        return firstName + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return lastName.equals(patient.lastName) &&
+                dob.equals(patient.dob);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastName, dob);
     }
 }
 

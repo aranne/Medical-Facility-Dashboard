@@ -44,7 +44,7 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO<Negat
             while (resultSet.next()) {
                 negas.add(new NegativeExperience(
                         resultSet.getInt("id"),
-                        resultSet.getString("negative_code"),
+                        resultSet.getString("nega_code"),
                         resultSet.getString("description"),
                         resultSet.getTimestamp("time"),
                         resultSet.getDate("dob"),
@@ -102,7 +102,7 @@ public class NegativeExpeDAOImp extends AbstractDAO implements TemplateDAO<Negat
             while (resultSet.next()) {
                 negas.add(new NegativeExperience(
                         resultSet.getInt("id"),
-                        resultSet.getString("negative_code"),
+                        resultSet.getString("nega_code"),
                         resultSet.getString("description"),
                         resultSet.getTimestamp("time"),
                         resultSet.getDate("dob"),
