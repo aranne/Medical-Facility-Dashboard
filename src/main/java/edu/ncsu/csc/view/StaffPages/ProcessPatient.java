@@ -60,6 +60,8 @@ public class ProcessPatient extends BasePage implements PageView {
           StaffProcessPatient stp = new StaffProcessPatient();
           PatientDAOImp patientDAOImp = new PatientDAOImp();
           patientDAOImp.addTreatmentTime(checkIn);
+          System.out.println("Treat this patient successfully.");
+          running = false;
           break;
         case 3:
           running = false;

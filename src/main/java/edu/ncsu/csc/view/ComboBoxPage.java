@@ -29,7 +29,7 @@ public class ComboBoxPage extends BasePage {
         String [] values=s.split(",");
         for(int i=0;i<values.length;i++){
             int v=Integer.parseInt(values[i]);
-            if (v<= menuStrs.size()&& i>0) {
+            if (v <= menuStrs.size() && v > 0) {
                 indexes.add(Integer.parseInt(values[i]));
             }else{
                 throw new NumberFormatException("input index is invalid");
