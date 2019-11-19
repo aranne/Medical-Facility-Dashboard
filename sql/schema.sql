@@ -50,11 +50,13 @@ create table PATIENTS
     ADDRESS_CITY VARCHAR2(255),
     ADDRESS_STREET VARCHAR2(255),
     ADDRESS_ZIP NUMBER,
-    PRIORITY_STATUS VARCHAR2(255),
     TREATMENT_TIME DATE,
     constraint PETIENTS_PK
         primary key (LAST_NAME, DOB)
 )
+/
+create sequence patient_ID_SEQ
+    nocache
 /
 
 create trigger PATIENT_ID_TRIGGER
@@ -104,6 +106,10 @@ create table CHECK_INS
         foreign key (LAST_NAME, DOB) references PATIENTS
             on delete cascade
 )
+/
+
+create sequence check_in_ID_SEQ
+    nocache
 /
 
 create trigger CHECK_IN_ID_TRIGGER
@@ -330,6 +336,9 @@ create table VITALS
         foreign key (LAST_NAME, DOB) references PATIENTS
             on delete cascade
 )
+/
+create sequence vital_ID_SEQ
+    nocache
 /
 
 create trigger VITAL_ID_TRIGGER
