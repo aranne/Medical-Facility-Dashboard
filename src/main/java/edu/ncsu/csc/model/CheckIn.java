@@ -9,18 +9,28 @@ public class CheckIn implements Comparable<CheckIn> {
     private Date startTime;
     private Date endTime;
     private Integer facilityId;
+    private Integer priority;
 
     public CheckIn() {
 
     }
 
-    public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime, Integer facilityId) {
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
+    public CheckIn(Integer id, String lastName, Date dob, Date startTime, Date endTime, Integer facilityId, Integer priority) {
         this.id = id;
         this.lastName = lastName;
         this.dob = dob;
         this.startTime = startTime;
         this.endTime = endTime;
         this.facilityId = facilityId;
+        this.priority = priority;
     }
 
     public Integer getId() {

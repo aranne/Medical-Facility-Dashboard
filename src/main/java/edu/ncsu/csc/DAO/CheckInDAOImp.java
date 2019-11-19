@@ -4,11 +4,35 @@ import edu.ncsu.csc.model.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
+
+  public boolean setPriority(CheckIn p, int priority) {
+    boolean rest = false;
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("update CHECK_INS " +
+              "set PRIORITY = ? " +
+              "where LAST_NAME = ? and DOB = ? and START_TIME = ?");
+
+      preparedStatement.setInt(1, priority);
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setDate(3, (java.sql.Date) p.getDob());
+      preparedStatement.setTimestamp(4, new java.sql.Timestamp(p.getStartTime().getTime()) );
+      preparedStatement.executeUpdate();
+      rest = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
 
   public List<BodyPart> getBodysByCheckin(CheckIn p) {
     List<BodyPart> bodys = new ArrayList<BodyPart>();
@@ -71,7 +95,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -98,7 +123,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -125,7 +151,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -151,7 +178,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
                 resultSet.getDate("dob"),
                 resultSet.getDate("start_time"),
                 resultSet.getDate("end_time"),
-                resultSet.getInt("facility_id")
+                resultSet.getInt("facility_id"),
+                resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -183,12 +211,13 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
     try {
       openConnection();
       preparedStatement = connection
-          .prepareStatement("update check_ins set START_TIME=?, END_TIME=? where LAST_NAME=? and DOB=? and FACILITY_ID=?");
-      preparedStatement.setDate(1, new java.sql.Date(p.getStartTime().getTime()));
-      preparedStatement.setDate(2, new java.sql.Date(p.getEndTime().getTime()));
-      preparedStatement.setString(3, p.getLastName());
-      preparedStatement.setDate(4, new java.sql.Date(p.getDob().getTime()));
-      preparedStatement.setInt(5, p.getFacilityId());
+          .prepareStatement("update check_ins set END_TIME=? where LAST_NAME=? and DOB=? and FACILITY_ID=? and START_TIME=?");
+
+      preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getEndTime().getTime()));
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setDate(3, new java.sql.Date(p.getDob().getTime()));
+      preparedStatement.setInt(4, p.getFacilityId());
+      preparedStatement.setTimestamp(5, new java.sql.Timestamp(p.getStartTime().getTime()));
       if (preparedStatement.executeUpdate() > 0)
         rest = true;
       ;
@@ -277,7 +306,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
               "(?,?,?,?)");
       preparedStatement.setString(1, p.getLastName());
       preparedStatement.setDate(2, (Date) p.getDob());
-      preparedStatement.setDate(3, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+      preparedStatement.setTimestamp(3, new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
       preparedStatement.setInt(4, mf.getFacilityId());
       resultSet = preparedStatement.executeQuery();
     } catch (SQLException e) {
@@ -304,9 +333,10 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getInt("id"),
             resultSet.getString("last_name"),
             resultSet.getDate("dob"),
-            resultSet.getDate("start_time"),
-            resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getTimestamp("start_time"),
+            resultSet.getTimestamp("end_time"),
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -324,7 +354,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
       openConnection();
       preparedStatement = connection
           .prepareStatement("SELECT CHECK_INS.id, CHECK_INS.last_name, CHECK_INS.dob, " +
-              "CHECK_INS.start_time, CHECK_INS.end_time, CHECK_INS.facility_id " +
+              "CHECK_INS.start_time, CHECK_INS.end_time, CHECK_INS.facility_id, CHECK_INS.PRIORITY " +
               "FROM CHECK_INS, PATIENTS " +
               "where PATIENTS.TREATMENT_TIME is not null " +
               "and CHECK_INS.LAST_NAME = PATIENTS.LAST_NAME " +
@@ -337,9 +367,10 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getInt("id"),
             resultSet.getString("last_name"),
             resultSet.getDate("dob"),
-            resultSet.getDate("start_time"),
-            resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getTimestamp("start_time"),
+            resultSet.getTimestamp("end_time"),
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
