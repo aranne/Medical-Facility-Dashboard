@@ -8,11 +8,15 @@ import edu.ncsu.csc.view.BasePage;
 import edu.ncsu.csc.view.ComboBoxPage;
 import edu.ncsu.csc.view.PageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UpdateReferral extends BasePage implements PageView {
     private ReferralStatus referralStatus;
     private Report report;
     private ReportManager repm;
-    private Reason reason;
+    private List<Reason> reasons;
+    private int facilityId;
     public UpdateReferral(ReferralStatus referralStatus,ReportManager repm, Report report) {
         this.referralStatus = referralStatus;
         this.repm = repm;
@@ -21,10 +25,11 @@ public class UpdateReferral extends BasePage implements PageView {
         menuStrs.add("Referrer id");
         menuStrs.add("add a reason");
         menuStrs.add("done");
+        reasons = new ArrayList<>();
     }
 
-    public Reason getReason() {
-        return reason;
+    public List<Reason> getReasons() {
+        return reasons;
     }
 
     @Override
@@ -36,16 +41,22 @@ public class UpdateReferral extends BasePage implements PageView {
            int cho=getChoice();
            if (cho==1){
                int index = ComboBoxPage.getInstance().select(repm.getFacilityMenu(),"choose a medicalFacility");
-               report.setReferFacilityId(repm.getFacilitySelection(index));
+               facilityId = repm.getFacilitySelection(index);
+               report.setReferFacilityId(facilityId);
            }else if(cho==2){
-               int index = ComboBoxPage.getInstance().select(repm.getStaffMenu(),"choose a Referrer id");
-               report.setReferrerId(repm.getStaffSelection(index));
+               if (facilityId != 0) {
+                   int index = ComboBoxPage.getInstance().select(repm.getStaffMenu(facilityId),"choose a Referrer id");
+                   report.setReferrerId(repm.getStaffSelection(index));
+               } else {
+                   show("Please select a medical facility to refer to.");
+               }
            }else if(cho==3){
-               Reason r = new Reason();
                UpdateReason upr = new UpdateReason(repm, report);
-               this.reason = upr.getReason();
                upr.display();
-
+               reasons.add(upr.getReason());
+               if (reasons.size() == 4) {
+                   running = false;
+               }
            }else{
                running=false;
            }

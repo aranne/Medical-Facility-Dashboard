@@ -10,7 +10,6 @@ public class UpdateNegative extends BasePage implements PageView {
     NegativeExperience nagexp;
     Report report;
     public UpdateNegative(Report report) {
-        nagexp = new NegativeExperience();
         this.report = report;
         choicePrompt = "input your choice:";
         menuStrs.add("Misdiagnosis");
@@ -19,6 +18,7 @@ public class UpdateNegative extends BasePage implements PageView {
 
     @Override
     public void display() {
+        nagexp = new NegativeExperience();
         initPage();
         int index = getChoice();
         nagexp.setNegativeCode(menuStrs.get(index - 1));
@@ -26,7 +26,6 @@ public class UpdateNegative extends BasePage implements PageView {
         nagexp.setTime(report.getTime());
         nagexp.setDob(report.getDob());
         nagexp.setLastName(report.getLastName());
-
     }
 
     public NegativeExperience getNagexp() {

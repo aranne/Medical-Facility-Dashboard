@@ -15,6 +15,8 @@ public class Report {
     private int referrerId;
     private int referFacilityId;
     private String reason;
+    private ReferralStatus referralStatus;
+    private List<NegativeExperience> nagexps=new ArrayList<NegativeExperience>();
 
     public int getReferrerId() {
         return referrerId;
@@ -32,11 +34,8 @@ public class Report {
         this.referFacilityId = referFacilityId;
     }
 
-    private ReferralStatus referralStatus;
-    private List<NegativeExperience> nagexps=new ArrayList<NegativeExperience>();
     public Report() {
     }
-
 
     public Report(int id, Date time, Date dob, String lastName, String dischargeStatus, String treatment, int facilityId, int employeeId, String reason, int referrerId, int referFacilityId) {
         this.id = id;

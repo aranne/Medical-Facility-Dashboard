@@ -10,31 +10,57 @@ import java.util.ArrayList;
 public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     @Override
     public boolean addOneValue(Report p) {
-    	 boolean rest=true;
+    	 boolean rest = true;
          try {
              openConnection();
              preparedStatement = connection
                      .prepareStatement("INSERT INTO reports " +
                              "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id,REFERRER_ID, REFER_FACILITY_ID) " +
-							"values (?, ?, ?, ?,?,?,?,?,?,?)");
-			preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
-			preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
-			preparedStatement.setString(3, p.getLastName());
-			preparedStatement.setString(4, p.getDischargeStatus());
-			preparedStatement.setString(5, p.getTreatment());
-			preparedStatement.setString(6, p.getReason());
-			preparedStatement.setInt(7, p.getFacilityId());
-			preparedStatement.setInt(8, p.getEmployeeId());
-			preparedStatement.setInt(9, p.getReferrerId());
-			preparedStatement.setInt(10, p.getReferFacilityId());
-			preparedStatement.executeUpdate();
+                             "values (?, ?, ?, ?,?,?,?,?,?,?)");
+             preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
+             preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+             preparedStatement.setString(3, p.getLastName());
+             preparedStatement.setString(4, p.getDischargeStatus());
+             preparedStatement.setString(5, p.getTreatment());
+             preparedStatement.setString(6, p.getReason());
+             preparedStatement.setInt(7, p.getFacilityId());
+             preparedStatement.setInt(8, p.getEmployeeId());
+             preparedStatement.setInt(9, p.getReferrerId());
+             preparedStatement.setInt(10, p.getReferFacilityId());
+             preparedStatement.executeUpdate();
          } catch (SQLException e) {
              e.printStackTrace();
-             rest=false;
+             rest = false;
          } finally {
              closeConnection();
          }
          return rest;
+    }
+
+    public boolean addOneValueWithoutRefer(Report p) {
+        boolean rest = true;
+        try {
+            openConnection();
+            preparedStatement = connection
+                    .prepareStatement("INSERT INTO reports " +
+                            "(time, dob, last_name, discharge_status,treatment,reason,facility_id,employee_id) " +
+                            "values (?, ?, ?, ?,?,?,?,?)");
+            preparedStatement.setTimestamp(1, new java.sql.Timestamp(p.getTime().getTime()));
+            preparedStatement.setDate(2, new java.sql.Date(p.getDob().getTime()));
+            preparedStatement.setString(3, p.getLastName());
+            preparedStatement.setString(4, p.getDischargeStatus());
+            preparedStatement.setString(5, p.getTreatment());
+            preparedStatement.setString(6, p.getReason());
+            preparedStatement.setInt(7, p.getFacilityId());
+            preparedStatement.setInt(8, p.getEmployeeId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            rest = false;
+        } finally {
+            closeConnection();
+        }
+        return rest;
     }
 
     @Override
