@@ -16,7 +16,6 @@ public class Patient {
     private String addrCity;
     private String addrStreet;
     private int addrZip;
-    private String priorityStatus;
     private Date treatmentDate;
 
     /* a patient has many facilities */
@@ -35,11 +34,10 @@ public class Patient {
         this.addrCity = addrCity;
         this.addrStreet = addrStreet;
         this.addrZip = addrZip;
-        this.priorityStatus = null;
         this.treatmentDate = null;
         facilities = new ArrayList<>();
     }
-    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, String addrStreet, int addrZip, String priorityStatus, Date treatmentDate) {
+    public Patient(int id, String firstName, String lastName, Date dob, String phone, String addrCountry, String addrState, String addrCity, String addrStreet, int addrZip, Date treatmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,7 +48,6 @@ public class Patient {
         this.addrCity = addrCity;
         this.addrStreet = addrStreet;
         this.addrZip = addrZip;
-        this.priorityStatus = priorityStatus;
         this.treatmentDate = treatmentDate;
         facilities = new ArrayList<>();
     }
@@ -133,14 +130,6 @@ public class Patient {
 
     public void setAddrZip(int addrZip) {
         this.addrZip = addrZip;
-    }
-
-    public String getPriorityStatus() {
-        return priorityStatus;
-    }
-
-    public void setPriorityStatus(String priorityStatus) {
-        this.priorityStatus = priorityStatus;
     }
 
     public Date getTreatmentDate() {

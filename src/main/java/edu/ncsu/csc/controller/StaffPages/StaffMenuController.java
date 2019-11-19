@@ -40,11 +40,9 @@ public class StaffMenuController {
     }
     public  List<String> getTreatedPatientChoices(){
         List<String> choices = new ArrayList<String>(0);
-        PatientDAOImp patientDAOImp = new PatientDAOImp();
         for(int i = 0; i< treatedPatientsList.size(); i++)
         {
-            String priority = patientDAOImp.getPriority(treatedPatientsList.get(i));
-            choices.add(treatedPatientsList.get(i).getLastName() + " priority:" + priority);
+            choices.add(treatedPatientsList.get(i).getLastName() + " priority:" + String.valueOf(treatedPatientsList.get(i).getPriority()));
         }
         return choices;
     }

@@ -7,6 +7,7 @@ import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PatientCheckProceed {
@@ -21,12 +22,18 @@ public class PatientCheckProceed {
         symptoms = patientPagesDao.getAllValues();
     }
     public CheckIn getCheckin(Patient p){
-        TemplateDAO<CheckIn> chdao=new CheckInDAOImp();
+        TemplateDAO<CheckIn> chdao = new CheckInDAOImp();
         return chdao.getOneByQuery("last_name= ? and dob =?");
     }
     public Report getReport(Patient p){
-        TemplateDAO<Report> chdao=new ReportDAOImp();
-        return chdao.getOneByQuery("last_name= ? and dob =?");
+        ReportDAOImp chdao = new ReportDAOImp();
+        String lastName = p.getLastName();
+        Date dob = p.getDob();
+        Report r = chdao.getReportByNameAndDob(lastName, dob);
+        return r;
+//        ("last_name = lastName and dob = dob");
+//        return chdao.getOneByQuery("last_name = lastName and dob = dob");
+//        return chdao.getOneByQuery("last_name= ? and dob =?");
     }
     public List<String> getSymtomsMenu(){
         List<String> choices = new ArrayList<String>(symptoms.size());

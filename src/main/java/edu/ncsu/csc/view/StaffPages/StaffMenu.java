@@ -47,7 +47,7 @@ public class StaffMenu extends BasePage implements PageView {
 
           List<String> checkins = checkmm.getCheckedinPatientChoices();
           if (checkins.size() <= 0) {
-            show("the patient checklist is empty!");
+            show("the patient checkin list is empty!");
             continue;
           } else {
             checkIn = checkmm.getCheckInSelection(ComboBoxPage.getInstance().select(checkins, "please select a checkin record:"));
@@ -58,7 +58,7 @@ public class StaffMenu extends BasePage implements PageView {
 
           List<String> treateds = checkmm.getTreatedPatientChoices();
           if (treateds.size() <= 0) {
-            show("the patient checklist is empty!");
+            show("the patient treated list is empty!");
             continue;
           } else {
             checkIn = checkmm.getTreatedSelection(ComboBoxPage.getInstance().select(treateds, "please select a checkin record:"));
