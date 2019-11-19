@@ -296,7 +296,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
       rules = new ArrayList<CheckIn>(0);
       openConnection();
       preparedStatement = connection
-          .prepareStatement("SELECT * FROM check_ins where FACILITY_ID = ? and END_TIME is null ");
+          .prepareStatement("SELECT * FROM check_ins where FACILITY_ID = ? ");
       preparedStatement.setInt(1, medicalFacility.getFacilityId());
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {

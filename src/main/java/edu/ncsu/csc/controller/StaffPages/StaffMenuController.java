@@ -2,6 +2,7 @@ package edu.ncsu.csc.controller.StaffPages;
 
 
 import edu.ncsu.csc.DAO.CheckInDAOImp;
+import edu.ncsu.csc.DAO.PatientDAOImp;
 import edu.ncsu.csc.DAO.TemplateDAO;
 import edu.ncsu.csc.model.CheckIn;
 import edu.ncsu.csc.model.MedicalFacility;
@@ -39,9 +40,11 @@ public class StaffMenuController {
     }
     public  List<String> getTreatedPatientChoices(){
         List<String> choices = new ArrayList<String>(0);
+        PatientDAOImp patientDAOImp = new PatientDAOImp();
         for(int i = 0; i< treatedPatientsList.size(); i++)
         {
-            choices.add(treatedPatientsList.get(i).getLastName());
+            String priority = patientDAOImp.getPriority(treatedPatientsList.get(i));
+            choices.add(treatedPatientsList.get(i).getLastName() + " priority:" + priority);
         }
         return choices;
     }
