@@ -47,6 +47,7 @@ public class ProcessPatient extends BasePage implements PageView {
                 if (t > priority) priority = t;
               }
             }
+            new PatientDAOImp().setPriority(checkIn, priority);
             show("enter vitals successfully! ");
             System.out.println("Priority is " + String.valueOf(priority) + " (1 is normal, 2 is high, 3 is quarantine)");
             running = false;

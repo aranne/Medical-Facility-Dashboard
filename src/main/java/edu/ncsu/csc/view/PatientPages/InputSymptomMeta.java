@@ -24,7 +24,7 @@ public class InputSymptomMeta extends BasePage implements PageView {
 
   public InputSymptomMeta(Symptom s) {
     this.s = s;
-    choicePrompt = "Enter Choice (1-5)";
+    choicePrompt = "Enter Choice: ";
     pageTitle = "#Symptom meta";
     menuStrs.add("Body part");
     menuStrs.add("Duration");
@@ -102,7 +102,6 @@ public class InputSymptomMeta extends BasePage implements PageView {
       symptomMeta.setIsFirstTime(false);
   }
 
-  //TODO
   public void inputSeverity() {
     SeverityDAOImp severityDAOImp = new SeverityDAOImp();
 
