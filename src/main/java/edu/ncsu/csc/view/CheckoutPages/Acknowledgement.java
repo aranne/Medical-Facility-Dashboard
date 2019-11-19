@@ -18,7 +18,8 @@ public class Acknowledgement extends BasePage implements PageView {
     private List<Reason> reasons;
     private List<NegativeExperience> negas;
 
-    public Acknowledgement(Report report) {
+    public Acknowledgement(Report report, Patient p) {
+        this.pd = p;
         this.report = report;
         choicePrompt = "Enter Choice (1-3)";
         pageTitle = "=========== Check-out Acknowledgement ===============";
@@ -31,18 +32,18 @@ public class Acknowledgement extends BasePage implements PageView {
     public void display() {
         // show report
         show("=========== Here is your report ===========");
-        PatientCheckProceed pcp = new PatientCheckProceed(f);
-        String stat = pcp.getReport(pd).getDischargeStatus();
+        PatientCheckProceed pcp = new PatientCheckProceed(f, pd);
+        String stat = pcp.getReport().getDischargeStatus();
         show("================ Report ================");
         show("Discharge Status:\t" + stat );
         System.out.println();
         System.out.println("Referral Status: ");
-        if(pcp.getReport(pd).getReferralStatus() == null){
+        if(pcp.getReport().getReferralStatus() == null){
             show("No referral status here");
-        }else if(pcp.getReport(pd).getReferralStatus() != null){
-            ReferralStatus rs = pcp.getReport(pd).getReferralStatus();
-            int fid = pcp.getReport(pd).getFacilityId();
-            int employeeId = pcp.getReport(pd).getEmployeeId();
+        }else if(pcp.getReport().getReferralStatus() != null){
+            ReferralStatus rs = pcp.getReport().getReferralStatus();
+            int fid = pcp.getReport().getFacilityId();
+            int employeeId = pcp.getReport().getEmployeeId();
             if (fid == 0) {
                 show("Facility: unknown");
             } else {
@@ -52,17 +53,17 @@ public class Acknowledgement extends BasePage implements PageView {
                 show("Referrer staff:" + staffDao.getOneById(employeeId));
             }
             ReasonDAOImp reasonDao = new ReasonDAOImp();
-            reasons = reasonDao.getAllByNameAndDob(pcp.getReport(pd).getLastName(), pcp.getReport(pd).getDob(), pcp.getReport(pd).getTime());
+            reasons = reasonDao.getAllByNameAndDob(pcp.getReport().getLastName(), pcp.getReport().getDob(), pcp.getReport().getTime());
             for (Reason reason : reasons) {
                 show("Reason Code: " + reason.getReasonCode());
                 show("Reason Description: " + reason.getDescription());
             }
         }
         System.out.println();
-        show("Treatment:\t" + pcp.getReport(pd).getTreatment());
+        show("Treatment:\t" + pcp.getReport().getTreatment());
         show("Negative experiences: ");
         NegativeExpeDAOImp negaDao = new NegativeExpeDAOImp();
-        negas = negaDao.getAllByNameAndDob(pcp.getReport(pd).getLastName(), pcp.getReport(pd).getDob(), pcp.getReport(pd).getTime());
+        negas = negaDao.getAllByNameAndDob(pcp.getReport().getLastName(), pcp.getReport().getDob(), pcp.getReport().getTime());
         for (NegativeExperience nega : negas) {
             show("Code: " + nega.getNegativeCode());
             show("Negative Experience: " + nega.getDescription());
@@ -84,7 +85,7 @@ public class Acknowledgement extends BasePage implements PageView {
 
                 }
                 ReportDAOImp reportDao = new ReportDAOImp();
-                reportDao.updateReason(report.getTime(), report.getDob(), report.getLastName());
+                reportDao.updateReason(report, reason);
                 break;
         }
 

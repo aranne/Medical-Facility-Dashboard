@@ -37,12 +37,12 @@ public class PatientRoutingPage extends BasePage implements PageView {
           new CheckInPage(checkIn, this.pd, f).display();
           break;
         case 2:
-          PatientCheckProceed pcp = new PatientCheckProceed(f);
-          Report r = pcp.getReport(pd);
-          if (pcp.getReport(pd) == null){
+          PatientCheckProceed pcp = new PatientCheckProceed(f, pd);
+          Report r = pcp.getReport();
+          if (pcp.getReport() == null){
             show("Here is not your report yet");
           }else{
-            new Acknowledgement(pcp.getReport(pd)).display();
+            new Acknowledgement(pcp.getReport(), pd).display();
           }
           break;
         case 3:
