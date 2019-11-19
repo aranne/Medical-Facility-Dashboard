@@ -55,7 +55,10 @@ public class SampleQueryPage extends BasePage implements PageView {
                     }
                     break;
                 case 4:
-                    System.out.println(sampleQuery.queryFour());
+                    List<MedicalFacility> fs = sampleQuery.queryFour();
+                    for (MedicalFacility f : fs) {
+                        System.out.println(f);
+                    }
                     break;
                 case 5:
                     System.out.println(sampleQuery.queryFive());
@@ -64,7 +67,13 @@ public class SampleQueryPage extends BasePage implements PageView {
                     Map<MedicalFacility, List<Patient>> map2 = sampleQuery.querySix();
                     System.out.println("Top five longest check-in phases for each facility");
                     for (MedicalFacility f : map2.keySet()) {
-                        System.out.println("Five patients for " + f + " are: " + map2.get(f));
+                        System.out.println("Five patients for " + f + " are: ");
+                        int j = 1;
+                        for (Patient p : map2.get(f)) {
+                            System.out.print(j + ": " + p);
+                            j += 1;
+                        }
+                        System.out.println();
                     }
                     break;
                 case 7:
