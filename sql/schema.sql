@@ -40,35 +40,33 @@ create table facility_has_certification
 -- 2.
 create table PATIENTS
 (
-    PATIENT_ID      NUMBER,
-    FIRST_NAME       VARCHAR2(255),
-    LAST_NAME        VARCHAR2(255) not null,
-    DOB             DATE          not null,
-    PHONE           VARCHAR2(255),
+    PATIENT_ID NUMBER,
+    FIRST_NAME VARCHAR2(255),
+    LAST_NAME VARCHAR2(255) not null,
+    DOB DATE not null,
+    PHONE VARCHAR2(255),
     ADDRESS_COUNTRY VARCHAR2(255),
-    ADDRESS_STATE   VARCHAR2(255),
-    ADDRESS_CITY    VARCHAR2(255),
-    ADDRESS_STREET  VARCHAR2(255),
-    ADDRESS_ZIP     NUMBER,
+    ADDRESS_STATE VARCHAR2(255),
+    ADDRESS_CITY VARCHAR2(255),
+    ADDRESS_STREET VARCHAR2(255),
+    ADDRESS_ZIP NUMBER,
     PRIORITY_STATUS VARCHAR2(255),
-    TREATMENT_TIME  DATE,
+    TREATMENT_TIME DATE,
     constraint PETIENTS_PK
         primary key (LAST_NAME, DOB)
 )
 /
-create sequence patient_ID_SEQ
-    nocache
-/
-create trigger patient_id_TRIGGER
+
+create trigger PATIENT_ID_TRIGGER
     before insert
-    on patients
-    for each row
-    when (NEW.PATIENT_ID is null)
+    on PATIENTS
+    for each row when (NEW.PATIENT_ID is null)
 begin
     select patient_ID_SEQ.nextval into :new.patient_id from dual;
 
 end patient_id_TRIGGER;
 /
+
 
 
 -- 3.
@@ -89,31 +87,29 @@ create table patient_has_facility
 /
 
 -- 4.
-create table check_ins
+create table CHECK_INS
 (
-    id number not null,
-    last_name varchar2(255) not null,
-    dob date not null,
-    start_time date not null,
-    end_time date,
-    facility_id number not null,
-        foreign key (facility_id) references MEDICAL_FACILITIES
+    ID NUMBER not null,
+    LAST_NAME VARCHAR2(255) not null,
+    DOB DATE not null,
+    START_TIME DATE not null,
+    END_TIME DATE,
+    FACILITY_ID NUMBER not null
+        references MEDICAL_FACILITIES
             on delete cascade,
-                   constraint check_ins_pk
-                   primary key (last_name, dob, start_time, facility_id),
-                   constraint PHF_NAME_DOB_fk
-                   foreign key (last_name, dob) references PATIENTS
-                       on delete cascade
-                      )
+    PRIORITY NUMBER,
+    constraint CHECK_INS_PK
+        primary key (LAST_NAME, DOB, START_TIME, FACILITY_ID),
+    constraint PHF_NAME_DOB_FK
+        foreign key (LAST_NAME, DOB) references PATIENTS
+            on delete cascade
+)
 /
-create sequence check_in_ID_SEQ
-    nocache
-/
-create trigger check_in_id_TRIGGER
+
+create trigger CHECK_IN_ID_TRIGGER
     before insert
-    on check_ins
-    for each row
-    when (NEW.id is null)
+    on CHECK_INS
+    for each row when (NEW.id is null)
 begin
     select check_in_ID_SEQ.nextval into :new.id from dual;
 

@@ -11,6 +11,29 @@ import java.util.List;
 
 public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
 
+  public boolean setPriority(CheckIn p, int priority) {
+    boolean rest = false;
+    try {
+      openConnection();
+      preparedStatement = connection
+          .prepareStatement("update CHECK_INS " +
+              "set PRIORITY = ? " +
+              "where LAST_NAME = ? and DOB = ? and START_TIME = ?");
+
+      preparedStatement.setInt(1, priority);
+      preparedStatement.setString(2, p.getLastName());
+      preparedStatement.setDate(3, (java.sql.Date) p.getDob());
+      preparedStatement.setTimestamp(4, new java.sql.Timestamp(p.getStartTime().getTime()) );
+      preparedStatement.executeUpdate();
+      rest = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closeConnection();
+    }
+    return rest;
+  }
+
   public List<BodyPart> getBodysByCheckin(CheckIn p) {
     List<BodyPart> bodys = new ArrayList<BodyPart>();
 //    	try {
@@ -72,7 +95,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -99,7 +123,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -126,7 +151,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getDate("start_time"),
             resultSet.getDate("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -152,7 +178,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
                 resultSet.getDate("dob"),
                 resultSet.getDate("start_time"),
                 resultSet.getDate("end_time"),
-                resultSet.getInt("facility_id")
+                resultSet.getInt("facility_id"),
+                resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -308,7 +335,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getTimestamp("start_time"),
             resultSet.getTimestamp("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {
@@ -326,7 +354,7 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
       openConnection();
       preparedStatement = connection
           .prepareStatement("SELECT CHECK_INS.id, CHECK_INS.last_name, CHECK_INS.dob, " +
-              "CHECK_INS.start_time, CHECK_INS.end_time, CHECK_INS.facility_id " +
+              "CHECK_INS.start_time, CHECK_INS.end_time, CHECK_INS.facility_id, CHECK_INS.PRIORITY " +
               "FROM CHECK_INS, PATIENTS " +
               "where PATIENTS.TREATMENT_TIME is not null " +
               "and CHECK_INS.LAST_NAME = PATIENTS.LAST_NAME " +
@@ -341,7 +369,8 @@ public class CheckInDAOImp extends AbstractDAO implements TemplateDAO<CheckIn> {
             resultSet.getDate("dob"),
             resultSet.getTimestamp("start_time"),
             resultSet.getTimestamp("end_time"),
-            resultSet.getInt("facility_id")
+            resultSet.getInt("facility_id"),
+            resultSet.getInt("priority")
         ));
       }
     } catch (SQLException e) {

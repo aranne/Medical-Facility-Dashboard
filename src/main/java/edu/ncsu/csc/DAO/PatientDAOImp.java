@@ -41,7 +41,6 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
             resultSet.getString("address_city"),
             resultSet.getString("address_street"),
             resultSet.getInt("address_zip"),
-            resultSet.getString("priority_status"),
             resultSet.getDate("treatment_time")
         );
       }
@@ -74,7 +73,6 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
             resultSet.getString("address_city"),
             resultSet.getString("address_street"),
             resultSet.getInt("address_zip"),
-            resultSet.getString("priority_status"),
             resultSet.getDate("treatment_time")
         );
       }
@@ -220,7 +218,6 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
             resultSet.getString("address_city"),
             resultSet.getString("address_street"),
             resultSet.getInt("address_zip"),
-            resultSet.getString("priority_status"),
             resultSet.getDate("treatment_time")
         );
       }
@@ -251,7 +248,7 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
       preparedStatement = connection
           .prepareStatement("update patients " +
               "set first_name = ?, last_name = ?, dob = ?, phone = ?, " +
-              "address_country = ?, address_state = ?, address_city = ?, address_street = ?, address_zip = ?, priority_status = ?, treatment_time = ?" +
+              "address_country = ?, address_state = ?, address_city = ?, address_street = ?, address_zip = ?, treatment_time = ?" +
               "where patient_id = ?");
       preparedStatement.setString(1, p.getFirstName());
       preparedStatement.setString(2, p.getLastName());
@@ -262,13 +259,12 @@ public class PatientDAOImp extends AbstractDAO implements TemplateDAO<Patient> {
       preparedStatement.setString(7, p.getAddrCity());
       preparedStatement.setString(8, p.getAddrStreet());
       preparedStatement.setInt(9, p.getAddrZip());
-      preparedStatement.setString(10, p.getPriorityStatus());
       if (p.getTreatmentDate() == null) {
-        preparedStatement.setDate(11, null);
+        preparedStatement.setDate(10, null);
       } else {
-        preparedStatement.setDate(11, new java.sql.Date(p.getTreatmentDate().getTime()));
+        preparedStatement.setDate(10, new java.sql.Date(p.getTreatmentDate().getTime()));
       }
-      preparedStatement.setInt(12, p.getId());
+      preparedStatement.setInt(11, p.getId());
       preparedStatement.executeUpdate();
       rest = true;
     } catch (SQLException e) {
