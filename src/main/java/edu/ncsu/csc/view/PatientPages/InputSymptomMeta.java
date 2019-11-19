@@ -81,7 +81,6 @@ public class InputSymptomMeta extends BasePage implements PageView {
       symptomMeta.setBodyPart(checkinSymptomMeta.getBodySelection(ch));
     } else {
       String bodyPart = getStringFromInput("input a bodyPart name:");
-      //TODO
       symptomMeta.setBodyPart(new BodyPart(bodyPart, bodyPart));
     }
 

@@ -214,7 +214,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
                         resultSet.getInt("facility_id"),
                         resultSet.getInt("employee_id"),
                         resultSet.getString("reason"),
-                        resultSet.getInt("referer_id"),
+                        resultSet.getInt("referrer_id"),
                         resultSet.getInt("refer_facility_id")
                 );
             }
@@ -227,7 +227,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
     }
 
     public List<Report> getReportByNameAndDob(String lastName, Date dob) {
-        List<Report> reports = null;
+        List<Report> reports = new ArrayList<>();
         try {
             openConnection();
             preparedStatement = connection
@@ -246,7 +246,7 @@ public class ReportDAOImp extends AbstractDAO implements TemplateDAO<Report> {
                         resultSet.getInt("facility_id"),
                         resultSet.getInt("employee_id"),
                         resultSet.getString("reason"),
-                        resultSet.getInt("referer_id"),
+                        resultSet.getInt("referrer_id"),
                         resultSet.getInt("refer_facility_id")
                 ));
             }

@@ -503,37 +503,3 @@ begin
 
 end reason_id_TRIGGER;
 /
-
-
--- 26.
-create table rules
-(
-    id number not null,
-    body_code varchar2(255) not null
-        constraint R_BODY_CODE_fk
-            references BODY_PARTS
-                on delete cascade,
-    sym_code varchar2(255) not null
-        constraint R_SYM_CODE_fk
-            references SYMPTOMS
-                on delete cascade,
-    scale_low number,
-    scale_high number,
-    constraint rules_pk
-        primary key (body_code, sym_code)
-)
-/
-create sequence rule_ID_SEQ
-    nocache
-/
-create trigger rule_id_TRIGGER
-    before insert
-    on rules
-    for each row
-    when (NEW.id is null)
-begin
-    select rule_ID_SEQ.nextval into :new.id from dual;
-
-end rule_id_TRIGGER;
-/
-

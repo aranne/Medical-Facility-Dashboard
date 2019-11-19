@@ -31,13 +31,11 @@ public class Acknowledgement extends BasePage implements PageView {
     @Override
     public void display() {
         // show report
-        show("=========== Here is your report ===========");
         PatientCheckProceed pcp = new PatientCheckProceed(f, pd);
         String stat = pcp.getReport().getDischargeStatus();
         show("================ Report ================");
-        show("Discharge Status:\t" + stat );
-        System.out.println();
-        System.out.println("Referral Status: ");
+        show("1. Discharge Status:\t" + stat );
+        System.out.println("2. Referral Status: ");
         if(pcp.getReport().getReferralStatus() == null){
             show("No referral status here");
         }else if(pcp.getReport().getReferralStatus() != null){
@@ -45,12 +43,12 @@ public class Acknowledgement extends BasePage implements PageView {
             int fid = pcp.getReport().getFacilityId();
             int employeeId = pcp.getReport().getEmployeeId();
             if (fid == 0) {
-                show("Facility: unknown");
+                show("3. Facility: unknown");
             } else {
                 MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
                 StaffDAOImp staffDao = new StaffDAOImp();
-                show("Facility: " + facilityDao.getOneById(fid).getName());
-                show("Referrer staff:" + staffDao.getOneById(employeeId));
+                show("3. Facility: " + facilityDao.getOneById(fid).getName());
+                show("4. Referrer staff:" + staffDao.getOneById(employeeId));
             }
             ReasonDAOImp reasonDao = new ReasonDAOImp();
             reasons = reasonDao.getAllByNameAndDob(pcp.getReport().getLastName(), pcp.getReport().getDob(), pcp.getReport().getTime());
@@ -60,8 +58,8 @@ public class Acknowledgement extends BasePage implements PageView {
             }
         }
         System.out.println();
-        show("Treatment:\t" + pcp.getReport().getTreatment());
-        show("Negative experiences: ");
+        show("5. Treatment:\t" + pcp.getReport().getTreatment());
+        show("6. Negative experiences: ");
         NegativeExpeDAOImp negaDao = new NegativeExpeDAOImp();
         negas = negaDao.getAllByNameAndDob(pcp.getReport().getLastName(), pcp.getReport().getDob(), pcp.getReport().getTime());
         for (NegativeExperience nega : negas) {
