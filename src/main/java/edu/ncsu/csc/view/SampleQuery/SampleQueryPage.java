@@ -21,6 +21,7 @@ public class SampleQueryPage extends BasePage implements PageView {
         menuStrs.add("Query four");
         menuStrs.add("Query five");
         menuStrs.add("Query six");
+        menuStrs.add("Query eight");
         menuStrs.add("Go back");
         choicePrompt = "Please select a sample query";
 
@@ -76,7 +77,11 @@ public class SampleQueryPage extends BasePage implements PageView {
                         System.out.println();
                     }
                     break;
+
                 case 7:
+                    SampleQuery numberofStaff = new SampleQuery();
+                    numberofStaff.queryEight();
+                case 8:
                     running = false;
                     break;
             }

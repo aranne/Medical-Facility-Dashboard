@@ -24,6 +24,7 @@ public class SampleQuery {
         private Date checkDate;
         private Date dischargeDate;
         private List<NegativeExperience> negas;
+        private Staff staff;
 
         public ReturnOne(Patient patient, String facilityName, Date checkDate, Date dischargeDate, List<NegativeExperience> negas) {
             this.patient = patient;
@@ -31,6 +32,7 @@ public class SampleQuery {
             this.checkDate = checkDate;
             this.dischargeDate = dischargeDate;
             this.negas = negas;
+            this.staff = staff;
         }
 
         public Patient getPatient() {
@@ -52,6 +54,7 @@ public class SampleQuery {
         public List<NegativeExperience> getNegas() {
             return negas;
         }
+
     }
 
     /** Find all patients that were discharged but had negative experiences
@@ -258,5 +261,25 @@ public class SampleQuery {
             map.put(f, patients);
         }
         return map;
+    }
+
+    /** For each facility, print the facility, the number of non-medical staff, the number of medical staff
+     **/
+    public void queryEight() {
+        List<MedicalFacility> facilities;
+        MedicalFacilityDAOImp facilityDao = new MedicalFacilityDAOImp();
+        facilities = facilityDao.getAllValues();
+        ServiceDeptDAOImp deptDao = new ServiceDeptDAOImp();
+        // For each facility
+        int mS=-1;
+        int nS=-1;
+        for (MedicalFacility f : facilities) {
+            MedicalFacility mostReferFacility = null;
+            int id = f.getFacilityId();
+            // Get all depts.
+            mS = deptDao.getMstaff(String.valueOf(id));
+            nS = deptDao.getNstaff(String.valueOf(id));
+            System.out.println(f.getName()+", medical staff: "+mS+", Non_medical staff: "+nS);
+        }
     }
 }
