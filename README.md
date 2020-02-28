@@ -1,5 +1,4 @@
-## CSC 540 - DATABASE MANAGEMENT CONCEPTS & SYSTEMS
-### Medical Facility Performance Dashboard Application
+## Medical Facility Performance Dashboard Application
 
 We would like to develop an application that provides performance data about medical facilities with respect to the quality of patient visits and patient outcomes. 
 
