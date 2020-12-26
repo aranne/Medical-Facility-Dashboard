@@ -19,7 +19,7 @@ class AbstractDAO {
       Class.forName("oracle.jdbc.driver.OracleDriver");
       connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
     } catch (ClassNotFoundException e) {
-      System.out.println("Class not found");
+      System.out.println("Cannot connect to database: " + e.getMessage());
     }
   }
 

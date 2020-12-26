@@ -38,5 +38,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-/src/main/java/edu/ncsu/csc/DAO/AbstractDAO
